@@ -577,4 +577,17 @@ Route::middleware(['auth', 'super_admin'])
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     });
 
+Route::get('/create-super-admin', function () {
+    \App\Models\User::updateOrCreate(
+        ['email' => 'admin@novapos.az'],
+        [
+            'name' => 'NovaPOS Admin',
+            'password' => \Illuminate\Support\Facades\Hash::make('Admin12345'),
+            'role' => 'super_admin',
+        ]
+    );
+
+    return 'Super admin yaradıldı';
+});
+
 require __DIR__ . '/auth.php';
