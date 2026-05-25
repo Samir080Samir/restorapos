@@ -55,4 +55,9 @@ class PosOrder extends Model
     {
         return $this->hasMany(PosOrderItem::class, 'order_id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(PosPayment::class, 'order_id');
+    }
 }

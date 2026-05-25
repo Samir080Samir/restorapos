@@ -55,8 +55,24 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::post('/terminal/reset', [StaffLoginController::class, 'resetTerminal'])->name('terminal.reset');
     Route::post('/orders', [PosOrderController::class, 'store'])
         ->name('orders.store');
+    Route::get('/orders/open-checks', [PosOrderController::class, 'openChecks'])
+        ->name('orders.open-checks');
     Route::get('/orders/table/{table}', [PosOrderController::class, 'active'])
         ->name('orders.active');
+    Route::post('/orders/new-check', [PosOrderController::class, 'newCheck'])
+        ->name('orders.new-check');
+    Route::post('/orders/move-table', [PosOrderController::class, 'moveTable'])
+        ->name('orders.move-table');
+    Route::post('/orders/merge-tables', [PosOrderController::class, 'mergeTables'])
+        ->name('orders.merge-tables');
+    Route::post('/orders/merge-checks', [PosOrderController::class, 'mergeChecks'])
+        ->name('orders.merge-checks');
+    Route::post('/orders/print-bill', [PosOrderController::class, 'printBill'])
+        ->name('orders.print-bill');
+    Route::post('/orders/unlock-bill', [PosOrderController::class, 'unlockBill'])
+        ->name('orders.unlock-bill');
+    Route::post('/orders/complete-payment', [PosOrderController::class, 'completePayment'])
+        ->name('orders.complete-payment');
     Route::post('/reservations', [TableReservationController::class, 'store'])
         ->name('reservations.store');
 
@@ -576,18 +592,5 @@ Route::middleware(['auth', 'super_admin'])
 
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     });
-
-Route::get('/create-super-admin', function () {
-    \App\Models\User::updateOrCreate(
-        ['email' => 'admin@novapos.az'],
-        [
-            'name' => 'NovaPOS Admin',
-            'password' => \Illuminate\Support\Facades\Hash::make('Admin12345'),
-            'role' => 'super_admin',
-        ]
-    );
-
-    return 'Super admin yaradıldı';
-});
 
 require __DIR__ . '/auth.php';

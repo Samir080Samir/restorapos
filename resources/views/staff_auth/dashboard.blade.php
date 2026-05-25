@@ -707,11 +707,21 @@
             cursor: pointer;
         }
 
-        .table-action-btn.danger {
-            grid-column: 1 / -1;
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, .28);
-            background: #fff7f7;
+        .table-action-btn.share {
+            color: #2563eb;
+            border-color: rgba(37, 99, 235, .28);
+            background: #eff6ff;
+        }
+
+        .table-info-card,
+        .table-info-card button,
+        .table-info-card input,
+        .table-info-card textarea,
+        .reservation-card,
+        .reservation-card button,
+        .reservation-card input,
+        .reservation-card textarea {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         .reservation-card {
@@ -891,6 +901,279 @@
             line-height: 1.45;
         }
 
+        .check-switcher {
+            margin-top: 10px;
+            display: flex;
+            gap: 7px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .check-chip {
+            min-height: 34px;
+            padding: 0 10px;
+            border-radius: 999px;
+            border: 1px solid #dfe7f2;
+            background: #fff;
+            color: #4c5570;
+            font-size: 11.5px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .check-chip.active {
+            border-color: rgba(32, 201, 133, .45);
+            background: rgba(32, 201, 133, .10);
+            color: #059669;
+        }
+
+        .table-action-btn.success {
+            color: #059669;
+            border-color: rgba(16, 185, 129, .35);
+            background: #f0fdf4;
+        }
+
+        .table-action-btn.warning {
+            color: #b45309;
+            border-color: rgba(245, 158, 11, .35);
+            background: #fffbeb;
+        }
+
+
+
+
+        /* ================= PAYMENT SCREEN ================= */
+
+        .payment-screen {
+            display: none;
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        .payment-screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-card {
+            margin-top: 14px;
+            border: 1px solid #e6edf7;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            padding: 14px;
+        }
+
+        .payment-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .payment-title {
+            font-size: 17px;
+            font-weight: 900;
+            color: #071143;
+        }
+
+        .payment-subtitle {
+            margin-top: 3px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #7b8498;
+        }
+
+        .payment-total-badge {
+            min-width: 112px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(16, 185, 129, .10);
+            border: 1px solid rgba(16, 185, 129, .22);
+            color: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .payment-section-title {
+            margin: 12px 0 8px;
+            font-size: 12px;
+            color: #071143;
+            font-weight: 900;
+        }
+
+        .payment-method-grid,
+        .discount-type-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .payment-choice-btn {
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid #dfe7f2;
+            background: #fff;
+            color: #071143;
+            font-size: 12.5px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .payment-choice-btn.active {
+            background: #171545;
+            border-color: #171545;
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(23, 21, 69, .14);
+        }
+
+        .payment-amount-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .payment-input-box {
+            border: 1px solid #e6edf7;
+            border-radius: 13px;
+            background: #fff;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .payment-input-box.active {
+            border-color: rgba(32, 201, 133, .48);
+            box-shadow: 0 0 0 3px rgba(32, 201, 133, .09);
+        }
+
+        .payment-input-box span {
+            display: block;
+            font-size: 10.5px;
+            color: #7b8498;
+            font-weight: 800;
+        }
+
+        .payment-input-box strong {
+            display: block;
+            margin-top: 4px;
+            font-size: 17px;
+            color: #071143;
+            font-weight: 900;
+        }
+
+        .payment-input-field {
+            width: 100%;
+            margin-top: 4px;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #071143;
+            font-size: 17px;
+            font-weight: 900;
+            line-height: 1.2;
+            font-family: inherit;
+        }
+
+        .payment-input-field:focus {
+            color: #059669;
+        }
+
+        .payment-input-box.disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            background: #f8fafc;
+        }
+
+        .payment-input-box.disabled .payment-input-field {
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+
+        .payment-summary-box {
+            margin-top: 10px;
+            display: grid;
+            gap: 7px;
+            border-top: 1px solid #eef1f6;
+            padding-top: 10px;
+        }
+
+        .payment-summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            font-weight: 800;
+            color: #65708a;
+        }
+
+        .payment-summary-line strong {
+            color: #071143;
+            font-weight: 900;
+        }
+
+        .payment-keypad {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .payment-key {
+            height: 46px;
+            border-radius: 13px;
+            border: 1px solid #dfe7f2;
+            background: #fff;
+            color: #071143;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .payment-key.danger {
+            color: #ef4444;
+            background: #fff7f7;
+            border-color: rgba(239, 68, 68, .22);
+        }
+
+        .payment-footer-actions {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 10px;
+        }
+
+        .payment-back-btn,
+        .payment-complete-btn {
+            height: 50px;
+            border-radius: 13px;
+            font-size: 14px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .payment-back-btn {
+            border: 1px solid #dfe7f2;
+            background: #fff;
+            color: #071143;
+        }
+
+        .payment-complete-btn {
+            border: none;
+            background: linear-gradient(90deg, #17b978, #21c985);
+            color: #fff;
+        }
+
+        .payment-complete-btn:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
 
         /* ================= TABLE SELECTION SCREEN ================= */
 
@@ -996,6 +1279,14 @@
 
         .status-waiting {
             background: #f59e0b;
+        }
+
+        .status-late {
+            background: #ef4444;
+        }
+
+        .status-arrived {
+            background: #10b981;
         }
 
         .tables-area-tabs {
@@ -1108,6 +1399,28 @@
         .staff-table-item[data-status="reserved"] {
             background: linear-gradient(180deg, #fff, #f0f9ff);
             border-color: rgba(14, 165, 233, .35);
+        }
+
+        .staff-table-item[data-state="reservation_upcoming"] {
+            background: linear-gradient(180deg, #ffffff, #eff6ff);
+            border-color: rgba(37, 99, 235, .42);
+        }
+
+        .staff-table-item[data-state="reservation_due_soon"] {
+            background: linear-gradient(180deg, #ffffff, #fffbeb);
+            border-color: rgba(245, 158, 11, .58);
+            box-shadow: 0 14px 32px rgba(245, 158, 11, .16);
+        }
+
+        .staff-table-item[data-state="reservation_late"] {
+            background: linear-gradient(180deg, #ffffff, #fff1f2);
+            border-color: rgba(239, 68, 68, .58);
+            box-shadow: 0 14px 32px rgba(239, 68, 68, .16);
+        }
+
+        .staff-table-item[data-state="reservation_arrived"] {
+            background: linear-gradient(180deg, #ffffff, #ecfdf5);
+            border-color: rgba(16, 185, 129, .52);
         }
 
         .staff-table-item:hover {
@@ -1300,6 +1613,153 @@
         }
 
 
+
+
+        /* ================= PREMIUM TABLE TOP NAV ================= */
+
+        .premium-tables-topbar {
+            flex-shrink: 0;
+            height: 64px;
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: stretch;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            background: linear-gradient(90deg, #251d55, #171545);
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+            overflow: hidden;
+        }
+
+        .premium-area-navbar {
+            height: 64px;
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            overflow: hidden;
+            background: transparent;
+            border-top-left-radius: 18px;
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .06);
+            flex-shrink: 0;
+        }
+
+        .premium-area-tab {
+            position: relative;
+            width: 126px;
+            height: 64px;
+            padding: 0 8px;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            color: rgba(255, 255, 255, .92);
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: -.15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .18s ease, color .18s ease;
+            border-right: 1px solid rgba(255, 255, 255, .06);
+            flex-shrink: 0;
+        }
+
+        .premium-area-tab:first-child {
+            border-top-left-radius: 18px;
+        }
+
+        .premium-area-tab:hover {
+            background: rgba(255, 255, 255, .055);
+            color: #ffffff;
+        }
+
+        .premium-area-tab.active {
+            background: rgba(255, 255, 255, .075);
+            color: #ffffff;
+        }
+
+        .premium-area-tab.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background: #20d68f;
+            box-shadow: 0 -7px 18px rgba(32, 214, 143, .36);
+        }
+
+        .premium-area-icon {
+            width: 13px;
+            height: 13px;
+            color: currentColor;
+            opacity: .96;
+            flex-shrink: 0;
+        }
+
+        .premium-status-legend {
+            height: 64px;
+            padding: 0 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 7px;
+            overflow: hidden;
+            background: linear-gradient(90deg, #251d55, #171545);
+            border-left: 1px solid rgba(255, 255, 255, .06);
+            min-width: 0;
+        }
+
+        .premium-status-card {
+            width: 88px;
+            height: 50px;
+            border: 1px solid rgba(255, 255, 255, .13);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .052);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+            display: grid;
+            grid-template-columns: 9px minmax(0, 1fr);
+            grid-template-rows: 19px 19px;
+            column-gap: 6px;
+            align-items: center;
+            padding: 6px 9px;
+            color: #ffffff;
+            backdrop-filter: blur(8px);
+            flex: 0 0 88px;
+        }
+
+        .premium-status-card .status-dot {
+            grid-column: 1;
+            grid-row: 1;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, .05);
+        }
+
+        .premium-status-card span:last-child {
+            grid-column: 2;
+            grid-row: 1;
+            font-size: 10.7px;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
+            line-height: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .premium-status-card strong {
+            grid-column: 2;
+            grid-row: 2;
+            font-size: 17px;
+            line-height: 1;
+            color: #ffffff;
+            font-weight: 900;
+            letter-spacing: -.2px;
+        }
+
         @media(max-width: 1100px) {
             .tables-header {
                 align-items: flex-start;
@@ -1336,38 +1796,393 @@
             }
         }
 
-        @media(max-width: 900px) {
-            body {
-                overflow: auto;
-            }
 
-            .pos-wrapper {
-                height: auto;
-                min-height: 100vh;
-            }
+        .pos-toast-container {
+            position: fixed;
+            top: 76px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            display: grid;
+            gap: 9px;
+            pointer-events: none;
+            width: min(520px, calc(100vw - 32px));
+        }
 
-            .pos-navbar {
-                height: auto;
-                min-height: 60px;
-                flex-wrap: wrap;
-                padding: 10px;
-            }
+        .pos-toast {
+            min-height: 46px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: #ffffff;
+            color: #071143;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, .18);
+            border: 1px solid #e6edf7;
+            border-left: 4px solid #64748b;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.35;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            opacity: 0;
+            transform: translateY(-8px);
+            animation: posToastIn .18s ease forwards;
+        }
 
-            .pos-content {
+        .pos-toast.success {
+            border-left-color: #10b981;
+        }
+
+        .pos-toast.error {
+            border-left-color: #ef4444;
+        }
+
+        .pos-toast.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .pos-toast.info {
+            border-left-color: #171545;
+        }
+
+        @keyframes posToastIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 1100px) {
+            .premium-tables-topbar {
                 height: auto;
                 grid-template-columns: 1fr;
-                overflow: visible;
             }
 
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                overflow: visible;
+            .premium-area-navbar {
+                height: 58px;
+            }
+
+            .premium-area-tab {
+                width: 150px;
+                height: 58px;
+                font-size: 12.5px;
+            }
+
+            .premium-status-legend {
+                height: 68px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media(max-width: 700px) {
+            .premium-area-tab {
+                width: 132px;
+                font-size: 12px;
+            }
+
+            .premium-status-card {
+                width: 96px;
+                min-width: 96px;
+            }
+        }
+
+
+        /* ================= OPEN CHECKS PANEL ================= */
+
+        .checks-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, .16);
+            z-index: 8000;
+            display: none;
+        }
+
+        .checks-overlay.show {
+            display: block;
+        }
+
+        .checks-panel {
+            position: fixed;
+            top: 72px;
+            left: 14px;
+            width: min(520px, calc(100vw - 28px));
+            max-height: calc(100vh - 92px);
+            z-index: 8100;
+            background: #ffffff;
+            border: 1px solid #e5ebf5;
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
+            padding: 14px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .checks-panel.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checks-panel-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .checks-panel-title {
+            color: #071143;
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .checks-panel-subtitle {
+            margin-top: 6px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .checks-panel-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            color: #071143;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .checks-panel-summary {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 10px;
+        }
+
+        .checks-summary-card {
+            min-height: 66px;
+            border-radius: 14px;
+            border: 1px solid #e6edf7;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+            padding: 12px;
+        }
+
+        .checks-summary-card span {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .checks-summary-card strong {
+            display: block;
+            margin-top: 6px;
+            color: #071143;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .checks-summary-card.total {
+            background: linear-gradient(135deg, rgba(32, 201, 133, .12), rgba(255, 255, 255, 1));
+            border-color: rgba(32, 201, 133, .25);
+        }
+
+        .checks-summary-card.total strong {
+            color: #059669;
+        }
+
+
+        .checks-filter-row {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .checks-filter-btn {
+            height: 38px;
+            border-radius: 12px;
+            border: 1px solid #dfe7f2;
+            background: #ffffff;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .checks-filter-btn.active {
+            background: #171545;
+            border-color: #171545;
+            color: #ffffff;
+            box-shadow: 0 10px 22px rgba(23, 21, 69, .13);
+        }
+
+        .check-status-badge {
+            height: 24px;
+            padding: 0 8px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10.5px;
+            font-weight: 900;
+            white-space: nowrap;
+            margin-top: 6px;
+        }
+
+        .check-status-badge.open {
+            background: rgba(16, 185, 129, .10);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, .22);
+        }
+
+        .check-status-badge.paid {
+            background: rgba(100, 116, 139, .10);
+            color: #475569;
+            border: 1px solid rgba(100, 116, 139, .20);
+        }
+
+
+        .checks-list {
+            margin-top: 12px;
+            overflow-y: auto;
+            display: grid;
+            gap: 9px;
+            padding-right: 4px;
+        }
+
+        .check-row-card {
+            border: 1px solid #e6edf7;
+            border-radius: 15px;
+            background: #fff;
+            padding: 12px;
+            cursor: pointer;
+            transition: .16s ease;
+        }
+
+        .check-row-card:hover {
+            border-color: rgba(32, 201, 133, .45);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, .09);
+            transform: translateY(-1px);
+        }
+
+        .check-row-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .check-row-title {
+            color: #071143;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .check-row-sub {
+            margin-top: 4px;
+            color: #64748b;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        .check-row-amount {
+            color: #059669;
+            font-size: 16px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .check-row-meta {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+        }
+
+        .check-row-meta span {
+            min-height: 30px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            color: #475569;
+            font-size: 10.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+        .checks-empty {
+            padding: 26px 12px;
+            text-align: center;
+            border: 1px dashed #dbe3ef;
+            border-radius: 14px;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 800;
+            background: #fbfdff;
+        }
+
+        @media(max-width: 640px) {
+            .checks-panel {
+                left: 8px;
+                right: 8px;
+                width: auto;
+            }
+
+            .check-row-meta {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 
 <body>
+
+    <div id="posToastContainer" class="pos-toast-container"></div>
+
+    <div id="openChecksOverlay" class="checks-overlay"></div>
+
+    <section id="openChecksPanel" class="checks-panel" aria-hidden="true">
+        <div class="checks-panel-head">
+            <div>
+                <div class="checks-panel-title" id="checksPanelTitle">Açıq çeklər</div>
+                <div class="checks-panel-subtitle" id="checksPanelSubtitle">Yüklənir...</div>
+            </div>
+
+            <button type="button" id="closeChecksPanelBtn" class="checks-panel-close">×</button>
+        </div>
+
+        <div class="checks-panel-summary">
+            <div class="checks-summary-card">
+                <span>Çek sayı</span>
+                <strong id="checksTotalCount">0</strong>
+            </div>
+            <div class="checks-summary-card total">
+                <span>Ümumi məbləğ</span>
+                <strong id="checksTotalAmount">0.00 ₼</strong>
+            </div>
+        </div>
+
+        <div class="checks-filter-row">
+            <button type="button" class="checks-filter-btn active" data-check-filter="open">Açıq</button>
+            <button type="button" class="checks-filter-btn" data-check-filter="paid">Bağlı</button>
+            <button type="button" class="checks-filter-btn" data-check-filter="all">Hamısı</button>
+        </div>
+
+        <div id="openChecksList" class="checks-list">
+            <div class="checks-empty">Açıq çek yoxdur</div>
+        </div>
+    </section>
 
     @php
     $restaurantName = session('staff_restaurant_name') ?: 'Restoran';
@@ -1379,6 +2194,8 @@
 
     $staffName = session('staff_user_name') ?: 'Əməkdaş';
     $staffRole = session('staff_user_role') ?: 'cashier';
+    $canUnlockPaymentLock = in_array($staffRole, ['cashier', 'waiter', 'branch_manager']);
+    $canTakePayment = in_array($staffRole, ['cashier']);
     @endphp
 
     <div class="pos-wrapper">
@@ -1392,7 +2209,7 @@
                 Yeni sifariş
             </a>
 
-            <a href="#" class="nav-btn">
+            <a href="#" id="openChecksBtn" class="nav-btn">
                 <svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
                     <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z" />
                     <path d="M9 8h6M9 12h6M9 16h3" />
@@ -1472,55 +2289,98 @@
 
         @php
         $tableAreas = $areas ?? collect();
+
+        $allTables = $tableAreas->flatMap(function ($area) {
+        return $area->tables ?? collect();
+        });
+
+        $tableStatusCounts = [
+        'empty' => 0,
+        'busy' => 0,
+        'waiting' => 0,
+        'reserved' => 0,
+        'due_soon' => 0,
+        'late' => 0,
+        ];
+
+        foreach ($allTables as $countTable) {
+        $state = method_exists($countTable, 'reservationState')
+        ? $countTable->reservationState()
+        : ($countTable->status ?? 'empty');
+
+        if ($state === 'empty') {
+        $tableStatusCounts['empty']++;
+        } elseif ($state === 'busy') {
+        $tableStatusCounts['busy']++;
+        } elseif ($state === 'waiting_payment') {
+        $tableStatusCounts['waiting']++;
+        } elseif ($state === 'reservation_due_soon') {
+        $tableStatusCounts['due_soon']++;
+        } elseif ($state === 'reservation_late') {
+        $tableStatusCounts['late']++;
+        } elseif (in_array($state, ['reserved', 'reservation_upcoming', 'reservation_arrived'], true)) {
+        $tableStatusCounts['reserved']++;
+        }
+        }
         @endphp
 
         <section id="tablesScreen" class="tables-screen">
 
             <div class="tables-shell">
 
-                <div class="tables-header">
+                <div class="premium-tables-topbar">
 
-                    <div class="tables-header-left">
-                        <div class="tables-title">Masa seçimi</div>
-                        <div class="tables-subtitle">Sifarişə başlamaq üçün əvvəl masanı seçin.</div>
+                    @if($tableAreas->count())
+                    <div class="premium-area-navbar">
+                        @foreach($tableAreas as $area)
+                        <button type="button"
+                            class="premium-area-tab table-area-tab {{ $loop->first ? 'active' : '' }}"
+                            data-area-tab="staff-area-{{ $area->id }}">
+                            <svg class="premium-area-icon" fill="none" stroke="currentColor" stroke-width="2.15" viewBox="0 0 24 24">
+                                <path d="M4 10h16M6 10v9M18 10v9M8 6h8" />
+                            </svg>
+                            <span>{{ $area->name }}</span>
+                        </button>
+                        @endforeach
                     </div>
+                    @endif
 
-                    <div class="tables-header-right">
-
-                        @if($tableAreas->count())
-                        <div class="tables-area-tabs">
-                            @foreach($tableAreas as $area)
-                            <button type="button"
-                                class="table-area-tab {{ $loop->first ? 'active' : '' }}"
-                                data-area-tab="staff-area-{{ $area->id }}">
-                                {{ $area->name }}
-                            </button>
-                            @endforeach
-                        </div>
-                        @endif
-
-                        <div class="tables-status-row">
-                            <div class="table-status-pill">
-                                <span class="status-dot status-empty"></span>
-                                Boş
-                            </div>
-
-                            <div class="table-status-pill">
-                                <span class="status-dot status-busy"></span>
-                                Dolu
-                            </div>
-
-                            <div class="table-status-pill">
-                                <span class="status-dot status-waiting"></span>
-                                Hesab gözləyir
-                            </div>
-
-                            <div class="table-status-pill">
-                                <span class="status-dot status-reserved"></span>
-                                Rezerv
-                            </div>
+                    <div class="premium-status-legend">
+                        <div class="premium-status-card">
+                            <span class="status-dot status-empty"></span>
+                            <span>Boş</span>
+                            <strong>{{ $tableStatusCounts['empty'] }}</strong>
                         </div>
 
+                        <div class="premium-status-card">
+                            <span class="status-dot status-busy"></span>
+                            <span>Dolu</span>
+                            <strong>{{ $tableStatusCounts['busy'] }}</strong>
+                        </div>
+
+                        <div class="premium-status-card">
+                            <span class="status-dot status-waiting"></span>
+                            <span>Hesab</span>
+                            <strong>{{ $tableStatusCounts['waiting'] }}</strong>
+                        </div>
+
+                        <div class="premium-status-card">
+                            <span class="status-dot status-reserved"></span>
+                            <span>Rezerv</span>
+                            <strong>{{ $tableStatusCounts['reserved'] }}</strong>
+                        </div>
+
+                        <div class="premium-status-card">
+                            <span class="status-dot status-waiting"></span>
+                            <span>Vaxt</span>
+                            <strong>{{ $tableStatusCounts['due_soon'] }}</strong>
+                        </div>
+
+                        <div class="premium-status-card">
+                            <span class="status-dot status-late"></span>
+                            <span>Gecikir</span>
+                            <strong>{{ $tableStatusCounts['late'] }}</strong>
+                        </div>
                     </div>
 
                 </div>
@@ -1544,14 +2404,19 @@
                             @forelse($area->tables as $table)
 
                             @php
-                            $tableStatus = $table->status ?? 'empty';
+                            $openOrder = $table->openOrder()->with('staff')->first();
+                            $openOrdersCount = $table->openOrders()->count();
+                            $tableState = $table->reservationState();
+                            $tableStateLabel = $table->reservationStateLabel();
+                            $visibleReservation = method_exists($table, 'visibleReservation')
+                            ? $table->visibleReservation()
+                            : ($table->activeReservation()->first() ?: $table->nextReservation()->first());
 
-                            $statusClass = match($tableStatus) {
-                            'busy' => 'status-busy',
-                            'reserved' => 'status-reserved',
-                            'waiting_payment' => 'status-waiting',
-                            default => 'status-empty',
-                            };
+                            $tableStatus = $openOrdersCount > 0
+                            ? (($table->status ?? '') === 'waiting_payment' ? 'waiting_payment' : 'busy')
+                            : (in_array($tableState, ['reserved', 'reservation_upcoming', 'reservation_due_soon', 'reservation_late', 'reservation_arrived'], true) ? 'reserved' : 'empty');
+
+                            $statusClass = $table->reservationBadgeClass();
                             @endphp
 
                             <button type="button"
@@ -1560,16 +2425,20 @@
                                 data-name="{{ $table->name }}"
                                 data-seats="{{ (int) $table->seats }}"
                                 data-status="{{ $tableStatus }}"
+                                data-payment-locked="{{ $tableStatus === 'waiting_payment' ? '1' : '0' }}"
+                                data-state="{{ $tableState }}"
+                                data-state-label="{{ $tableStateLabel }}"
                                 data-area="{{ $area->name }}"
-                                data-staff="{{ $table->openOrder?->staff?->name ?? '' }}"
-                                data-opened-at="{{ optional($table->openOrder?->opened_at)->toIso8601String() }}"
-                                data-reservation-id="{{ $table->activeReservation?->id ?? '' }}"
-                                data-reservation-time="{{ $table->activeReservation ? \Carbon\Carbon::parse($table->activeReservation->start_time)->format('H:i') : '' }}"
-                                data-reservation-date="{{ $table->activeReservation?->reservation_date ?? '' }}"
-                                data-reservation-customer="{{ $table->activeReservation?->customer_name ?? '' }}"
-                                data-reservation-phone="{{ $table->activeReservation?->customer_phone ?? '' }}"
-                                data-reservation-guests="{{ $table->activeReservation?->guest_count ?? '' }}"
-                                data-reservation-note="{{ $table->activeReservation?->note ?? '' }}"
+                                data-staff="{{ $openOrder?->staff?->name ?? '' }}"
+                                data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}"
+                                data-check-count="{{ $openOrdersCount }}"
+                                data-reservation-id="{{ $visibleReservation?->id ?? '' }}"
+                                data-reservation-time="{{ $visibleReservation ? $visibleReservation->formattedStartTime() : '' }}"
+                                data-reservation-date="{{ $visibleReservation ? $visibleReservation->formattedDate() : '' }}"
+                                data-reservation-customer="{{ $visibleReservation?->customer_name ?? '' }}"
+                                data-reservation-phone="{{ $visibleReservation?->customer_phone ?? '' }}"
+                                data-reservation-guests="{{ $visibleReservation?->guest_count ?? '' }}"
+                                data-reservation-note="{{ $visibleReservation?->note ?? '' }}"
                                 onclick="openPosForTable(this)"
                                 style="
                                                 left: {{ $table->position_x }}px;
@@ -1580,9 +2449,9 @@
 
                                 <span class="staff-table-badge {{ $statusClass }}"></span>
 
-                                @if($table->activeReservation)
+                                @if($visibleReservation)
                                 <span class="staff-reservation-badge">
-                                    Rezerv {{ \Carbon\Carbon::parse($table->activeReservation->start_time)->format('H:i') }}
+                                    {{ $tableStateLabel }} {{ $visibleReservation->formattedStartTime() }}
                                 </span>
                                 @endif
 
@@ -1602,7 +2471,7 @@
                                     </span>
 
                                     <span class="staff-table-time"
-                                        data-opened-at="{{ optional($table->openOrder?->opened_at)->toIso8601String() }}">
+                                        data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}">
                                         00:00
                                     </span>
                                     @endif
@@ -1749,10 +2618,9 @@
                     <div class="order-header">
                         <h3 class="order-title">Sifariş siyahısı</h3>
 
-                        <a href="#" class="clear-cart-link">
-                            Səbəti təmizlə 🗑
-                        </a>
                     </div>
+
+                    <div id="checkSwitcher" class="check-switcher"></div>
 
                     <div class="order-list" id="cartItems">
                         <div style="padding:30px 10px; text-align:center; color:#7b8498; font-weight:800;">
@@ -1782,13 +2650,97 @@
                                 <small>Masa üzərinə vur</small>
                             </a>
 
-                            <a href="#" class="pay-link">
-                                Ödəniş et
-                                <small>Sifarişi tamamla</small>
+                            <a href="#" id="mainPaymentActionBtn" class="pay-link">
+                                Hesab yaz
+                                <small>Hesabı çıxar</small>
                             </a>
                         </div>
                     </div>
 
+                </div>
+
+
+
+                <div id="paymentTabContent" class="payment-screen">
+                    <div class="payment-card">
+                        <div class="payment-head">
+                            <div>
+                                <div class="payment-title">Ödəniş ekranı</div>
+                                <div class="payment-subtitle" id="paymentCheckLabel">Çek seçilməyib</div>
+                            </div>
+                            <div class="payment-total-badge" id="paymentPayableBadge">0.00 ₼</div>
+                        </div>
+
+                        <div class="payment-section-title">Endirim</div>
+                        <div class="discount-type-grid">
+                            <button type="button" class="payment-choice-btn active" data-discount-type="none">Yoxdur</button>
+                            <button type="button" class="payment-choice-btn" data-discount-type="percent">%</button>
+                            <button type="button" class="payment-choice-btn" data-discount-type="amount">₼</button>
+                        </div>
+
+                        <div class="payment-input-box" id="discountInputBox" data-payment-target="discount" style="margin-top:8px;">
+                            <span>Endirim dəyəri</span>
+                            <input type="text" id="paymentDiscountValue" class="payment-input-field" value="0" autocomplete="off" inputmode="decimal">
+                        </div>
+
+                        <div class="payment-section-title">Ödəniş tipi</div>
+                        <div class="payment-method-grid">
+                            <button type="button" class="payment-choice-btn active" data-payment-method="cash">Nağd</button>
+                            <button type="button" class="payment-choice-btn" data-payment-method="card">Kart</button>
+                            <button type="button" class="payment-choice-btn" data-payment-method="mixed">Qarışıq</button>
+                        </div>
+
+                        <div class="payment-section-title">Məbləğ bölgüsü</div>
+                        <div class="payment-amount-grid">
+                            <div class="payment-input-box active" data-payment-target="cash">
+                                <span>Nağd</span>
+                                <input type="text" id="paymentCashAmount" class="payment-input-field" value="0.00" autocomplete="off" inputmode="decimal">
+                            </div>
+                            <div class="payment-input-box" data-payment-target="card">
+                                <span>Kart</span>
+                                <input type="text" id="paymentCardAmount" class="payment-input-field" value="0.00" autocomplete="off" inputmode="decimal">
+                            </div>
+                        </div>
+
+                        <div class="payment-summary-box">
+                            <div class="payment-summary-line">
+                                <span>Ara məbləğ</span>
+                                <strong id="paymentSubtotalText">0.00 ₼</strong>
+                            </div>
+                            <div class="payment-summary-line">
+                                <span>Endirim</span>
+                                <strong id="paymentDiscountText">0.00 ₼</strong>
+                            </div>
+                            <div class="payment-summary-line">
+                                <span>Ödəniləcək</span>
+                                <strong id="paymentPayableText">0.00 ₼</strong>
+                            </div>
+                            <div class="payment-summary-line">
+                                <span>Qalıq</span>
+                                <strong id="paymentRemainingText">0.00 ₼</strong>
+                            </div>
+                        </div>
+
+                        <div class="payment-keypad">
+                            <button type="button" class="payment-key" data-key="1">1</button>
+                            <button type="button" class="payment-key" data-key="2">2</button>
+                            <button type="button" class="payment-key" data-key="3">3</button>
+                            <button type="button" class="payment-key" data-key="4">4</button>
+                            <button type="button" class="payment-key" data-key="5">5</button>
+                            <button type="button" class="payment-key" data-key="6">6</button>
+                            <button type="button" class="payment-key" data-key="7">7</button>
+                            <button type="button" class="payment-key" data-key="8">8</button>
+                            <button type="button" class="payment-key" data-key="9">9</button>
+                            <button type="button" class="payment-key" data-key="0">0</button>
+                            <button type="button" class="payment-key" data-key=".">.</button>
+                            <button type="button" class="payment-key danger" data-key="back">Sil</button>
+                        </div>
+
+                        <div class="payment-footer-actions">
+                            <button type="button" id="paymentBackBtn" class="payment-back-btn">Geri</button>
+                            <button type="button" id="paymentCompleteBtn" class="payment-complete-btn">Ödənişi tamamla</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="tableTabContent" class="order-tab-content">
@@ -1826,9 +2778,10 @@
                         </div>
 
                         <div class="table-actions-stack">
-                            <button type="button" class="table-action-btn">Masanı dəyiş</button>
-                            <button type="button" class="table-action-btn">Yekunlaşdır</button>
-                            <button type="button" class="table-action-btn danger">Masanı boşalt</button>
+                            <button type="button" id="moveTableBtn" class="table-action-btn">Masanı dəyiş</button>
+                            <button type="button" id="mergeTablesBtn" class="table-action-btn warning">Masanı birləşdir</button>
+                            <button type="button" id="mergeChecksBtn" class="table-action-btn success">Çekləri birləşdir</button>
+                            <button type="button" id="shareTableBtn" class="table-action-btn share">Masanı paylaş</button>
                         </div>
                     </div>
 
@@ -1880,7 +2833,7 @@
                     <div class="reservation-card">
                         <div class="reservation-title">Rezervasiya yarat</div>
                         <div class="reservation-note">
-                            Masa açıq olsa belə, bu masanı seçilən başlanğıc saatına rezerv edə bilərsiniz.
+                            Aktiv istifadə olunan masalar üçün də gələcək tarix və saat üzrə rezervasiya qəbul edilə bilər.
                         </div>
 
                         @if(in_array($staffRole, ['cashier']))
@@ -1927,6 +2880,33 @@
     </div>
 
     <script>
+        function showPosToast(message, type = 'info') {
+            const container = document.getElementById('posToastContainer');
+
+            if (!container) {
+                return;
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'pos-toast ' + type;
+            toast.textContent = message || 'Əməliyyat icra olundu.';
+            container.appendChild(toast);
+
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-8px)';
+                toast.style.transition = '.18s ease';
+            }, 2800);
+
+            setTimeout(function() {
+                toast.remove();
+            }, 3200);
+        }
+
+        window.alert = function(message) {
+            showPosToast(message, 'info');
+        };
+
         function updateBakuClock() {
             const clockElement = document.getElementById('bakuClock');
 
@@ -1948,6 +2928,10 @@
         setInterval(updateBakuClock, 1000);
 
         const cart = {};
+        let selectedOrderId = null;
+        let currentChecks = [];
+        const staffCanUnlockPaymentLock = @json($canUnlockPaymentLock);
+        const staffCanTakePayment = @json($canTakePayment);
 
         function formatMoney(amount) {
             return Number(amount).toFixed(2) + ' ₼';
@@ -2044,9 +3028,13 @@
                 name: button.dataset.name,
                 seats: button.dataset.seats,
                 status: button.dataset.status,
+                paymentLocked: button.dataset.paymentLocked === '1' || button.dataset.status === 'waiting_payment',
+                state: button.dataset.state || button.dataset.status || 'empty',
+                stateLabel: button.dataset.stateLabel || '',
                 area: button.dataset.area || '',
                 staff: button.dataset.staff || '',
                 openedAt: button.dataset.openedAt || '',
+                checkCount: button.dataset.checkCount || '0',
                 reservationId: button.dataset.reservationId || '',
                 reservationTime: button.dataset.reservationTime || '',
                 reservationDate: button.dataset.reservationDate || '',
@@ -2072,6 +3060,13 @@
                 }
 
                 selectedTable = tableData;
+                selectedTable.status = data.table_status || selectedTable.status;
+                selectedTable.staff = data.staff_name || selectedTable.staff || '';
+                selectedTable.openedAt = data.opened_at || selectedTable.openedAt || '';
+                selectedTable.paymentLocked = !!data.payment_locked || selectedTable.status === 'waiting_payment';
+                selectedTable.stateLabel = selectedTable.paymentLocked ? 'Hesab gözləyir' : selectedTable.stateLabel;
+                selectedOrderId = data.order_id || null;
+                currentChecks = Array.isArray(data.checks) ? data.checks : [];
 
                 Object.keys(cart).forEach(id => delete cart[id]);
 
@@ -2086,12 +3081,14 @@
                             product_id: item.product_id || item.id,
                             name: item.name,
                             price: parseFloat(item.price || 0),
-                            qty: parseFloat(item.qty || 1)
+                            qty: parseFloat(item.qty || 1),
+                            lockedQty: parseFloat(item.locked_qty ?? item.qty ?? 1)
                         };
                     });
                 }
 
                 renderCart();
+                renderCheckTabs();
                 renderTableInfo();
 
                 const tablesScreen = document.getElementById('tablesScreen');
@@ -2136,6 +3133,9 @@
             }
 
             selectedTable = null;
+            selectedOrderId = null;
+            currentChecks = [];
+            renderCheckTabs();
         }
 
         document.querySelectorAll('.table-area-tab').forEach(function(tab) {
@@ -2158,6 +3158,215 @@
             });
         });
 
+
+        function renderCheckTabs() {
+            const switcher = document.getElementById('checkSwitcher');
+
+            if (!switcher) {
+                return;
+            }
+
+            if (!selectedTable) {
+                switcher.innerHTML = '';
+                return;
+            }
+
+            const chips = currentChecks.map(function(check, index) {
+                const active = String(check.id) === String(selectedOrderId) ? 'active' : '';
+                const total = check.total_amount ? ' · ' + formatMoney(check.total_amount) : '';
+
+                return `<button type="button" class="check-chip ${active}" data-order-id="${check.id}">${check.label || ('Çek #' + (index + 1))}${total}</button>`;
+            });
+
+            switcher.innerHTML = chips.join('');
+        }
+
+        async function loadOrderCheck(orderId, saveBeforeLoad = true) {
+            if (!selectedTable || !orderId) {
+                return;
+            }
+
+            if (saveBeforeLoad) {
+                await saveCurrentOrder(false);
+            }
+
+            try {
+                const response = await fetch("{{ url('/staff/orders/table') }}/" + selectedTable.id + '?order_id=' + orderId, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    alert(data.message || 'Çek yüklənmədi.');
+                    return;
+                }
+
+                selectedOrderId = data.order_id || orderId;
+                currentChecks = Array.isArray(data.checks) ? data.checks : [];
+                Object.keys(cart).forEach(id => delete cart[id]);
+
+                if (Array.isArray(data.items)) {
+                    data.items.forEach(function(item) {
+                        if (!item.id) return;
+
+                        cart[item.id] = {
+                            id: item.id,
+                            product_id: item.product_id || item.id,
+                            name: item.name,
+                            price: parseFloat(item.price || 0),
+                            qty: parseFloat(item.qty || 1),
+                            lockedQty: parseFloat(item.locked_qty ?? item.qty ?? 1)
+                        };
+                    });
+                }
+
+                renderCart();
+                renderCheckTabs();
+            } catch (error) {
+                console.error(error);
+                alert('Çek məlumatı yüklənmədi.');
+            }
+        }
+
+        async function saveCurrentOrder(showAlert) {
+            if (!selectedTable) {
+                return false;
+            }
+
+            if (selectedTable.paymentLocked) {
+                if (showAlert !== false) {
+                    alert('Bu masa üçün hesab yazılıb. Əlavə dəyişiklik üçün əvvəl “Kilidi aç” edin.');
+                }
+                return false;
+            }
+
+            const items = Object.values(cart);
+
+            if (!selectedOrderId && items.length === 0) {
+                return true;
+            }
+
+            const response = await fetch("{{ route('staff.orders.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    table_id: selectedTable.id,
+                    order_id: selectedOrderId,
+                    items: items,
+                    clear_table: false
+                })
+            });
+
+            const data = await response.json();
+
+            if (!data.success) {
+                if (showAlert !== false) {
+                    alert(data.message || 'Sifariş saxlanılmadı.');
+                }
+                return false;
+            }
+
+            selectedOrderId = data.order_id || selectedOrderId;
+
+            if (selectedTable) {
+                if (data.opened_at) {
+                    selectedTable.openedAt = data.opened_at;
+                }
+
+                if (data.staff_name) {
+                    selectedTable.staff = data.staff_name;
+                }
+            }
+
+            return true;
+        }
+
+        document.addEventListener('click', async function(event) {
+            const checkChip = event.target.closest('.check-chip[data-order-id]');
+
+            if (checkChip) {
+                event.preventDefault();
+                await loadOrderCheck(checkChip.dataset.orderId);
+            }
+        });
+
+        async function refreshSelectedTableChecks() {
+            if (!selectedTable) return;
+
+            const response = await fetch("{{ url('/staff/orders/table') }}/" + selectedTable.id + (selectedOrderId ? '?order_id=' + selectedOrderId : ''), {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                selectedOrderId = data.order_id || selectedOrderId;
+                currentChecks = Array.isArray(data.checks) ? data.checks : [];
+                renderCheckTabs();
+            }
+        }
+
+        async function postJson(url, payload) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const text = await response.text();
+            let data = {};
+
+            try {
+                data = text ? JSON.parse(text) : {};
+            } catch (error) {
+                data = {
+                    success: false,
+                    message: 'Server JSON cavab qaytarmadı. Route və controlleri yoxlayın.'
+                };
+            }
+
+            if (!response.ok && data.success !== false) {
+                data.success = false;
+                data.message = data.message || 'Server xətası baş verdi.';
+            }
+
+            return data;
+        }
+
+        function askTargetTableId(message) {
+            const tables = Array.from(document.querySelectorAll('.staff-table-item'))
+                .filter(function(table) {
+                    return !selectedTable || String(table.dataset.id) !== String(selectedTable.id);
+                })
+                .map(function(table) {
+                    const statusText = table.dataset.status === 'empty' ? 'Boş' : 'Dolu';
+                    return table.dataset.id + ' - ' + table.dataset.name + ' (' + statusText + ')';
+                })
+                .join('\n');
+
+            const value = prompt(message + '\n\nAşağıdakı siyahıdan hədəf masanın ID nömrəsini yazın:\n\n' + tables);
+
+            if (!value) {
+                return null;
+            }
+
+            return value.trim();
+        }
 
         function renderCart() {
             const cartItems = document.getElementById('cartItems');
@@ -2184,15 +3393,28 @@
             let subtotal = 0;
 
             cartItems.innerHTML = items.map(item => {
-                const lineTotal = item.price * item.qty;
+                const qty = parseFloat(item.qty || 0);
+                const lockedQty = parseFloat(item.lockedQty || 0);
+                const lineTotal = item.price * qty;
                 subtotal += lineTotal;
+
+                const canDecrease = qty > lockedQty;
+                const canDelete = lockedQty <= 0;
+
+                const minusButton = canDecrease ?
+                    `<a href="#" class="qty-link js-cart-minus" data-id="${item.id}">-</a>` :
+                    `<span class="qty-link" style="opacity:.35; cursor:not-allowed;">-</span>`;
+
+                const deleteButton = canDelete ?
+                    `<a href="#" class="delete-link js-cart-remove" data-id="${item.id}">⊗</a>` :
+                    `<span></span>`;
 
                 return `
                     <div class="order-item">
                         <div class="qty-box">
-                            <a href="#" class="qty-link js-cart-minus" data-id="${item.id}">-</a>
-                            <span>${item.qty}</span>
-                            <a href="#" class="qty-link js-cart-plus" data-id="${item.id}">+</a>
+                            ${minusButton}
+                            <span>${qty}</span>
+                            ${selectedTable && selectedTable.paymentLocked ? '<span class="qty-link" style="opacity:.35; cursor:not-allowed;">+</span>' : `<a href="#" class="qty-link js-cart-plus" data-id="${item.id}">+</a>`}
                         </div>
 
                         <div>
@@ -2201,7 +3423,7 @@
 
                         <div class="order-price">${formatMoney(lineTotal)}</div>
 
-                        <a href="#" class="delete-link js-cart-remove" data-id="${item.id}">⊗</a>
+                        ${deleteButton}
                     </div>
                 `;
             }).join('');
@@ -2218,6 +3440,11 @@
             card.addEventListener('click', function(event) {
                 event.preventDefault();
 
+                if (selectedTable && selectedTable.paymentLocked) {
+                    alert('Bu masa üçün hesab yazılıb. Əlavə məhsul üçün əvvəl “Kilidi aç” edin.');
+                    return;
+                }
+
                 const id = this.dataset.id;
                 const name = this.dataset.name;
                 const price = parseFloat(this.dataset.price);
@@ -2225,9 +3452,11 @@
                 if (!cart[id]) {
                     cart[id] = {
                         id: id,
+                        product_id: id,
                         name: name,
                         price: price,
-                        qty: 1
+                        qty: 1,
+                        lockedQty: 0
                     };
                 } else {
                     cart[id].qty++;
@@ -2276,6 +3505,11 @@
             if (plus) {
                 event.preventDefault();
 
+                if (selectedTable && selectedTable.paymentLocked) {
+                    alert('Bu masa üçün hesab yazılıb. Say artırmaq üçün əvvəl “Kilidi aç” edin.');
+                    return;
+                }
+
                 const id = plus.dataset.id;
 
                 if (cart[id]) {
@@ -2287,12 +3521,21 @@
             if (minus) {
                 event.preventDefault();
 
+                if (selectedTable && selectedTable.paymentLocked) {
+                    alert('Bu masa üçün hesab yazılıb. Dəyişiklik üçün əvvəl “Kilidi aç” edin.');
+                    return;
+                }
+
                 const id = minus.dataset.id;
 
                 if (cart[id]) {
-                    cart[id].qty--;
+                    const lockedQty = parseFloat(cart[id].lockedQty || 0);
 
-                    if (cart[id].qty <= 0) {
+                    if (parseFloat(cart[id].qty || 0) > lockedQty) {
+                        cart[id].qty--;
+                    }
+
+                    if (lockedQty <= 0 && cart[id].qty <= 0) {
                         delete cart[id];
                     }
 
@@ -2303,27 +3546,114 @@
             if (remove) {
                 event.preventDefault();
 
+                if (selectedTable && selectedTable.paymentLocked) {
+                    alert('Bu masa üçün hesab yazılıb. Dəyişiklik üçün əvvəl “Kilidi aç” edin.');
+                    return;
+                }
+
                 const id = remove.dataset.id;
 
                 if (cart[id]) {
+                    const lockedQty = parseFloat(cart[id].lockedQty || 0);
+
+                    if (lockedQty > 0) {
+                        alert('Bu məhsul artıq masaya vurulub. Silmək üçün icazə tələb olunur.');
+                        return;
+                    }
+
                     delete cart[id];
                     renderCart();
                 }
             }
         });
 
-        const clearCartLink = document.querySelector('.clear-cart-link');
 
-        if (clearCartLink) {
-            clearCartLink.addEventListener('click', function(event) {
-                event.preventDefault();
 
-                Object.keys(cart).forEach(id => delete cart[id]);
+        function setTableUiStatus(tableId, statusValue, stateLabel, badgeClass) {
+            const tableButton = document.querySelector('.staff-table-item[data-id="' + tableId + '"]');
 
-                renderCart();
-            });
+            if (!tableButton) {
+                return;
+            }
+
+            tableButton.dataset.status = statusValue;
+            tableButton.dataset.state = statusValue;
+            tableButton.dataset.stateLabel = stateLabel;
+            tableButton.dataset.paymentLocked = statusValue === 'waiting_payment' ? '1' : '0';
+
+            const badge = tableButton.querySelector('.staff-table-badge');
+
+            if (badge) {
+                badge.className = 'staff-table-badge ' + badgeClass;
+            }
         }
 
+        function updateOrderActionButtons() {
+            const closeBtn = document.getElementById('closeOrderBtn');
+            const actionBtn = document.getElementById('mainPaymentActionBtn');
+
+            if (!closeBtn || !actionBtn) {
+                return;
+            }
+
+            if (selectedTable && selectedTable.paymentLocked) {
+                if (staffCanUnlockPaymentLock) {
+                    closeBtn.innerHTML = 'Kilidi aç<small>Əlavə sifariş</small>';
+                    closeBtn.classList.add('unlock-mode');
+                } else {
+                    closeBtn.innerHTML = 'Bağla<small>Masa üzərinə vur</small>';
+                    closeBtn.classList.remove('unlock-mode');
+                }
+
+                if (staffCanTakePayment) {
+                    actionBtn.innerHTML = 'Ödəniş et<small>Hesabı tamamla</small>';
+                    actionBtn.dataset.mode = 'payment';
+                } else if (staffCanUnlockPaymentLock) {
+                    actionBtn.innerHTML = 'Kilidi aç<small>Əlavə sifariş</small>';
+                    actionBtn.dataset.mode = 'unlock';
+                } else {
+                    actionBtn.innerHTML = 'Bağla<small>Masa ekranına dön</small>';
+                    actionBtn.dataset.mode = 'close';
+                }
+
+                return;
+            }
+
+            closeBtn.innerHTML = 'Bağla<small>Masa üzərinə vur</small>';
+            closeBtn.classList.remove('unlock-mode');
+            actionBtn.innerHTML = 'Hesab yaz<small>Hesabı çıxar</small>';
+            actionBtn.dataset.mode = 'print_bill';
+        }
+
+        async function unlockCurrentTablePaymentLock() {
+            if (!selectedTable) {
+                return;
+            }
+
+            if (!staffCanUnlockPaymentLock) {
+                alert('Bu əməliyyat üçün səlahiyyət tələb olunur.');
+                return;
+            }
+
+            const data = await postJson("{{ route('staff.orders.unlock-bill') }}", {
+                table_id: selectedTable.id
+            });
+
+            if (!data.success) {
+                alert(data.message || 'Kilid açılmadı.');
+                return;
+            }
+
+            selectedTable.status = data.table_status || 'busy';
+            selectedTable.state = selectedTable.status;
+            selectedTable.stateLabel = 'Dolu';
+            selectedTable.paymentLocked = false;
+
+            setTableUiStatus(selectedTable.id, 'busy', 'Dolu', 'status-busy');
+            renderTableInfo();
+            updateOrderActionButtons();
+            showPosToast(data.message || 'Masa kilidi açıldı.', 'success');
+        }
 
         const closeOrderBtn = document.getElementById('closeOrderBtn');
 
@@ -2335,6 +3665,15 @@
 
                 if (!selectedTable) {
                     returnToTablesScreen();
+                    return;
+                }
+
+                if (selectedTable.paymentLocked) {
+                    if (staffCanUnlockPaymentLock) {
+                        await unlockCurrentTablePaymentLock();
+                    } else {
+                        returnToTablesScreen();
+                    }
                     return;
                 }
 
@@ -2354,6 +3693,7 @@
                         },
                         body: JSON.stringify({
                             table_id: selectedTable.id,
+                            order_id: selectedOrderId,
                             items: items
                         })
                     });
@@ -2365,6 +3705,12 @@
                         return;
                     }
 
+                    selectedOrderId = data.order_id || selectedOrderId;
+
+                    Object.values(cart).forEach(function(item) {
+                        item.lockedQty = parseFloat(item.qty || 0);
+                    });
+
                     const tableButton = document.querySelector(
                         '.staff-table-item[data-id="' + selectedTable.id + '"]'
                     );
@@ -2372,6 +3718,8 @@
                     if (tableButton && items.length > 0) {
 
                         tableButton.dataset.status = 'busy';
+                        tableButton.dataset.state = 'busy';
+                        tableButton.dataset.stateLabel = 'Dolu';
 
                         const badge = tableButton.querySelector('.staff-table-badge');
 
@@ -2382,14 +3730,18 @@
                         const meta = tableButton.querySelector('.staff-table-meta');
 
                         if (meta) {
-                            const nowIso = new Date().toISOString();
+                            const existingOpenedAt = data.opened_at || selectedTable.openedAt || tableButton.dataset.openedAt || new Date().toISOString();
+                            const activeStaffName = data.staff_name || selectedTable.staff || tableButton.dataset.staff || "{{ $staffName }}";
 
-                            tableButton.dataset.staff = "{{ $staffName }}";
-                            tableButton.dataset.openedAt = nowIso;
+                            selectedTable.openedAt = existingOpenedAt;
+                            selectedTable.staff = activeStaffName;
+
+                            tableButton.dataset.staff = activeStaffName;
+                            tableButton.dataset.openedAt = existingOpenedAt;
 
                             meta.innerHTML = `
-                                <span class="staff-table-waiter">{{ $staffName }}</span>
-                                <span class="staff-table-time" data-opened-at="${nowIso}">00:00</span>
+                                <span class="staff-table-waiter">${tableButton.dataset.staff}</span>
+                                <span class="staff-table-time" data-opened-at="${existingOpenedAt}">00:00</span>
                             `;
                         }
                     }
@@ -2397,6 +3749,8 @@
                     if (tableButton && items.length === 0) {
 
                         tableButton.dataset.status = 'empty';
+                        tableButton.dataset.state = tableButton.dataset.reservationId ? 'reservation_upcoming' : 'empty';
+                        tableButton.dataset.stateLabel = tableButton.dataset.reservationId ? 'Rezerv var' : 'Boş';
 
                         const badge = tableButton.querySelector('.staff-table-badge');
 
@@ -2429,6 +3783,91 @@
             });
         }
 
+
+        const mainPaymentActionBtn = document.getElementById('mainPaymentActionBtn');
+
+        if (mainPaymentActionBtn) {
+            mainPaymentActionBtn.addEventListener('click', async function(event) {
+                event.preventDefault();
+
+                if (!selectedTable) {
+                    alert('Əvvəl masa seçin.');
+                    return;
+                }
+
+                const mode = mainPaymentActionBtn.dataset.mode || 'print_bill';
+
+                if (mode === 'unlock') {
+                    await unlockCurrentTablePaymentLock();
+                    return;
+                }
+
+                if (mode === 'close') {
+                    returnToTablesScreen();
+                    return;
+                }
+
+                if (mode === 'payment') {
+                    openPaymentScreen();
+                    return;
+                }
+
+                const items = Object.values(cart);
+
+                if (items.length === 0) {
+                    alert('Hesab yazmaq üçün əvvəl məhsul əlavə edin.');
+                    return;
+                }
+
+                mainPaymentActionBtn.style.pointerEvents = 'none';
+                mainPaymentActionBtn.style.opacity = '.7';
+
+                try {
+                    const saved = await saveCurrentOrder(true);
+
+                    if (!saved) {
+                        return;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.print-bill') }}", {
+                        table_id: selectedTable.id,
+                        order_id: selectedOrderId
+                    });
+
+                    if (!data.success) {
+                        alert(data.message || 'Hesab yazılmadı.');
+                        return;
+                    }
+
+                    Object.values(cart).forEach(function(item) {
+                        item.lockedQty = parseFloat(item.qty || 0);
+                    });
+
+                    selectedTable.status = 'waiting_payment';
+                    selectedTable.state = 'waiting_payment';
+                    selectedTable.stateLabel = 'Hesab gözləyir';
+                    selectedTable.paymentLocked = true;
+
+                    setTableUiStatus(selectedTable.id, 'waiting_payment', 'Hesab gözləyir', 'status-waiting');
+                    renderCart();
+                    renderTableInfo();
+                    updateOrderActionButtons();
+
+                    showPosToast(data.message || 'Hesab yazıldı.', 'success');
+
+                    if (!staffCanTakePayment) {
+                        returnToTablesScreen();
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Server xətası baş verdi.');
+                } finally {
+                    mainPaymentActionBtn.style.pointerEvents = '';
+                    mainPaymentActionBtn.style.opacity = '';
+                }
+            });
+        }
+
         const newOrderBtn = document.getElementById('newOrderBtn');
 
         if (newOrderBtn) {
@@ -2440,6 +3879,155 @@
             });
         }
 
+
+        async function runTableOperation(button, callback) {
+            if (!selectedTable) {
+                alert('Əvvəl masa seçin.');
+                return;
+            }
+
+            button.style.pointerEvents = 'none';
+            button.style.opacity = '.7';
+
+            try {
+                await callback();
+            } finally {
+                button.style.pointerEvents = '';
+                button.style.opacity = '';
+            }
+        }
+
+        const moveTableBtn = document.getElementById('moveTableBtn');
+
+        if (moveTableBtn) {
+            moveTableBtn.addEventListener('click', function() {
+                runTableOperation(moveTableBtn, async function() {
+                    const saved = await saveCurrentOrder(true);
+                    if (!saved) return;
+
+                    const toTableId = askTargetTableId('Masanı dəyişmək üçün boş hədəf masanı seçin.');
+                    if (!toTableId) return;
+
+                    if (!confirm(selectedTable.name + ' masasındakı bütün açıq çeklər həmin masaya köçürülsün?')) {
+                        return;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.move-table') }}", {
+                        from_table_id: selectedTable.id,
+                        to_table_id: toTableId
+                    });
+
+                    if (!data.success) {
+                        alert(data.message || 'Masa dəyişdirilmədi.');
+                        return;
+                    }
+
+                    showPosToast(data.message || 'Masa dəyişdirildi.', 'success');
+                    window.location.reload();
+                });
+            });
+        }
+
+        const mergeTablesBtn = document.getElementById('mergeTablesBtn');
+
+        if (mergeTablesBtn) {
+            mergeTablesBtn.addEventListener('click', function() {
+                runTableOperation(mergeTablesBtn, async function() {
+                    const saved = await saveCurrentOrder(true);
+                    if (!saved) return;
+
+                    const toTableId = askTargetTableId('Bu masanı hansı masa ilə birləşdirirsiniz?');
+                    if (!toTableId) return;
+
+                    if (!confirm(selectedTable.name + ' masasındakı çeklər hədəf masaya keçəcək və bu masa boşalacaq. Davam edək?')) {
+                        return;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.merge-tables') }}", {
+                        from_table_id: selectedTable.id,
+                        to_table_id: toTableId
+                    });
+
+                    if (!data.success) {
+                        alert(data.message || 'Masalar birləşdirilmədi.');
+                        return;
+                    }
+
+                    showPosToast(data.message || 'Masalar birləşdirildi.', 'success');
+                    window.location.reload();
+                });
+            });
+        }
+
+        const mergeChecksBtn = document.getElementById('mergeChecksBtn');
+
+        if (mergeChecksBtn) {
+            mergeChecksBtn.addEventListener('click', function() {
+                runTableOperation(mergeChecksBtn, async function() {
+                    const saved = await saveCurrentOrder(true);
+                    if (!saved) return;
+
+                    if (!confirm('Bu masadakı bütün açıq çeklər bir hesaba birləşdirilsin?')) {
+                        return;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.merge-checks') }}", {
+                        table_id: selectedTable.id,
+                        target_order_id: selectedOrderId
+                    });
+
+                    if (!data.success) {
+                        alert(data.message || 'Çeklər birləşdirilmədi.');
+                        return;
+                    }
+
+                    selectedOrderId = data.order_id || selectedOrderId;
+
+                    Object.values(cart).forEach(function(item) {
+                        item.lockedQty = parseFloat(item.qty || 0);
+                    });
+                    showPosToast(data.message || 'Çeklər birləşdirildi.', 'success');
+                    await loadOrderCheck(selectedOrderId, false);
+                });
+            });
+        }
+
+        const shareTableBtn = document.getElementById('shareTableBtn');
+
+        if (shareTableBtn) {
+            shareTableBtn.addEventListener('click', function() {
+                runTableOperation(shareTableBtn, async function() {
+                    if (!selectedTable) {
+                        alert('Əvvəl masa seçin.');
+                        return;
+                    }
+
+                    const saved = await saveCurrentOrder(true);
+                    if (!saved) return;
+
+                    if (!confirm(selectedTable.name + ' üçün ayrıca yeni çek açılsın?')) {
+                        return;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.new-check') }}", {
+                        table_id: selectedTable.id
+                    });
+
+                    if (!data.success) {
+                        alert(data.message || 'Masa paylaşılmadı.');
+                        return;
+                    }
+
+                    selectedOrderId = data.order_id;
+                    Object.keys(cart).forEach(id => delete cart[id]);
+                    await refreshSelectedTableChecks();
+                    renderCart();
+                    renderCheckTabs();
+                    setOrderTab('order');
+                    showPosToast(data.message || 'Masa paylaşıldı və yeni çek açıldı.', 'success');
+                });
+            });
+        }
 
         const liveSearch = document.getElementById('liveProductSearch');
 
@@ -2455,22 +4043,32 @@
             });
         }
 
+        function parsePosDate(value) {
+            if (!value) return null;
+
+            const raw = String(value).trim();
+            let date = new Date(raw);
+
+            if (!Number.isNaN(date.getTime())) {
+                return date;
+            }
+
+            date = new Date(raw.replace(' ', 'T'));
+
+            return Number.isNaN(date.getTime()) ? null : date;
+        }
+
         function updateTableTimers() {
             document.querySelectorAll('.staff-table-time').forEach(function(timer) {
                 const openedAt = timer.dataset.openedAt;
+                const startDate = parsePosDate(openedAt);
 
-                if (!openedAt) {
+                if (!startDate) {
                     timer.textContent = '00:00';
                     return;
                 }
 
-                const start = new Date(openedAt).getTime();
-
-                if (!start || Number.isNaN(start)) {
-                    timer.textContent = '00:00';
-                    return;
-                }
-
+                const start = startDate.getTime();
                 const now = new Date().getTime();
                 const diffSeconds = Math.max(0, Math.floor((now - start) / 1000));
 
@@ -2523,13 +4121,9 @@
         });
 
         function formatDateTimeLabel(value) {
-            if (!value) {
-                return '-';
-            }
+            const date = parsePosDate(value);
 
-            const date = new Date(value);
-
-            if (Number.isNaN(date.getTime())) {
+            if (!date) {
                 return '-';
             }
 
@@ -2541,6 +4135,45 @@
                 minute: '2-digit',
                 hour12: false
             });
+        }
+
+        function normalizeReservationDateLabel(value) {
+            if (!value) return '-';
+
+            const raw = String(value).trim();
+
+            if (/^\d{2}\.\d{2}\.\d{4}$/.test(raw)) {
+                return raw;
+            }
+
+            const onlyDate = raw.split(' ')[0].split('T')[0];
+            const parts = onlyDate.split('-');
+
+            if (parts.length === 3) {
+                return parts[2].padStart(2, '0') + '.' + parts[1].padStart(2, '0') + '.' + parts[0];
+            }
+
+            const date = new Date(raw);
+            if (Number.isNaN(date.getTime())) return raw;
+
+            return date.toLocaleDateString('az-AZ', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function normalizeReservationTimeLabel(value) {
+            if (!value) return '--:--';
+
+            const raw = String(value).trim();
+            const match = raw.match(/(\d{1,2}):(\d{2})/);
+
+            if (match) {
+                return match[1].padStart(2, '0') + ':' + match[2];
+            }
+
+            return raw;
         }
 
         function renderTableInfo() {
@@ -2573,12 +4206,13 @@
                 }
                 if (reservationTableId) reservationTableId.value = '';
                 if (currentReservationCard) currentReservationCard.classList.remove('show');
+                updateOrderActionButtons();
                 return;
             }
 
             if (name) name.textContent = selectedTable.name || 'Masa';
             if (area) area.textContent = selectedTable.area || '-';
-            if (status) status.textContent = selectedTable.status === 'busy' ? 'Dolu' : 'Boş';
+            if (status) status.textContent = selectedTable.paymentLocked ? 'Hesab gözləyir' : (selectedTable.stateLabel || (selectedTable.status === 'busy' ? 'Dolu' : 'Boş'));
             if (seats) seats.textContent = (selectedTable.seats || '-') + ' nəfər';
             if (staff) staff.textContent = selectedTable.staff || '{{ $staffName }}';
             if (openedAt) openedAt.textContent = formatDateTimeLabel(selectedTable.openedAt);
@@ -2596,12 +4230,14 @@
                     if (currentReservationTime) currentReservationTime.textContent = selectedTable.reservationTime || '--:--';
                     if (currentReservationCustomer) currentReservationCustomer.textContent = selectedTable.reservationCustomer || '-';
                     if (currentReservationPhone) currentReservationPhone.textContent = selectedTable.reservationPhone || '-';
-                    if (currentReservationDate) currentReservationDate.textContent = selectedTable.reservationDate || '-';
+                    if (currentReservationDate) currentReservationDate.textContent = normalizeReservationDateLabel(selectedTable.reservationDate);
                     if (currentReservationGuests) currentReservationGuests.textContent = (selectedTable.reservationGuests || '-') + ' nəfər';
                 } else {
                     currentReservationCard.classList.remove('show');
                 }
             }
+
+            updateOrderActionButtons();
         }
 
         function clearSelectedReservationFromUi() {
@@ -2629,6 +4265,14 @@
                 tableButton.dataset.reservationPhone = '';
                 tableButton.dataset.reservationGuests = '';
                 tableButton.dataset.reservationNote = '';
+
+                if (tableButton.dataset.status === 'empty') {
+                    tableButton.dataset.state = 'empty';
+                    tableButton.dataset.stateLabel = 'Boş';
+
+                    selectedTable.state = 'empty';
+                    selectedTable.stateLabel = 'Boş';
+                }
 
                 const badge = tableButton.querySelector('.staff-reservation-badge');
 
@@ -2676,7 +4320,11 @@
 
                 clearSelectedReservationFromUi();
 
-                alert(data.message || 'Əməliyyat tamamlandı.');
+                showPosToast(data.message || 'Əməliyyat tamamlandı.', 'success');
+
+                setTimeout(function() {
+                    window.location.reload();
+                }, 900);
 
             } catch (error) {
                 console.error(error);
@@ -2755,6 +4403,8 @@
                         tableButton.dataset.reservationPhone = payload.customer_phone;
                         tableButton.dataset.reservationGuests = payload.guest_count;
                         tableButton.dataset.reservationNote = payload.note;
+                        tableButton.dataset.state = 'reservation_upcoming';
+                        tableButton.dataset.stateLabel = 'Rezerv var';
 
                         selectedTable.reservationId = reservationId;
                         selectedTable.reservationTime = payload.start_time;
@@ -2763,6 +4413,8 @@
                         selectedTable.reservationPhone = payload.customer_phone;
                         selectedTable.reservationGuests = payload.guest_count;
                         selectedTable.reservationNote = payload.note;
+                        selectedTable.state = 'reservation_upcoming';
+                        selectedTable.stateLabel = 'Rezerv var';
 
                         let badge = tableButton.querySelector('.staff-reservation-badge');
 
@@ -2772,13 +4424,17 @@
                             tableButton.appendChild(badge);
                         }
 
-                        badge.textContent = 'Rezerv ' + payload.start_time;
+                        badge.textContent = 'Rezerv var ' + payload.start_time;
                     }
 
                     reservationForm.reset();
                     renderTableInfo();
 
-                    alert('Rezerv yaradıldı.');
+                    showPosToast('Rezerv yaradıldı.', 'success');
+
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 900);
 
                 } catch (error) {
                     console.error(error);
@@ -2788,11 +4444,762 @@
         }
 
 
+
+
+        /* ================= OPEN CHECKS LOGIC ================= */
+
+        const openChecksBtn = document.getElementById('openChecksBtn');
+        const openChecksPanel = document.getElementById('openChecksPanel');
+        const openChecksOverlay = document.getElementById('openChecksOverlay');
+        const closeChecksPanelBtn = document.getElementById('closeChecksPanelBtn');
+        const openChecksList = document.getElementById('openChecksList');
+        const checksTotalCount = document.getElementById('checksTotalCount');
+        const checksTotalAmount = document.getElementById('checksTotalAmount');
+        const checksPanelSubtitle = document.getElementById('checksPanelSubtitle');
+        const checksPanelTitle = document.getElementById('checksPanelTitle');
+        const checksFilterButtons = document.querySelectorAll('[data-check-filter]');
+        let currentChecksFilter = 'open';
+        let checksFetchController = null;
+
+        function closeOpenChecksPanel() {
+            if (openChecksPanel) {
+                openChecksPanel.classList.remove('show');
+                openChecksPanel.setAttribute('aria-hidden', 'true');
+            }
+
+            if (openChecksOverlay) {
+                openChecksOverlay.classList.remove('show');
+            }
+        }
+
+        function openOpenChecksPanel() {
+            if (openChecksPanel) {
+                openChecksPanel.classList.add('show');
+                openChecksPanel.setAttribute('aria-hidden', 'false');
+            }
+
+            if (openChecksOverlay) {
+                openChecksOverlay.classList.add('show');
+            }
+        }
+
+        function checkFilterTitle(filter) {
+            if (filter === 'paid') return 'Bağlı çeklər';
+            if (filter === 'all') return 'Bütün çeklər';
+            return 'Açıq çeklər';
+        }
+
+        function updateChecksFilterUi(filter) {
+            checksFilterButtons.forEach(function(button) {
+                button.classList.toggle('active', button.dataset.checkFilter === filter);
+            });
+
+            if (checksPanelTitle) {
+                checksPanelTitle.textContent = checkFilterTitle(filter);
+            }
+        }
+
+        function renderOpenChecks(data) {
+            const checks = Array.isArray(data.checks) ? data.checks : [];
+            const filter = data.filter || currentChecksFilter || 'open';
+
+            updateChecksFilterUi(filter);
+
+            if (checksTotalCount) checksTotalCount.textContent = data.count || checks.length || 0;
+            if (checksTotalAmount) checksTotalAmount.textContent = formatMoney(data.total_amount || 0);
+
+            if (checksPanelSubtitle) {
+                const scopeText = data.role === 'cashier' ?
+                    'Bütün əməkdaşların çekləri' :
+                    'Yalnız sizə aid çeklər';
+
+                checksPanelSubtitle.textContent = scopeText + ' · ' + checkFilterTitle(filter);
+            }
+
+            if (!openChecksList) return;
+
+            if (!checks.length) {
+                openChecksList.innerHTML = '<div class="checks-empty">' + checkFilterTitle(filter) + ' tapılmadı</div>';
+                return;
+            }
+
+            openChecksList.innerHTML = checks.map(function(check) {
+                const area = check.area_name ? ' · ' + check.area_name : '';
+                const amount = formatMoney(check.total_amount || 0);
+                const openedAt = check.opened_at || '-';
+                const closedAt = check.closed_at || '-';
+                const itemsCount = check.items_count || 0;
+                const status = check.status || 'open';
+                const statusLabel = check.status_label || (status === 'paid' ? 'Bağlı' : 'Açıq');
+                const timeLabel = status === 'paid' ? ('Bağlandı: ' + closedAt) : ('Açılış: ' + openedAt);
+
+                return `
+                    <button type="button" class="check-row-card" data-open-check-table-id="${check.table_id || ''}" data-open-check-order-id="${check.id}" data-check-status="${status}">
+                        <div class="check-row-top">
+                            <div>
+                                <div class="check-row-title">${check.label || ('Çek #' + check.id)} · ${check.table_name || 'Masa'}</div>
+                                <div class="check-row-sub">${check.staff_name || 'Əməkdaş'}${area}</div>
+                                <span class="check-status-badge ${status === 'paid' ? 'paid' : 'open'}">${statusLabel}</span>
+                            </div>
+                            <div class="check-row-amount">${amount}</div>
+                        </div>
+                        <div class="check-row-meta">
+                            <span>${timeLabel}</span>
+                            <span>Məhsul: ${itemsCount}</span>
+                            <span>${statusLabel}</span>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        async function loadOpenChecks(filter = currentChecksFilter) {
+            currentChecksFilter = filter || 'open';
+            updateChecksFilterUi(currentChecksFilter);
+
+            if (openChecksList) {
+                openChecksList.innerHTML = '<div class="checks-empty">Çeklər yüklənir...</div>';
+            }
+
+            openOpenChecksPanel();
+
+            if (checksFetchController) {
+                checksFetchController.abort();
+            }
+
+            checksFetchController = new AbortController();
+
+            try {
+                const url = "{{ route('staff.orders.open-checks') }}" + '?status=' + encodeURIComponent(currentChecksFilter);
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    signal: checksFetchController.signal
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    showPosToast(data.message || 'Çeklər yüklənmədi.', 'error');
+                    return;
+                }
+
+                renderOpenChecks(data);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                }
+
+                console.error(error);
+                showPosToast('Çeklər yüklənmədi.', 'error');
+            }
+        }
+
+        async function openCheckFromPanel(tableId, orderId, status = 'open') {
+            if (status !== 'open') {
+                showPosToast('Bağlı çek yalnız baxış üçündür. Açıq sifariş kimi açılmır.', 'info');
+                return;
+            }
+
+            closeOpenChecksPanel();
+
+            const tableButton = document.querySelector('.staff-table-item[data-id="' + tableId + '"]');
+
+            if (!tableButton) {
+                showPosToast('Bu çekin masası ekranda tapılmadı.', 'error');
+                return;
+            }
+
+            await openPosForTable(tableButton);
+
+            if (orderId && String(selectedOrderId) !== String(orderId)) {
+                await loadOrderCheck(orderId, false);
+            }
+        }
+
+        if (openChecksBtn) {
+            openChecksBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                loadOpenChecks('open');
+            });
+        }
+
+        checksFilterButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                loadOpenChecks(button.dataset.checkFilter || 'open');
+            });
+        });
+
+        if (closeChecksPanelBtn) {
+            closeChecksPanelBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                closeOpenChecksPanel();
+            });
+        }
+
+        if (openChecksOverlay) {
+            openChecksOverlay.addEventListener('click', closeOpenChecksPanel);
+        }
+
+        document.addEventListener('click', function(event) {
+            const checkCard = event.target.closest('[data-open-check-order-id]');
+
+            if (!checkCard) {
+                return;
+            }
+
+            event.preventDefault();
+            openCheckFromPanel(checkCard.dataset.openCheckTableId, checkCard.dataset.openCheckOrderId, checkCard.dataset.checkStatus || 'open');
+        });
+
+
         renderStaffSeats();
+        renderCheckTabs();
         renderCart();
         updateTableTimers();
         setInterval(updateTableTimers, 1000);
         resetStaffIdleTimer();
+
+        /* ================= PAYMENT SCREEN LOGIC ================= */
+
+        const paymentState = {
+            method: 'cash',
+            discountType: 'none',
+            discountValue: '',
+            cashAmount: '',
+            cardAmount: '',
+            inputTarget: 'cash',
+            subtotal: 0,
+            discountAmount: 0,
+            payable: 0,
+            changeAmount: 0,
+        };
+
+        function parsePaymentNumber(value) {
+            const number = parseFloat(String(value ?? '').replace(',', '.'));
+            return Number.isFinite(number) ? number : 0;
+        }
+
+        function getCartSubtotalForPayment() {
+            return Object.values(cart).reduce(function(sum, item) {
+                return sum + (parseFloat(item.price || 0) * parseFloat(item.qty || 0));
+            }, 0);
+        }
+
+        function cleanPaymentInput(value) {
+            let clean = String(value ?? '')
+                .replace(',', '.')
+                .replace(/[^0-9.]/g, '');
+
+            const parts = clean.split('.');
+
+            if (parts.length > 2) {
+                clean = parts.shift() + '.' + parts.join('');
+            }
+
+            if (clean.startsWith('.')) {
+                clean = '0' + clean;
+            }
+
+            return clean;
+        }
+
+        function normalizePaymentInput(value) {
+            const clean = cleanPaymentInput(value);
+            return clean === '' ? '' : clean;
+        }
+
+        function isPaymentTargetAllowed(target) {
+            if (target === 'discount') {
+                return paymentState.discountType !== 'none';
+            }
+
+            if (target === 'cash') {
+                return paymentState.method === 'cash' || paymentState.method === 'mixed';
+            }
+
+            if (target === 'card') {
+                return paymentState.method === 'card' || paymentState.method === 'mixed';
+            }
+
+            return false;
+        }
+
+        function setPaymentFieldValue(id, value) {
+            const element = document.getElementById(id);
+
+            if (!element) {
+                return;
+            }
+
+            if (element.tagName === 'INPUT') {
+                if (document.activeElement !== element) {
+                    element.value = value;
+                }
+            } else {
+                element.textContent = value;
+            }
+        }
+
+        function setPaymentInputDisabled(id, disabled) {
+            const input = document.getElementById(id);
+
+            if (!input || input.tagName !== 'INPUT') {
+                return;
+            }
+
+            input.disabled = disabled;
+            input.readOnly = disabled;
+
+            const box = input.closest('.payment-input-box');
+            if (box) {
+                box.classList.toggle('disabled', disabled);
+            }
+        }
+
+        function syncPaymentStateFromInputs() {
+            const discountInput = document.getElementById('paymentDiscountValue');
+            const cashInput = document.getElementById('paymentCashAmount');
+            const cardInput = document.getElementById('paymentCardAmount');
+
+            if (discountInput && discountInput.tagName === 'INPUT' && !discountInput.disabled) {
+                paymentState.discountValue = normalizePaymentInput(discountInput.value);
+            }
+
+            if (cashInput && cashInput.tagName === 'INPUT' && !cashInput.disabled) {
+                paymentState.cashAmount = normalizePaymentInput(cashInput.value);
+            }
+
+            if (cardInput && cardInput.tagName === 'INPUT' && !cardInput.disabled) {
+                paymentState.cardAmount = normalizePaymentInput(cardInput.value);
+            }
+        }
+
+        function calculatePaymentAmounts() {
+            paymentState.subtotal = getCartSubtotalForPayment();
+
+            const discountValue = parsePaymentNumber(paymentState.discountValue);
+
+            if (paymentState.discountType === 'percent') {
+                paymentState.discountAmount = Math.min(paymentState.subtotal, paymentState.subtotal * discountValue / 100);
+            } else if (paymentState.discountType === 'amount') {
+                paymentState.discountAmount = Math.min(paymentState.subtotal, discountValue);
+            } else {
+                paymentState.discountAmount = 0;
+            }
+
+            paymentState.payable = roundMoney(Math.max(0, paymentState.subtotal - paymentState.discountAmount));
+
+            if (paymentState.method === 'cash') {
+                paymentState.cardAmount = '';
+                paymentState.inputTarget = 'cash';
+            }
+
+            if (paymentState.method === 'card') {
+                paymentState.cashAmount = '';
+                paymentState.inputTarget = 'card';
+            }
+
+            if (paymentState.method === 'mixed') {
+                let cash = Math.min(parsePaymentNumber(paymentState.cashAmount), paymentState.payable);
+                let card = Math.min(parsePaymentNumber(paymentState.cardAmount), paymentState.payable);
+
+                if (paymentState.inputTarget === 'cash') {
+                    card = Math.max(0, paymentState.payable - cash);
+                } else if (paymentState.inputTarget === 'card') {
+                    cash = Math.max(0, paymentState.payable - card);
+                } else if (roundMoney(cash + card) !== paymentState.payable) {
+                    card = Math.max(0, paymentState.payable - cash);
+                }
+
+                paymentState.cashAmount = cash > 0 ? cash.toFixed(2) : '';
+                paymentState.cardAmount = card > 0 ? card.toFixed(2) : '';
+            }
+        }
+
+        function roundMoney(value) {
+            return Math.round((parseFloat(value) || 0) * 100) / 100;
+        }
+
+        function getPaymentPaidAndBalance() {
+            const cash = parsePaymentNumber(paymentState.cashAmount);
+            const card = parsePaymentNumber(paymentState.cardAmount);
+            const paid = roundMoney(cash + card);
+            const payable = roundMoney(paymentState.payable);
+
+            if (paymentState.method === 'cash') {
+                return {
+                    cash,
+                    card: 0,
+                    paid: cash,
+                    remaining: Math.max(0, payable - cash),
+                    change: Math.max(0, cash - payable),
+                    canComplete: payable > 0 && cash >= payable,
+                };
+            }
+
+            if (paymentState.method === 'card') {
+                return {
+                    cash: 0,
+                    card,
+                    paid: card,
+                    remaining: Math.max(0, payable - card),
+                    change: 0,
+                    canComplete: payable > 0 && Math.abs(card - payable) <= 0.01,
+                };
+            }
+
+            return {
+                cash,
+                card,
+                paid,
+                remaining: Math.max(0, payable - paid),
+                change: 0,
+                canComplete: payable > 0 && Math.abs(paid - payable) <= 0.01,
+            };
+        }
+
+        function renderPaymentScreen() {
+            calculatePaymentAmounts();
+
+            const balance = getPaymentPaidAndBalance();
+            paymentState.changeAmount = balance.change;
+
+            document.getElementById('paymentCheckLabel').textContent = selectedOrderId ? ('Çek #' + selectedOrderId) : 'Çek seçilməyib';
+            document.getElementById('paymentPayableBadge').textContent = formatMoney(paymentState.payable);
+            setPaymentFieldValue('paymentDiscountValue', paymentState.discountType === 'none' ? '0' : (paymentState.discountValue || ''));
+            setPaymentFieldValue('paymentCashAmount', paymentState.method === 'card' ? '' : (paymentState.cashAmount || ''));
+            setPaymentFieldValue('paymentCardAmount', paymentState.method === 'cash' ? '' : (paymentState.cardAmount || ''));
+            document.getElementById('paymentSubtotalText').textContent = formatMoney(paymentState.subtotal);
+            document.getElementById('paymentDiscountText').textContent = formatMoney(paymentState.discountAmount);
+            document.getElementById('paymentPayableText').textContent = formatMoney(paymentState.payable);
+
+            const remainingText = document.getElementById('paymentRemainingText');
+            if (remainingText) {
+                remainingText.textContent = balance.change > 0 ? formatMoney(balance.change) : formatMoney(balance.remaining);
+
+                const remainingLabel = remainingText.closest('.payment-summary-line')?.querySelector('span');
+                if (remainingLabel) {
+                    remainingLabel.textContent = balance.change > 0 ? 'Qaytarılacaq' : 'Qalıq';
+                }
+            }
+
+            document.querySelectorAll('[data-payment-method]').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.paymentMethod === paymentState.method);
+            });
+
+            document.querySelectorAll('[data-discount-type]').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.discountType === paymentState.discountType);
+            });
+
+            document.querySelectorAll('[data-payment-target]').forEach(function(box) {
+                const target = box.dataset.paymentTarget;
+                const allowed = isPaymentTargetAllowed(target);
+                box.classList.toggle('active', allowed && target === paymentState.inputTarget);
+                box.classList.toggle('disabled', !allowed);
+            });
+
+            setPaymentInputDisabled('paymentDiscountValue', paymentState.discountType === 'none');
+            setPaymentInputDisabled('paymentCashAmount', !(paymentState.method === 'cash' || paymentState.method === 'mixed'));
+            setPaymentInputDisabled('paymentCardAmount', !(paymentState.method === 'card' || paymentState.method === 'mixed'));
+
+            const completeBtn = document.getElementById('paymentCompleteBtn');
+            if (completeBtn) {
+                completeBtn.disabled = !balance.canComplete;
+            }
+        }
+
+        function resetPaymentState() {
+            paymentState.method = 'cash';
+            paymentState.discountType = 'none';
+            paymentState.discountValue = '';
+            paymentState.subtotal = getCartSubtotalForPayment();
+            paymentState.discountAmount = 0;
+            paymentState.payable = roundMoney(paymentState.subtotal);
+            paymentState.cashAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
+            paymentState.cardAmount = '';
+            paymentState.inputTarget = 'cash';
+            paymentState.changeAmount = 0;
+        }
+
+        function openPaymentScreen() {
+            if (!staffCanTakePayment) {
+                showPosToast('Ödəniş almaq üçün səlahiyyət tələb olunur.', 'error');
+                return;
+            }
+
+            if (!selectedTable || !selectedOrderId) {
+                showPosToast('Ödəniş üçün aktiv çek seçilməyib.', 'error');
+                return;
+            }
+
+            if (Object.values(cart).length === 0) {
+                showPosToast('Ödəniş üçün çekdə məhsul yoxdur.', 'error');
+                return;
+            }
+
+            resetPaymentState();
+
+            document.querySelectorAll('.order-tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            const paymentTab = document.getElementById('paymentTabContent');
+            if (paymentTab) paymentTab.classList.add('active');
+
+            renderPaymentScreen();
+        }
+
+        function closePaymentScreen() {
+            const paymentTab = document.getElementById('paymentTabContent');
+            const orderTab = document.getElementById('orderTabContent');
+
+            if (paymentTab) paymentTab.classList.remove('active');
+            if (orderTab) orderTab.classList.add('active');
+        }
+
+        function focusPaymentTarget(target, clearOnFocus = false) {
+            if (!isPaymentTargetAllowed(target)) {
+                return;
+            }
+
+            paymentState.inputTarget = target;
+            renderPaymentScreen();
+
+            const inputId = target === 'discount' ? 'paymentDiscountValue' : (target === 'cash' ? 'paymentCashAmount' : 'paymentCardAmount');
+            const input = document.getElementById(inputId);
+
+            if (input && input.tagName === 'INPUT' && !input.disabled) {
+                input.focus();
+                if (clearOnFocus) {
+                    input.value = '';
+                    if (target === 'discount') paymentState.discountValue = '';
+                    if (target === 'cash') paymentState.cashAmount = '';
+                    if (target === 'card') paymentState.cardAmount = '';
+                }
+                input.select();
+            }
+        }
+
+        document.addEventListener('focusin', function(event) {
+            const input = event.target.closest('.payment-input-field');
+
+            if (!input) {
+                return;
+            }
+
+            const box = input.closest('[data-payment-target]');
+            if (!box) {
+                return;
+            }
+
+            const target = box.dataset.paymentTarget;
+
+            if (!isPaymentTargetAllowed(target)) {
+                input.blur();
+                return;
+            }
+
+            paymentState.inputTarget = target;
+
+            if (input.value === '0' || input.value === '0.00') {
+                input.value = '';
+                if (target === 'discount') paymentState.discountValue = '';
+                if (target === 'cash') paymentState.cashAmount = '';
+                if (target === 'card') paymentState.cardAmount = '';
+            }
+
+            renderPaymentScreen();
+        });
+
+        document.addEventListener('input', function(event) {
+            const input = event.target.closest('.payment-input-field');
+
+            if (!input || input.disabled) {
+                return;
+            }
+
+            const previousCursor = input.selectionStart || input.value.length;
+            input.value = cleanPaymentInput(input.value);
+
+            const box = input.closest('[data-payment-target]');
+            if (box) {
+                paymentState.inputTarget = box.dataset.paymentTarget;
+            }
+
+            syncPaymentStateFromInputs();
+            renderPaymentScreen();
+
+            if (document.activeElement === input) {
+                const pos = Math.min(previousCursor, input.value.length);
+                input.setSelectionRange(pos, pos);
+            }
+        });
+
+        document.addEventListener('click', async function(event) {
+            const methodBtn = event.target.closest('[data-payment-method]');
+            const discountBtn = event.target.closest('[data-discount-type]');
+            const targetBox = event.target.closest('[data-payment-target]');
+            const keyBtn = event.target.closest('.payment-key');
+            const backBtn = event.target.closest('#paymentBackBtn');
+            const completeBtn = event.target.closest('#paymentCompleteBtn');
+
+            if (methodBtn) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                paymentState.method = methodBtn.dataset.paymentMethod;
+                paymentState.subtotal = getCartSubtotalForPayment();
+                paymentState.payable = roundMoney(paymentState.subtotal - paymentState.discountAmount);
+
+                if (paymentState.method === 'cash') {
+                    paymentState.cashAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
+                    paymentState.cardAmount = '';
+                    paymentState.inputTarget = 'cash';
+                } else if (paymentState.method === 'card') {
+                    paymentState.cashAmount = '';
+                    paymentState.cardAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
+                    paymentState.inputTarget = 'card';
+                } else {
+                    paymentState.cashAmount = '';
+                    paymentState.cardAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
+                    paymentState.inputTarget = 'cash';
+                }
+
+                renderPaymentScreen();
+                return;
+            }
+
+            if (discountBtn) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                paymentState.discountType = discountBtn.dataset.discountType;
+                paymentState.discountValue = '';
+
+                if (paymentState.discountType === 'none') {
+                    paymentState.inputTarget = paymentState.method === 'card' ? 'card' : 'cash';
+                } else {
+                    paymentState.inputTarget = 'discount';
+                }
+
+                renderPaymentScreen();
+
+                if (paymentState.discountType !== 'none') {
+                    setTimeout(function() {
+                        focusPaymentTarget('discount', true);
+                    }, 30);
+                }
+
+                return;
+            }
+
+            if (targetBox) {
+                event.preventDefault();
+                const target = targetBox.dataset.paymentTarget;
+                focusPaymentTarget(target, true);
+                return;
+            }
+
+            if (keyBtn) {
+                event.preventDefault();
+                const key = keyBtn.dataset.key;
+                let target = paymentState.inputTarget;
+
+                if (!isPaymentTargetAllowed(target)) {
+                    target = paymentState.method === 'card' ? 'card' : 'cash';
+                    paymentState.inputTarget = target;
+                }
+
+                let current = '';
+                if (target === 'discount') current = paymentState.discountValue;
+                if (target === 'cash') current = paymentState.cashAmount;
+                if (target === 'card') current = paymentState.cardAmount;
+
+                current = String(current || '');
+
+                if (key === 'back') {
+                    current = current.length > 1 ? current.slice(0, -1) : '';
+                } else if (key === '.') {
+                    if (!current.includes('.')) current = current === '' ? '0.' : current + '.';
+                } else {
+                    current = current === '0' ? key : current + key;
+                }
+
+                current = cleanPaymentInput(current);
+
+                if (target === 'discount') paymentState.discountValue = current;
+                if (target === 'cash') paymentState.cashAmount = current;
+                if (target === 'card') paymentState.cardAmount = current;
+
+                renderPaymentScreen();
+                return;
+            }
+
+            if (backBtn) {
+                event.preventDefault();
+                closePaymentScreen();
+                return;
+            }
+
+            if (completeBtn) {
+                event.preventDefault();
+
+                if (completeBtn.disabled) return;
+
+                completeBtn.disabled = true;
+
+                try {
+                    syncPaymentStateFromInputs();
+                    calculatePaymentAmounts();
+                    const balance = getPaymentPaidAndBalance();
+
+                    let serverCashAmount = parsePaymentNumber(paymentState.cashAmount);
+                    let serverCardAmount = parsePaymentNumber(paymentState.cardAmount);
+
+                    if (paymentState.method === 'cash') {
+                        serverCashAmount = paymentState.payable;
+                        serverCardAmount = 0;
+                    }
+
+                    if (paymentState.method === 'card') {
+                        serverCashAmount = 0;
+                        serverCardAmount = paymentState.payable;
+                    }
+
+                    const data = await postJson("{{ route('staff.orders.complete-payment') }}", {
+                        table_id: selectedTable.id,
+                        order_id: selectedOrderId,
+                        payment_method: paymentState.method,
+                        discount_type: paymentState.discountType,
+                        discount_value: parsePaymentNumber(paymentState.discountValue),
+                        cash_amount: serverCashAmount,
+                        card_amount: serverCardAmount,
+                    });
+
+                    if (!data.success) {
+                        showPosToast(data.message || 'Ödəniş tamamlanmadı.', 'error');
+                        renderPaymentScreen();
+                        return;
+                    }
+
+                    const changeMessage = balance.change > 0 ? (' Qaytarılacaq: ' + formatMoney(balance.change)) : '';
+                    showPosToast((data.message || 'Ödəniş tamamlandı.') + changeMessage, 'success');
+                    Object.keys(cart).forEach(id => delete cart[id]);
+                    renderCart();
+
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 700);
+                } catch (error) {
+                    console.error(error);
+                    showPosToast('Server xətası baş verdi.', 'error');
+                    renderPaymentScreen();
+                }
+            }
+        });
     </script>
 
 </body>

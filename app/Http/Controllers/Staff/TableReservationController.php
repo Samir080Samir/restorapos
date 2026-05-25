@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Models\RestaurantTable;
 use App\Models\TableReservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TableReservationController extends Controller
 {
@@ -30,40 +32,51 @@ class TableReservationController extends Controller
             'note' => ['nullable', 'string'],
         ]);
 
-        $table = RestaurantTable::findOrFail($request->table_id);
+        return DB::transaction(function () use ($request) {
+            $table = RestaurantTable::lockForUpdate()->findOrFail($request->table_id);
 
-        $exists = TableReservation::where('table_id', $table->id)
-            ->whereDate('reservation_date', $request->reservation_date)
-            ->where('start_time', $request->start_time)
-            ->where('status', 'reserved')
-            ->exists();
+            $estimatedEndTime = Carbon::parse(
+                $request->reservation_date . ' ' . $request->start_time
+            )->addHours(2)->format('H:i');
 
-        if ($exists) {
+            $hasConflict = TableReservation::hasConflict(
+                $table->id,
+                $request->reservation_date,
+                $request->start_time,
+                $estimatedEndTime
+            );
+
+            if ($hasConflict) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu masa seçilən saat aralığında artıq rezerv edilib.',
+                ], 422);
+            }
+
+            $reservation = TableReservation::create([
+                'restaurant_id' => $table->restaurant_id,
+                'branch_id' => $table->branch_id,
+                'table_id' => $table->id,
+                'customer_name' => $request->customer_name,
+                'customer_phone' => $request->customer_phone,
+                'guest_count' => $request->guest_count ?: 1,
+                'reservation_date' => $request->reservation_date,
+                'start_time' => $request->start_time,
+                'estimated_end_time' => $estimatedEndTime,
+                'status' => 'reserved',
+                'note' => $request->note,
+                'created_by' => session('staff_user_id'),
+            ]);
+
+            $table->refreshOperationalStatus();
+
             return response()->json([
-                'success' => false,
-                'message' => 'Bu saat üçün artıq rezerv var.',
-            ], 422);
-        }
-
-        $reservation = TableReservation::create([
-            'restaurant_id' => $table->restaurant_id,
-            'branch_id' => $table->branch_id,
-            'table_id' => $table->id,
-            'customer_name' => $request->customer_name,
-            'customer_phone' => $request->customer_phone,
-            'guest_count' => $request->guest_count ?: 1,
-            'reservation_date' => $request->reservation_date,
-            'start_time' => $request->start_time,
-            'status' => 'reserved',
-            'note' => $request->note,
-            'created_by' => session('staff_user_id'),
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Rezerv yaradıldı.',
-            'reservation' => $reservation,
-        ]);
+                'success' => true,
+                'message' => 'Rezerv yaradıldı.',
+                'reservation' => $reservation,
+                'table_status' => $table->fresh()->status,
+            ]);
+        });
     }
 
     public function cancel($id)
@@ -77,13 +90,25 @@ class TableReservationController extends Controller
             ], 403);
         }
 
-        $reservation = TableReservation::findOrFail($id);
-        $reservation->update(['status' => 'cancelled']);
+        return DB::transaction(function () use ($id) {
+            $reservation = TableReservation::lockForUpdate()->findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Rezerv ləğv edildi.',
-        ]);
+            $reservation->update([
+                'status' => 'cancelled',
+                'cancelled_at' => now(),
+            ]);
+
+            $table = RestaurantTable::lockForUpdate()->find($reservation->table_id);
+            if ($table) {
+                $table->refreshOperationalStatus();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Rezerv ləğv edildi.',
+                'table_status' => $table?->fresh()?->status,
+            ]);
+        });
     }
 
     public function complete($id)
@@ -97,12 +122,24 @@ class TableReservationController extends Controller
             ], 403);
         }
 
-        $reservation = TableReservation::findOrFail($id);
-        $reservation->update(['status' => 'completed']);
+        return DB::transaction(function () use ($id) {
+            $reservation = TableReservation::lockForUpdate()->findOrFail($id);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Rezerv tamamlandı.',
-        ]);
+            $reservation->update([
+                'status' => 'completed',
+                'completed_at' => now(),
+            ]);
+
+            $table = RestaurantTable::lockForUpdate()->find($reservation->table_id);
+            if ($table) {
+                $table->refreshOperationalStatus();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Rezerv tamamlandı.',
+                'table_status' => $table?->fresh()?->status,
+            ]);
+        });
     }
 }

@@ -197,6 +197,8 @@ class StaffLoginController extends Controller
                 $query->with([
                     'openOrder.staff',
                     'activeReservation',
+                    'nextReservation',
+                    'todayReservations',
                 ]);
             }
         ])
