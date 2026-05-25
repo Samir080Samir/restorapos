@@ -657,4 +657,8 @@ Route::get('/debug-restaurants', function () {
     return \App\Models\Restaurant::select('id', 'name', 'slug')->get();
 });
 
+Route::get('/debug-tables', function () {
+    return \App\Models\RestaurantTable::select('id', 'restaurant_id', 'name', 'code')->get();
+});
+
 require __DIR__ . '/auth.php';
