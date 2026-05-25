@@ -65,6 +65,14 @@ class Product extends Model
 
         /*
         |--------------------------------------------------
+        | QR Menu / eMenu seçimləri
+        |--------------------------------------------------
+        */
+
+        'show_in_qr_menu',
+
+        /*
+        |--------------------------------------------------
         | Status
         |--------------------------------------------------
         */
@@ -119,5 +127,15 @@ class Product extends Model
     public function isVisibleInPos()
     {
         return $this->show_in_terminal == true;
+    }
+
+    /**
+     * QR menyuda görünür?
+     */
+    public function isVisibleInQrMenu()
+    {
+        return $this->show_in_qr_menu == true
+            && $this->is_active == true
+            && $this->is_hidden == false;
     }
 }

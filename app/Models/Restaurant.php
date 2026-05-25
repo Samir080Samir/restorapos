@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\DiningTable;
+use App\Models\RestaurantTable;
 use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
@@ -90,5 +91,10 @@ class Restaurant extends Model
     public function diningTables()
     {
         return $this->hasMany(DiningTable::class);
+    }
+
+    public function tables()
+    {
+        return $this->hasMany(RestaurantTable::class);
     }
 }

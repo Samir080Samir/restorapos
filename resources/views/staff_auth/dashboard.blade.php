@@ -943,6 +943,245 @@
 
 
 
+
+
+        /* ================= CUSTOMER PANEL ================= */
+
+        .customer-panel-card {
+            margin-top: 14px;
+            border: 1px solid #e6edf7;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            padding: 14px;
+        }
+
+        .customer-panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .customer-panel-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #071143;
+        }
+
+        .customer-panel-subtitle {
+            margin-top: 4px;
+            font-size: 11.5px;
+            color: #7b8498;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .customer-search-box {
+            height: 40px;
+            border: 1px solid #dfe7f2;
+            border-radius: 12px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 11px;
+        }
+
+        .customer-search-box svg {
+            width: 17px;
+            height: 17px;
+            color: #7b8498;
+            flex-shrink: 0;
+        }
+
+        .customer-search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #071143;
+            font-size: 12.5px;
+            font-weight: 700;
+        }
+
+        .customer-search-results {
+            margin-top: 8px;
+            display: grid;
+            gap: 7px;
+            max-height: 175px;
+            overflow-y: auto;
+        }
+
+        .customer-result-btn {
+            width: 100%;
+            min-height: 46px;
+            border: 1px solid #e6edf7;
+            border-radius: 12px;
+            background: #fff;
+            color: #071143;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .customer-result-btn strong {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 900;
+        }
+
+        .customer-result-btn span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11px;
+            color: #7b8498;
+            font-weight: 700;
+        }
+
+        .customer-result-btn em {
+            font-style: normal;
+            color: #ef4444;
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .customer-selected-card {
+            margin-top: 10px;
+            border: 1px solid rgba(32, 201, 133, .28);
+            border-radius: 14px;
+            background: rgba(32, 201, 133, .08);
+            padding: 12px;
+            display: none;
+        }
+
+        .customer-selected-card.show {
+            display: block;
+        }
+
+        .customer-selected-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .customer-selected-name {
+            font-size: 14px;
+            color: #071143;
+            font-weight: 900;
+        }
+
+        .customer-selected-phone {
+            margin-top: 4px;
+            font-size: 11.5px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .customer-clear-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(239, 68, 68, .22);
+            background: #fff;
+            color: #ef4444;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .customer-info-grid {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .customer-info-box {
+            border: 1px solid rgba(255, 255, 255, .75);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .72);
+            padding: 9px;
+        }
+
+        .customer-info-box span {
+            display: block;
+            font-size: 10.5px;
+            color: #64748b;
+            font-weight: 800;
+        }
+
+        .customer-info-box strong {
+            display: block;
+            margin-top: 4px;
+            font-size: 13px;
+            color: #071143;
+            font-weight: 900;
+        }
+
+        .customer-create-form {
+            margin-top: 12px;
+            border-top: 1px solid #eef1f6;
+            padding-top: 12px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .customer-create-form input,
+        .customer-create-form textarea {
+            width: 100%;
+            min-height: 38px;
+            border: 1px solid #dfe7f2;
+            border-radius: 11px;
+            padding: 0 11px;
+            background: #fff;
+            color: #071143;
+            font-size: 12.5px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .customer-create-form textarea {
+            min-height: 56px;
+            padding-top: 9px;
+            resize: none;
+        }
+
+        .customer-create-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .customer-save-btn {
+            height: 40px;
+            border-radius: 11px;
+            border: none;
+            background: linear-gradient(90deg, #17b978, #21c985);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .customer-help-card {
+            margin-top: 10px;
+            border: 1px dashed #dfe7f2;
+            border-radius: 13px;
+            padding: 11px;
+            background: #fbfdff;
+            color: #64748b;
+            font-size: 11.5px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+
         /* ================= PAYMENT SCREEN ================= */
 
         .payment-screen {
@@ -1013,6 +1252,10 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
+        }
+
+        .payment-method-grid {
+            grid-template-columns: repeat(4, 1fr);
         }
 
         .payment-choice-btn {
@@ -2690,6 +2933,7 @@
                             <button type="button" class="payment-choice-btn active" data-payment-method="cash">Nağd</button>
                             <button type="button" class="payment-choice-btn" data-payment-method="card">Kart</button>
                             <button type="button" class="payment-choice-btn" data-payment-method="mixed">Qarışıq</button>
+                            <button type="button" class="payment-choice-btn" data-payment-method="debt">Borc</button>
                         </div>
 
                         <div class="payment-section-title">Məbləğ bölgüsü</div>
@@ -2869,9 +3113,57 @@
                 </div>
 
                 <div id="customerTabContent" class="order-tab-content">
-                    <div class="customer-empty-card">
-                        Müştəri bölməsi növbəti mərhələdə aktivləşdiriləcək.
-                        Burada müştəri adı, telefon, qeyd, bonus və tarixçə görünəcək.
+                    <div class="customer-panel-card">
+                        <div class="customer-panel-head">
+                            <div>
+                                <div class="customer-panel-title">Müştəri məlumatları</div>
+                                <div class="customer-panel-subtitle">Kassir müştərini seçə, yeni müştəri yarada və borc ödənişində həmin müştərini çeka bağlaya bilər.</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-search-box">
+                            <svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
+                                <path d="M21 21l-4.3-4.3" />
+                                <circle cx="11" cy="11" r="7" />
+                            </svg>
+                            <input type="text" id="customerSearchInput" placeholder="Ad və ya telefon ilə axtar..." autocomplete="off">
+                        </div>
+
+                        <div id="customerSearchResults" class="customer-search-results"></div>
+
+                        <div id="selectedCustomerCard" class="customer-selected-card">
+                            <div class="customer-selected-top">
+                                <div>
+                                    <div id="selectedCustomerName" class="customer-selected-name">Müştəri seçilməyib</div>
+                                    <div id="selectedCustomerPhone" class="customer-selected-phone">Telefon yoxdur</div>
+                                </div>
+                                <button type="button" id="clearSelectedCustomerBtn" class="customer-clear-btn">×</button>
+                            </div>
+
+                            <div class="customer-info-grid">
+                                <div class="customer-info-box">
+                                    <span>Bonus</span>
+                                    <strong id="selectedCustomerBonus">0.00</strong>
+                                </div>
+                                <div class="customer-info-box">
+                                    <span>Borc</span>
+                                    <strong id="selectedCustomerDebt">0.00 ₼</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="customerCreateForm" class="customer-create-form">
+                            <div class="customer-create-row">
+                                <input type="text" id="customerFullNameInput" placeholder="Müştəri adı" autocomplete="off">
+                                <input type="text" id="customerPhoneInput" placeholder="Telefon" autocomplete="off">
+                            </div>
+                            <textarea id="customerNoteInput" placeholder="Qeyd"></textarea>
+                            <button type="submit" class="customer-save-btn">Müştərini yadda saxla</button>
+                        </form>
+
+                        <div class="customer-help-card">
+                            Borc kimi bağlamaq üçün əvvəl buradan müştəri seç və sonra ödəniş ekranında “Borc” seçimini istifadə et.
+                        </div>
                     </div>
                 </div>
 
@@ -2941,6 +3233,236 @@
 
 
         let selectedTable = null;
+
+        let selectedCustomer = null;
+        let customerSearchTimer = null;
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function customerDebtValue(customer) {
+            return parseFloat(
+                customer?.debt_amount ??
+                customer?.total_debt ??
+                customer?.remaining_debt ??
+                customer?.debt ??
+                0
+            ) || 0;
+        }
+
+        function normalizeCustomerPayload(customer) {
+            if (!customer) return null;
+
+            return {
+                id: customer.id,
+                full_name: customer.full_name || customer.name || 'Müştəri',
+                phone: customer.phone || customer.customer_phone || '',
+                note: customer.note || '',
+                bonus_balance: parseFloat(customer.bonus_balance ?? customer.bonus ?? 0) || 0,
+                debt_amount: customerDebtValue(customer),
+                total_debt: customerDebtValue(customer),
+                status: customer.status || 'active',
+            };
+        }
+
+        function setCustomerSearchText(value) {
+            const input = document.getElementById('customerSearchInput');
+            if (input) input.value = value || '';
+        }
+
+        function selectCustomer(customer) {
+            const normalized = normalizeCustomerPayload(customer);
+
+            if (!normalized || !normalized.id) {
+                showPosToast('Müştəri seçilə bilmədi.', 'error');
+                return;
+            }
+
+            selectedCustomer = normalized;
+            renderCustomerPanel();
+            setCustomerSearchText(normalized.full_name);
+
+            const results = document.getElementById('customerSearchResults');
+            if (results) results.innerHTML = '';
+
+            showPosToast('Müştəri seçildi.', 'success');
+        }
+
+        function clearSelectedCustomer() {
+            selectedCustomer = null;
+            renderCustomerPanel();
+            setCustomerSearchText('');
+
+            const results = document.getElementById('customerSearchResults');
+            if (results) results.innerHTML = '';
+        }
+
+        function renderCustomerPanel() {
+            const card = document.getElementById('selectedCustomerCard');
+            const name = document.getElementById('selectedCustomerName');
+            const phone = document.getElementById('selectedCustomerPhone');
+            const bonus = document.getElementById('selectedCustomerBonus');
+            const debt = document.getElementById('selectedCustomerDebt');
+
+            if (!card) return;
+
+            if (!selectedCustomer) {
+                card.classList.remove('show');
+                if (name) name.textContent = 'Müştəri seçilməyib';
+                if (phone) phone.textContent = 'Telefon yoxdur';
+                if (bonus) bonus.textContent = '0.00 ₼';
+                if (debt) debt.textContent = '0.00 ₼';
+                return;
+            }
+
+            card.classList.add('show');
+            if (name) name.textContent = selectedCustomer.full_name || 'Müştəri';
+            if (phone) phone.textContent = selectedCustomer.phone || 'Telefon yoxdur';
+            if (bonus) bonus.textContent = formatMoney(selectedCustomer.bonus_balance || 0);
+            if (debt) debt.textContent = formatMoney(selectedCustomer.debt_amount || 0);
+        }
+
+        function renderCustomerSearchResults(customers) {
+            const results = document.getElementById('customerSearchResults');
+            if (!results) return;
+
+            if (!Array.isArray(customers) || customers.length === 0) {
+                results.innerHTML = '<div class="customer-help-card">Müştəri tapılmadı. Aşağıdan yeni müştəri yarada bilərsən.</div>';
+                return;
+            }
+
+            results.innerHTML = customers.map(function(customer) {
+                const normalized = normalizeCustomerPayload(customer);
+
+                if (!normalized || !normalized.id) return '';
+
+                return `
+                    <button type="button" class="customer-result-btn" data-customer-id="${escapeHtml(normalized.id)}" data-customer-json='${escapeHtml(JSON.stringify(normalized))}'>
+                        <span>
+                            <strong>${escapeHtml(normalized.full_name)}</strong>
+                            <span>${escapeHtml(normalized.phone || 'Telefon yoxdur')}</span>
+                        </span>
+                        <em>${formatMoney(normalized.debt_amount || 0)}</em>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        async function searchCustomers(query) {
+            const results = document.getElementById('customerSearchResults');
+            const cleanQuery = String(query || '').trim();
+
+            if (!results) return;
+
+            if (cleanQuery.length < 2) {
+                results.innerHTML = '<div class="customer-help-card">Müştəri axtarmaq üçün ən azı 2 hərf yaz.</div>';
+                return;
+            }
+
+            results.innerHTML = '<div class="customer-help-card">Axtarılır...</div>';
+
+            try {
+                const response = await fetch("{{ route('staff.customers.search') }}" + '?q=' + encodeURIComponent(cleanQuery), {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    results.innerHTML = '<div class="customer-help-card">Müştəri axtarışı zamanı xəta baş verdi.</div>';
+                    return;
+                }
+
+                const customers = Array.isArray(data.customers) ? data.customers : (Array.isArray(data.data) ? data.data : []);
+                renderCustomerSearchResults(customers);
+            } catch (error) {
+                console.error(error);
+                results.innerHTML = '<div class="customer-help-card">Müştəri axtarışı zamanı xəta baş verdi.</div>';
+            }
+        }
+
+        document.addEventListener('input', function(event) {
+            if (event.target && event.target.id === 'customerSearchInput') {
+                clearTimeout(customerSearchTimer);
+                customerSearchTimer = setTimeout(function() {
+                    searchCustomers(event.target.value);
+                }, 300);
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            const customerBtn = event.target.closest('.customer-result-btn');
+            const clearCustomerBtn = event.target.closest('#clearSelectedCustomerBtn');
+
+            if (customerBtn) {
+                event.preventDefault();
+
+                try {
+                    const customer = JSON.parse(customerBtn.dataset.customerJson || '{}');
+                    selectCustomer(customer);
+                } catch (error) {
+                    console.error(error);
+                    showPosToast('Müştəri seçilə bilmədi.', 'error');
+                }
+
+                return;
+            }
+
+            if (clearCustomerBtn) {
+                event.preventDefault();
+                clearSelectedCustomer();
+            }
+        });
+
+        const customerCreateForm = document.getElementById('customerCreateForm');
+        if (customerCreateForm) {
+            customerCreateForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const fullNameInput = document.getElementById('customerFullNameInput');
+                const phoneInput = document.getElementById('customerPhoneInput');
+                const noteInput = document.getElementById('customerNoteInput');
+
+                const payload = {
+                    full_name: fullNameInput ? fullNameInput.value.trim() : '',
+                    phone: phoneInput ? phoneInput.value.trim() : '',
+                    note: noteInput ? noteInput.value.trim() : '',
+                };
+
+                if (!payload.full_name) {
+                    showPosToast('Müştəri adını daxil edin.', 'error');
+                    return;
+                }
+
+                try {
+                    const data = await postJson("{{ route('staff.customers.store') }}", payload);
+
+                    if (!data.success) {
+                        showPosToast(data.message || 'Müştəri yaradılmadı.', 'error');
+                        return;
+                    }
+
+                    const customer = data.customer || data.data || data;
+                    selectCustomer(customer);
+                    customerCreateForm.reset();
+
+                    const results = document.getElementById('customerSearchResults');
+                    if (results) results.innerHTML = '';
+                } catch (error) {
+                    console.error(error);
+                    showPosToast('Müştəri yaradılmadı.', 'error');
+                }
+            });
+        }
 
         function renderStaffSeats() {
             document.querySelectorAll('.staff-table-seats').forEach(function(container) {
@@ -3092,9 +3614,11 @@
                     });
                 }
 
+                selectedCustomer = null;
                 renderCart();
                 renderCheckTabs();
                 renderTableInfo();
+                renderCustomerPanel();
 
                 const tablesScreen = document.getElementById('tablesScreen');
                 const posScreen = document.getElementById('posScreen');
@@ -3139,8 +3663,10 @@
 
             selectedTable = null;
             selectedOrderId = null;
+            selectedCustomer = null;
             currentChecks = [];
             renderCheckTabs();
+            renderCustomerPanel();
         }
 
         document.querySelectorAll('.table-area-tab').forEach(function(tab) {
@@ -4902,6 +5428,12 @@
                 paymentState.inputTarget = 'card';
             }
 
+            if (paymentState.method === 'debt') {
+                paymentState.cashAmount = '';
+                paymentState.cardAmount = '';
+                paymentState.inputTarget = 'cash';
+            }
+
             if (paymentState.method === 'mixed') {
                 let cash = Math.min(parsePaymentNumber(paymentState.cashAmount), paymentState.payable);
                 let card = Math.min(parsePaymentNumber(paymentState.cardAmount), paymentState.payable);
@@ -4951,6 +5483,17 @@
                 };
             }
 
+            if (paymentState.method === 'debt') {
+                return {
+                    cash: 0,
+                    card: 0,
+                    paid: 0,
+                    remaining: payable,
+                    change: 0,
+                    canComplete: payable > 0 && !!selectedCustomer,
+                };
+            }
+
             return {
                 cash,
                 card,
@@ -4970,8 +5513,8 @@
             document.getElementById('paymentCheckLabel').textContent = selectedOrderId ? ('Çek #' + selectedOrderId) : 'Çek seçilməyib';
             document.getElementById('paymentPayableBadge').textContent = formatMoney(paymentState.payable);
             setPaymentFieldValue('paymentDiscountValue', paymentState.discountType === 'none' ? '0' : (paymentState.discountValue || ''));
-            setPaymentFieldValue('paymentCashAmount', paymentState.method === 'card' ? '' : (paymentState.cashAmount || ''));
-            setPaymentFieldValue('paymentCardAmount', paymentState.method === 'cash' ? '' : (paymentState.cardAmount || ''));
+            setPaymentFieldValue('paymentCashAmount', (paymentState.method === 'card' || paymentState.method === 'debt') ? '' : (paymentState.cashAmount || ''));
+            setPaymentFieldValue('paymentCardAmount', (paymentState.method === 'cash' || paymentState.method === 'debt') ? '' : (paymentState.cardAmount || ''));
             document.getElementById('paymentSubtotalText').textContent = formatMoney(paymentState.subtotal);
             document.getElementById('paymentDiscountText').textContent = formatMoney(paymentState.discountAmount);
             document.getElementById('paymentPayableText').textContent = formatMoney(paymentState.payable);
@@ -5162,6 +5705,14 @@
                     paymentState.cashAmount = '';
                     paymentState.cardAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
                     paymentState.inputTarget = 'card';
+                } else if (paymentState.method === 'debt') {
+                    paymentState.cashAmount = '';
+                    paymentState.cardAmount = '';
+                    paymentState.inputTarget = 'cash';
+
+                    if (!selectedCustomer) {
+                        showPosToast('Borc üçün əvvəl Müştəri tabından müştəri seçin.', 'warning');
+                    }
                 } else {
                     paymentState.cashAmount = '';
                     paymentState.cardAmount = paymentState.payable > 0 ? paymentState.payable.toFixed(2) : '';
@@ -5269,6 +5820,17 @@
                         serverCardAmount = paymentState.payable;
                     }
 
+                    if (paymentState.method === 'debt') {
+                        if (!selectedCustomer) {
+                            showPosToast('Borc üçün əvvəl Müştəri tabından müştəri seçin.', 'error');
+                            renderPaymentScreen();
+                            return;
+                        }
+
+                        serverCashAmount = 0;
+                        serverCardAmount = 0;
+                    }
+
                     const data = await postJson("{{ route('staff.orders.complete-payment') }}", {
                         table_id: selectedTable.id,
                         order_id: selectedOrderId,
@@ -5277,6 +5839,8 @@
                         discount_value: parsePaymentNumber(paymentState.discountValue),
                         cash_amount: serverCashAmount,
                         card_amount: serverCardAmount,
+                        customer_id: selectedCustomer ? selectedCustomer.id : null,
+                        debt_amount: paymentState.method === 'debt' ? paymentState.payable : 0,
                     });
 
                     if (!data.success) {

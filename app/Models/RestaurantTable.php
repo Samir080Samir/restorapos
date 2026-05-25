@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class RestaurantTable extends Model
@@ -24,8 +23,6 @@ class RestaurantTable extends Model
         'sort_order',
         'is_active',
     ];
-
-    public const BUSINESS_TIMEZONE = 'Asia/Baku';
 
     public function restaurant()
     {
@@ -61,20 +58,10 @@ class RestaurantTable extends Model
         return $this->hasMany(TableReservation::class, 'table_id');
     }
 
-    public static function businessNow(): Carbon
-    {
-        return Carbon::now(self::BUSINESS_TIMEZONE);
-    }
-
-    public static function businessToday(): string
-    {
-        return self::businessNow()->toDateString();
-    }
-
     public function activeReservation()
     {
         return $this->hasOne(TableReservation::class, 'table_id')
-            ->whereDate('reservation_date', self::businessToday())
+            ->whereDate('reservation_date', now()->toDateString())
             ->whereIn('status', ['reserved', 'arrived'])
             ->orderByRaw("CASE WHEN status = 'arrived' THEN 0 ELSE 1 END")
             ->orderBy('start_time');
@@ -83,9 +70,9 @@ class RestaurantTable extends Model
     public function nextReservation()
     {
         return $this->hasOne(TableReservation::class, 'table_id')
-            ->whereDate('reservation_date', self::businessToday())
+            ->whereDate('reservation_date', now()->toDateString())
             ->whereIn('status', ['reserved', 'arrived'])
-            ->whereTime('start_time', '>=', self::businessNow()->copy()->subMinutes(15)->format('H:i:s'))
+            ->whereTime('start_time', '>=', now()->subMinutes(15)->format('H:i:s'))
             ->orderByRaw("CASE WHEN status = 'arrived' THEN 0 ELSE 1 END")
             ->orderBy('start_time');
     }
@@ -93,7 +80,7 @@ class RestaurantTable extends Model
     public function todayReservations()
     {
         return $this->hasMany(TableReservation::class, 'table_id')
-            ->whereDate('reservation_date', self::businessToday())
+            ->whereDate('reservation_date', now()->toDateString())
             ->whereIn('status', ['reserved', 'arrived'])
             ->orderBy('start_time');
     }
@@ -118,47 +105,6 @@ class RestaurantTable extends Model
         return $this->status === 'waiting_payment';
     }
 
-    /**
-     * POS ekranında göstəriləcək real rezerv.
-     * Köhnə/stale relationship cache istifadə etmir; hər dəfə DB-dən təzə oxuyur.
-     */
-    public function visibleReservation(): ?TableReservation
-    {
-        $reservations = TableReservation::query()
-            ->where('table_id', $this->id)
-            ->whereDate('reservation_date', self::businessToday())
-            ->whereIn('status', ['reserved', 'arrived'])
-            ->orderByRaw("CASE WHEN status = 'arrived' THEN 0 ELSE 1 END")
-            ->orderBy('start_time')
-            ->get();
-
-        if ($reservations->isEmpty()) {
-            return null;
-        }
-
-        $arrived = $reservations->first(function (TableReservation $reservation) {
-            return $reservation->isArrived();
-        });
-
-        if ($arrived) {
-            return $arrived;
-        }
-
-        $activeWindow = $reservations->first(function (TableReservation $reservation) {
-            return $reservation->isDueSoon(15) || $reservation->isLate(15);
-        });
-
-        if ($activeWindow) {
-            return $activeWindow;
-        }
-
-        $upcoming = $reservations->first(function (TableReservation $reservation) {
-            return $reservation->isUpcoming();
-        });
-
-        return $upcoming ?: $reservations->first();
-    }
-
     public function refreshOperationalStatus(): void
     {
         if ($this->openOrders()->exists()) {
@@ -169,7 +115,7 @@ class RestaurantTable extends Model
             return;
         }
 
-        if ($this->todayReservations()->exists()) {
+        if ($this->todayReservations()->whereIn('status', ['reserved', 'arrived'])->exists()) {
             if ($this->status !== 'reserved') {
                 $this->update(['status' => 'reserved']);
             }
@@ -184,18 +130,19 @@ class RestaurantTable extends Model
 
     public function reservationState()
     {
-        if ($this->isWaitingPayment() && $this->openOrders()->exists()) {
-            return 'waiting_payment';
-        }
-
-        if ($this->openOrders()->exists()) {
+        if ($this->isBusy()) {
             return 'busy';
         }
 
-        $reservation = $this->visibleReservation();
+        if ($this->isWaitingPayment()) {
+            return 'waiting_payment';
+        }
+
+        $reservation = $this->activeReservation()->first()
+            ?: $this->nextReservation()->first();
 
         if (! $reservation) {
-            return 'empty';
+            return $this->status === 'reserved' ? 'empty' : ($this->status ?: 'empty');
         }
 
         if ($reservation->isArrived()) {
@@ -223,7 +170,7 @@ class RestaurantTable extends Model
             'busy' => 'Dolu',
             'waiting_payment' => 'Hesab gözləyir',
             'reservation_late' => 'Rezerv gecikir',
-            'reservation_due_soon' => '15 dəq. qalıb',
+            'reservation_due_soon' => 'Rezerv yaxınlaşır',
             'reservation_upcoming' => 'Rezerv var',
             'reservation_arrived' => 'Müştəri gəlib',
             'reserved' => 'Rezerv',

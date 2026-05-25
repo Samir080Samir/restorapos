@@ -60,6 +60,7 @@ class ProductController extends Controller
             'cost_price' => ['nullable', 'numeric', 'min:0'],
             'sale_price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'image', 'max:4096'],
+            'show_in_qr_menu' => ['nullable', 'boolean'],
         ]);
 
         $imagePath = null;
@@ -94,6 +95,14 @@ class ProductController extends Controller
             'allow_discount' => ! $request->boolean('disable_discount'),
             'sold_by_weight' => $request->boolean('sold_by_weight'),
             'show_in_terminal' => ! $request->boolean('is_hidden'),
+
+            /*
+            |--------------------------------------------------
+            | QR Menu / eMenu seçimləri
+            |--------------------------------------------------
+            */
+
+            'show_in_qr_menu' => $request->boolean('show_in_qr_menu'),
 
             'sort_order' => 0,
             'is_active' => true,

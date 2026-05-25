@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\PosOrder;
 use App\Models\PosOrderItem;
 use App\Models\PosPayment;
+use App\Models\Customer;
+use App\Models\CustomerDebt;
 use App\Models\RestaurantTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -509,12 +511,23 @@ class PosOrderController extends Controller
         $request->validate([
             'table_id' => ['required', 'exists:restaurant_tables,id'],
             'order_id' => ['required', 'exists:pos_orders,id'],
-            'payment_method' => ['required', 'in:cash,card,mixed'],
+            'payment_method' => ['required', 'in:cash,card,mixed,debt'],
             'discount_type' => ['nullable', 'in:none,percent,amount'],
             'discount_value' => ['nullable', 'numeric', 'min:0'],
             'cash_amount' => ['nullable', 'numeric', 'min:0'],
             'card_amount' => ['nullable', 'numeric', 'min:0'],
+            'customer_id' => ['nullable', 'exists:customers,id'],
+            'customer_name' => ['nullable', 'string', 'max:255'],
+            'customer_phone' => ['nullable', 'string', 'max:50'],
+            'debt_note' => ['nullable', 'string', 'max:2000'],
         ]);
+
+        if ($request->payment_method === 'debt' && session('staff_user_role') !== 'cashier') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Borc kimi bağlamaq yalnız kassir üçündür.',
+            ], 403);
+        }
 
         try {
             $result = DB::transaction(function () use ($request) {
@@ -547,6 +560,8 @@ class PosOrderController extends Controller
                 $payable = round(max(0, $subtotal - $discountAmount), 2);
                 $cashAmount = round((float) $request->input('cash_amount', 0), 2);
                 $cardAmount = round((float) $request->input('card_amount', 0), 2);
+                $debtAmount = 0;
+                $customer = null;
 
                 if ($request->payment_method === 'cash') {
                     $cashAmount = $payable;
@@ -558,16 +573,54 @@ class PosOrderController extends Controller
                     $cardAmount = $payable;
                 }
 
-                if (round($cashAmount + $cardAmount, 2) !== $payable) {
+                if ($request->payment_method === 'mixed') {
+                    if (round($cashAmount + $cardAmount, 2) !== $payable) {
+                        throw new \RuntimeException('Ödəniş məbləği yekun məbləğlə uyğun deyil.');
+                    }
+                }
+
+                if ($request->payment_method === 'debt') {
+                    if (! $request->customer_id && ! $request->filled('customer_name')) {
+                        throw new \RuntimeException('Borc yazmaq üçün müştəri seçin və ya yeni müştəri adı yazın.');
+                    }
+
+                    if ($request->customer_id) {
+                        $customer = Customer::where('restaurant_id', $order->restaurant_id)
+                            ->where('id', $request->customer_id)
+                            ->lockForUpdate()
+                            ->firstOrFail();
+                    } else {
+                        $customer = Customer::create([
+                            'restaurant_id' => $order->restaurant_id,
+                            'branch_id' => $order->branch_id,
+                            'full_name' => $request->customer_name,
+                            'phone' => $request->customer_phone,
+                            'status' => 'active',
+                        ]);
+                    }
+
+                    $paidPart = round($cashAmount + $cardAmount, 2);
+
+                    if ($paidPart > $payable) {
+                        throw new \RuntimeException('Ödənilən məbləğ yekun məbləğdən artıq ola bilməz.');
+                    }
+
+                    $debtAmount = round($payable - $paidPart, 2);
+
+                    if ($debtAmount <= 0) {
+                        throw new \RuntimeException('Borc məbləği 0 ola bilməz.');
+                    }
+                } elseif (round($cashAmount + $cardAmount, 2) !== $payable) {
                     throw new \RuntimeException('Ödəniş məbləği yekun məbləğlə uyğun deyil.');
                 }
 
-                PosPayment::create([
+                $payment = PosPayment::create([
                     'restaurant_id' => $order->restaurant_id,
                     'branch_id' => $order->branch_id,
                     'table_id' => $table->id,
                     'order_id' => $order->id,
                     'staff_id' => session('staff_user_id'),
+                    'customer_id' => $customer?->id,
                     'subtotal' => $subtotal,
                     'discount_type' => $discountType,
                     'discount_value' => $discountValue,
@@ -575,10 +628,32 @@ class PosOrderController extends Controller
                     'payable_amount' => $payable,
                     'cash_amount' => $cashAmount,
                     'card_amount' => $cardAmount,
+                    'debt_amount' => $debtAmount,
                     'payment_method' => $request->payment_method,
-                    'status' => 'paid',
+                    'status' => $debtAmount > 0 ? 'debt' : 'paid',
                     'paid_at' => now(),
+                    'note' => $request->debt_note,
                 ]);
+
+                if ($debtAmount > 0 && $customer) {
+                    CustomerDebt::create([
+                        'restaurant_id' => $order->restaurant_id,
+                        'branch_id' => $order->branch_id,
+                        'customer_id' => $customer->id,
+                        'order_id' => $order->id,
+                        'payment_id' => $payment->id,
+                        'staff_id' => session('staff_user_id'),
+                        'amount' => $debtAmount,
+                        'paid_amount' => 0,
+                        'remaining_amount' => $debtAmount,
+                        'status' => 'unpaid',
+                        'note' => $request->debt_note,
+                    ]);
+
+                    $customer->update([
+                        'total_debt' => round((float) $customer->total_debt + $debtAmount, 2),
+                    ]);
+                }
 
                 $order->update([
                     'status' => 'paid',
@@ -604,16 +679,20 @@ class PosOrderController extends Controller
                 return [
                     'order_id' => $order->id,
                     'table_status' => $table->fresh()->status,
-                    'paid_amount' => $payable,
+                    'paid_amount' => round($cashAmount + $cardAmount, 2),
+                    'debt_amount' => $debtAmount,
+                    'customer_id' => $customer?->id,
                 ];
             });
 
             return response()->json([
                 'success' => true,
-                'message' => 'Ödəniş tamamlandı.',
+                'message' => $result['debt_amount'] > 0 ? 'Çek bağlandı və borc qeyd edildi.' : 'Ödəniş tamamlandı.',
                 'order_id' => $result['order_id'],
                 'table_status' => $result['table_status'],
                 'paid_amount' => $result['paid_amount'],
+                'debt_amount' => $result['debt_amount'],
+                'customer_id' => $result['customer_id'],
             ]);
         } catch (\Throwable $e) {
             return response()->json([

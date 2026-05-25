@@ -27,10 +27,15 @@ use App\Http\Controllers\Owner\ProductController;
 use App\Http\Controllers\Owner\MenuCategoryController;
 use App\Http\Controllers\Owner\MenuDepartmentController;
 use App\Http\Controllers\Owner\TableManagementController;
-use App\Http\Controllers\Staff\TableReservationController;
+use App\Http\Controllers\Owner\CustomerController as OwnerCustomerController;
+use App\Http\Controllers\Owner\CustomerDebtController as OwnerCustomerDebtController;
 
+use App\Http\Controllers\Staff\TableReservationController;
 use App\Http\Controllers\Staff\StaffLoginController;
 use App\Http\Controllers\Staff\PosOrderController;
+use App\Http\Controllers\Staff\CustomerController as StaffCustomerController;
+
+use App\Http\Controllers\QrMenu\QrMenuController;
 
 use App\Models\Restaurant;
 use App\Models\User;
@@ -73,6 +78,19 @@ Route::prefix('staff')->name('staff.')->group(function () {
         ->name('orders.unlock-bill');
     Route::post('/orders/complete-payment', [PosOrderController::class, 'completePayment'])
         ->name('orders.complete-payment');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Staff POS Customers
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/customers/search', [StaffCustomerController::class, 'search'])
+        ->name('customers.search');
+
+    Route::post('/customers', [StaffCustomerController::class, 'store'])
+        ->name('customers.store');
+
     Route::post('/reservations', [TableReservationController::class, 'store'])
         ->name('reservations.store');
 
@@ -474,6 +492,30 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
+    | Owner Customers / Customer Debts
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/customers', [OwnerCustomerController::class, 'index'])
+        ->name('customers.index');
+
+    Route::post('/customers', [OwnerCustomerController::class, 'store'])
+        ->name('customers.store');
+
+    Route::get('/customers/{customer}', [OwnerCustomerController::class, 'show'])
+        ->name('customers.show');
+
+    Route::get('/customer-debts', [OwnerCustomerDebtController::class, 'index'])
+        ->name('customer-debts.index');
+
+    Route::post('/customer-debts/{debt}/pay', [OwnerCustomerDebtController::class, 'pay'])
+        ->name('customer-debts.pay');
+
+    Route::post('/customer-debts/{debt}/close', [OwnerCustomerDebtController::class, 'close'])
+        ->name('customer-debts.close');
+
+    /*
+    |--------------------------------------------------------------------------
     | Owner Logout
     |--------------------------------------------------------------------------
     */
@@ -538,6 +580,16 @@ Route::prefix('branch')->name('branch.')->group(function () {
         return redirect()->route('owner.login');
     })->name('logout');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Public QR Menu
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/menu/{restaurantSlug}/table/{tableCode}', [QrMenuController::class, 'show'])
+    ->name('public.qr-menu.show');
+
 
 /*
 |--------------------------------------------------------------------------
