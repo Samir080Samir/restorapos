@@ -59,8 +59,9 @@ class PosOrderController extends Controller
             'order_id' => $currentOrder?->id,
             'table_status' => $table->status ?: 'empty',
             'payment_locked' => ($table->status === 'waiting_payment'),
-            'staff_name' => optional($currentOrder?->staff)->name ?: session('staff_user_name'),
+            'staff_name' => optional($currentOrder?->staff)->name ?: 'Əməkdaş',
             'opened_at' => optional($currentOrder?->opened_at)->toIso8601String(),
+            'opened_at_ms' => $currentOrder?->opened_at ? $currentOrder->opened_at->getTimestampMs() : null,
             'checks' => $orders->map(function ($order, $index) {
                 return [
                     'id' => $order->id,
@@ -68,7 +69,9 @@ class PosOrderController extends Controller
                     'order_number' => $order->order_number,
                     'total_amount' => (float) $order->total_amount,
                     'items_count' => $order->items->count(),
+                    'staff_name' => optional($order->staff)->name ?: 'Əməkdaş',
                     'opened_at' => optional($order->opened_at)->toIso8601String(),
+                    'opened_at_ms' => $order->opened_at ? $order->opened_at->getTimestampMs() : null,
                 ];
             })->values(),
             'items' => $currentOrder ? $this->formatItems($currentOrder) : [],
@@ -142,7 +145,8 @@ class PosOrderController extends Controller
                     'message' => 'Sifariş saxlanıldı.',
                     'order_id' => $order?->id,
                     'opened_at' => optional($order?->opened_at)->toIso8601String(),
-                    'staff_name' => session('staff_user_name'),
+                    'opened_at_ms' => $order?->opened_at ? $order->opened_at->getTimestampMs() : null,
+                    'staff_name' => optional($order?->staff)->name ?: session('staff_user_name') ?: 'Əməkdaş',
                     'table_status' => $table->fresh()->status,
                 ]);
             }
@@ -167,6 +171,8 @@ class PosOrderController extends Controller
             $this->recalculateOrder($order->fresh('items'));
             $this->syncTableStatus($table);
 
+            $order->load('staff');
+
             DB::commit();
 
             return response()->json([
@@ -174,7 +180,8 @@ class PosOrderController extends Controller
                 'message' => 'Sifariş saxlanıldı.',
                 'order_id' => $order->id,
                 'opened_at' => optional($order->opened_at)->toIso8601String(),
-                'staff_name' => session('staff_user_name'),
+                'opened_at_ms' => $order->opened_at ? $order->opened_at->getTimestampMs() : null,
+                'staff_name' => optional($order->staff)->name ?: session('staff_user_name') ?: 'Əməkdaş',
                 'table_status' => 'busy',
             ]);
         } catch (\Throwable $e) {
@@ -210,6 +217,7 @@ class PosOrderController extends Controller
             'total_amount' => 0,
         ]);
 
+        $order->load('staff');
         $table->update(['status' => 'busy']);
 
         return response()->json([
@@ -217,7 +225,8 @@ class PosOrderController extends Controller
             'message' => 'Yeni çek açıldı.',
             'order_id' => $order->id,
             'opened_at' => optional($order->opened_at)->toIso8601String(),
-            'staff_name' => session('staff_user_name'),
+            'opened_at_ms' => $order->opened_at ? $order->opened_at->getTimestampMs() : null,
+            'staff_name' => optional($order->staff)->name ?: session('staff_user_name') ?: 'Əməkdaş',
         ]);
     }
 
@@ -696,6 +705,7 @@ class PosOrderController extends Controller
                     'opened_at' => optional($order->opened_at)->format('H:i'),
                     'closed_at' => optional($order->closed_at)->format('H:i'),
                     'opened_at_iso' => optional($order->opened_at)->toIso8601String(),
+                    'opened_at_ms' => $order->opened_at ? $order->opened_at->getTimestampMs() : null,
                     'closed_at_iso' => optional($order->closed_at)->toIso8601String(),
                     'table_status' => optional($order->table)->status ?: 'busy',
                 ];

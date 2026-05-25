@@ -2431,6 +2431,7 @@
                                 data-area="{{ $area->name }}"
                                 data-staff="{{ $openOrder?->staff?->name ?? '' }}"
                                 data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}"
+                                data-opened-at-ms="{{ $openOrder?->opened_at ? $openOrder->opened_at->getTimestampMs() : '' }}"
                                 data-check-count="{{ $openOrdersCount }}"
                                 data-reservation-id="{{ $visibleReservation?->id ?? '' }}"
                                 data-reservation-time="{{ $visibleReservation ? $visibleReservation->formattedStartTime() : '' }}"
@@ -2467,11 +2468,12 @@
                                     {{ $table->seats }} nəfər
                                     @else
                                     <span class="staff-table-waiter">
-                                        {{ $table->openOrder?->staff?->name ?? 'Əməkdaş' }}
+                                        {{ $openOrder?->staff?->name ?? 'Əməkdaş' }}
                                     </span>
 
                                     <span class="staff-table-time"
-                                        data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}">
+                                        data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}"
+                                        data-opened-at-ms="{{ $openOrder?->opened_at ? $openOrder->opened_at->getTimestampMs() : '' }}">
                                         00:00
                                     </span>
                                     @endif
@@ -3034,6 +3036,7 @@
                 area: button.dataset.area || '',
                 staff: button.dataset.staff || '',
                 openedAt: button.dataset.openedAt || '',
+                openedAtMs: button.dataset.openedAtMs || '',
                 checkCount: button.dataset.checkCount || '0',
                 reservationId: button.dataset.reservationId || '',
                 reservationTime: button.dataset.reservationTime || '',
@@ -3063,6 +3066,8 @@
                 selectedTable.status = data.table_status || selectedTable.status;
                 selectedTable.staff = data.staff_name || selectedTable.staff || '';
                 selectedTable.openedAt = data.opened_at || selectedTable.openedAt || '';
+                selectedTable.openedAtMs = data.opened_at_ms || selectedTable.openedAtMs || '';
+                syncTableButtonOrderInfo(selectedTable.id, selectedTable.staff, selectedTable.openedAt, selectedTable.openedAtMs, selectedTable.status);
                 selectedTable.paymentLocked = !!data.payment_locked || selectedTable.status === 'waiting_payment';
                 selectedTable.stateLabel = selectedTable.paymentLocked ? 'Hesab gözləyir' : selectedTable.stateLabel;
                 selectedOrderId = data.order_id || null;
@@ -3207,6 +3212,13 @@
 
                 selectedOrderId = data.order_id || orderId;
                 currentChecks = Array.isArray(data.checks) ? data.checks : [];
+
+                if (selectedTable) {
+                    selectedTable.staff = data.staff_name || selectedTable.staff || 'Əməkdaş';
+                    selectedTable.openedAt = data.opened_at || selectedTable.openedAt || '';
+                    selectedTable.openedAtMs = data.opened_at_ms || selectedTable.openedAtMs || '';
+                    syncTableButtonOrderInfo(selectedTable.id, selectedTable.staff, selectedTable.openedAt, selectedTable.openedAtMs, selectedTable.status || data.table_status || 'busy');
+                }
                 Object.keys(cart).forEach(id => delete cart[id]);
 
                 if (Array.isArray(data.items)) {
@@ -3281,9 +3293,25 @@
                     selectedTable.openedAt = data.opened_at;
                 }
 
+                if (data.opened_at_ms) {
+                    selectedTable.openedAtMs = data.opened_at_ms;
+                }
+
                 if (data.staff_name) {
                     selectedTable.staff = data.staff_name;
                 }
+
+                if (data.table_status) {
+                    selectedTable.status = data.table_status;
+                }
+
+                syncTableButtonOrderInfo(
+                    selectedTable.id,
+                    selectedTable.staff || data.staff_name || 'Əməkdaş',
+                    selectedTable.openedAt || data.opened_at || '',
+                    selectedTable.openedAtMs || data.opened_at_ms || '',
+                    selectedTable.status || data.table_status || 'busy'
+                );
             }
 
             return true;
@@ -3581,6 +3609,19 @@
             tableButton.dataset.stateLabel = stateLabel;
             tableButton.dataset.paymentLocked = statusValue === 'waiting_payment' ? '1' : '0';
 
+            if (statusValue === 'empty') {
+                tableButton.dataset.staff = '';
+                tableButton.dataset.openedAt = '';
+                tableButton.dataset.openedAtMs = '';
+
+                const meta = tableButton.querySelector('.staff-table-meta');
+                if (meta) {
+                    meta.textContent = (tableButton.dataset.seats || '0') + ' nəfər';
+                }
+            } else if (selectedTable && String(selectedTable.id) === String(tableId)) {
+                syncTableButtonOrderInfo(tableId, selectedTable.staff || 'Əməkdaş', selectedTable.openedAt || '', selectedTable.openedAtMs || '', statusValue);
+            }
+
             const badge = tableButton.querySelector('.staff-table-badge');
 
             if (badge) {
@@ -3848,6 +3889,7 @@
                     selectedTable.stateLabel = 'Hesab gözləyir';
                     selectedTable.paymentLocked = true;
 
+                    syncTableButtonOrderInfo(selectedTable.id, selectedTable.staff || 'Əməkdaş', selectedTable.openedAt || '', selectedTable.openedAtMs || '', 'waiting_payment');
                     setTableUiStatus(selectedTable.id, 'waiting_payment', 'Hesab gözləyir', 'status-waiting');
                     renderCart();
                     renderTableInfo();
@@ -4058,36 +4100,94 @@
             return Number.isNaN(date.getTime()) ? null : date;
         }
 
-        function updateTableTimers() {
-            document.querySelectorAll('.staff-table-time').forEach(function(timer) {
-                const openedAt = timer.dataset.openedAt;
-                const startDate = parsePosDate(openedAt);
+        function getTimerStartMs(timer) {
+            const ms = parseInt(timer.dataset.openedAtMs || '', 10);
 
-                if (!startDate) {
-                    timer.textContent = '00:00';
-                    return;
-                }
+            if (Number.isFinite(ms) && ms > 0) {
+                return ms;
+            }
 
-                const start = startDate.getTime();
-                const now = new Date().getTime();
-                const diffSeconds = Math.max(0, Math.floor((now - start) / 1000));
+            const startDate = parsePosDate(timer.dataset.openedAt || '');
 
-                const hours = Math.floor(diffSeconds / 3600);
-                const minutes = Math.floor((diffSeconds % 3600) / 60);
-                const seconds = diffSeconds % 60;
+            return startDate ? startDate.getTime() : null;
+        }
 
-                if (hours > 0) {
-                    timer.textContent =
-                        String(hours).padStart(2, '0') + ':' +
-                        String(minutes).padStart(2, '0') + ':' +
-                        String(seconds).padStart(2, '0');
-                    return;
-                }
+        function formatElapsedTime(diffSeconds) {
+            const hours = Math.floor(diffSeconds / 3600);
+            const minutes = Math.floor((diffSeconds % 3600) / 60);
+            const seconds = diffSeconds % 60;
 
-                timer.textContent =
+            if (hours > 0) {
+                return String(hours).padStart(2, '0') + ':' +
                     String(minutes).padStart(2, '0') + ':' +
                     String(seconds).padStart(2, '0');
+            }
+
+            return String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+        }
+
+        function updateTableTimers() {
+            const now = Date.now();
+
+            document.querySelectorAll('.staff-table-time').forEach(function(timer) {
+                const start = getTimerStartMs(timer);
+
+                if (!start) {
+                    timer.textContent = '--:--';
+                    return;
+                }
+
+                const diffSeconds = Math.max(0, Math.floor((now - start) / 1000));
+                timer.textContent = formatElapsedTime(diffSeconds);
             });
+        }
+
+        function syncTableButtonOrderInfo(tableId, staffName, openedAt, openedAtMs, statusValue) {
+            const tableButton = document.querySelector('.staff-table-item[data-id="' + tableId + '"]');
+
+            if (!tableButton) {
+                return;
+            }
+
+            if (statusValue) {
+                tableButton.dataset.status = statusValue;
+            }
+
+            tableButton.dataset.staff = staffName || tableButton.dataset.staff || 'Əməkdaş';
+            tableButton.dataset.openedAt = openedAt || tableButton.dataset.openedAt || '';
+            tableButton.dataset.openedAtMs = openedAtMs || tableButton.dataset.openedAtMs || '';
+
+            const meta = tableButton.querySelector('.staff-table-meta');
+
+            if (!meta) {
+                return;
+            }
+
+            const currentStatus = tableButton.dataset.status || statusValue || 'busy';
+
+            if (currentStatus === 'empty') {
+                meta.textContent = (tableButton.dataset.seats || '0') + ' nəfər';
+                return;
+            }
+
+            meta.innerHTML =
+                '<span class="staff-table-waiter"></span>' +
+                '<span class="staff-table-time"></span>';
+
+            const waiter = meta.querySelector('.staff-table-waiter');
+            const timer = meta.querySelector('.staff-table-time');
+
+            if (waiter) {
+                waiter.textContent = tableButton.dataset.staff || 'Əməkdaş';
+            }
+
+            if (timer) {
+                timer.dataset.openedAt = tableButton.dataset.openedAt || '';
+                timer.dataset.openedAtMs = tableButton.dataset.openedAtMs || '';
+            }
+
+            updateTableTimers();
         }
 
 
