@@ -653,4 +653,8 @@ Route::middleware(['auth', 'super_admin'])
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     });
 
+Route::get('/debug-restaurants', function () {
+    return \App\Models\Restaurant::select('id', 'name', 'slug')->get();
+});
+
 require __DIR__ . '/auth.php';
