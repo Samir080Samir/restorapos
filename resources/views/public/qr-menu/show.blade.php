@@ -48,7 +48,7 @@
         }
 
         .hero {
-            height: 286px;
+            height: 250px;
             padding: 14px;
             color: #fff;
             position: relative;
@@ -76,8 +76,8 @@
         }
 
         .round {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 15px;
             background: rgba(0, 56, 45, .78);
             color: #fff;
@@ -89,13 +89,13 @@
         }
 
         .lang {
-            height: 40px;
-            padding: 0 13px;
+            height: 38px;
+            padding: 0 12px;
             border-radius: 15px;
             background: rgba(0, 30, 24, .78);
             color: #fff;
-            font-size: 13px;
-            font-weight: 900;
+            font-size: 12px;
+            font-weight: 950;
             border: 1px solid rgba(255, 255, 255, .18);
             backdrop-filter: blur(14px);
         }
@@ -103,13 +103,13 @@
         .brand {
             position: relative;
             z-index: 2;
-            padding-top: 22px;
+            padding-top: 16px;
             text-align: center;
         }
 
         .logo {
-            width: 58px;
-            height: 58px;
+            width: 50px;
+            height: 50px;
             margin: 0 auto 7px;
             border-radius: 21px;
             display: grid;
@@ -128,8 +128,8 @@
 
         .name {
             font-family: Georgia, "Times New Roman", serif;
-            font-size: 30px;
-            line-height: 1;
+            font-size: 27px;
+            line-height: 1.04;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: .3px;
@@ -146,8 +146,8 @@
 
         .table {
             display: inline-flex;
-            margin-top: 12px;
-            padding: 8px 14px;
+            margin-top: 10px;
+            padding: 7px 12px;
             border-radius: 999px;
             background: linear-gradient(135deg, #064236, #0b6b50);
             color: #fff;
@@ -157,8 +157,8 @@
         }
 
         .welcome {
-            margin-top: 12px;
-            font-size: 13px;
+            margin-top: 9px;
+            font-size: 12px;
             font-weight: 800;
             color: rgba(255, 255, 255, .92);
         }
@@ -166,9 +166,9 @@
         .bill {
             position: relative;
             z-index: 4;
-            margin: -46px 12px 14px;
-            border-radius: 24px;
-            padding: 15px;
+            margin: -62px 12px 12px;
+            border-radius: 22px;
+            padding: 13px;
             color: #fff;
             background:
                 radial-gradient(circle at top right, rgba(72, 187, 120, .28), transparent 34%),
@@ -188,7 +188,7 @@
         }
 
         .bill-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 950;
             display: flex;
             align-items: center;
@@ -196,7 +196,7 @@
         }
 
         .open {
-            margin-top: 11px;
+            margin-top: 9px;
             display: flex;
             align-items: center;
             gap: 7px;
@@ -273,13 +273,14 @@
 
         .check {
             width: 100%;
-            height: 42px;
-            margin-top: 14px;
-            border-radius: 15px;
+            height: 36px;
+            margin-top: 11px;
+            border-radius: 13px;
             background: linear-gradient(135deg, #f3c96a, #dba13e);
             color: #1d1a13;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 950;
+            box-shadow: 0 8px 18px rgba(219, 161, 62, .22);
         }
 
         .actions {
@@ -887,6 +888,123 @@
             font-weight: 950;
         }
 
+
+        .menu-sheet {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            background: #fffaf2;
+            overflow-y: auto;
+            position: relative;
+            padding: 18px 14px 96px;
+            animation: slide .22s ease-out;
+        }
+
+        .menu-sheet-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(15, 23, 42, .08);
+        }
+
+        .menu-sheet-title {
+            min-width: 0;
+        }
+
+        .menu-sheet-title h2 {
+            font-size: 22px;
+            line-height: 1.12;
+            color: #0f172a;
+            font-weight: 950;
+            letter-spacing: -.4px;
+        }
+
+        .menu-sheet-title p {
+            margin-top: 5px;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .info-list {
+            margin-top: 18px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-card {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, .06);
+            border-radius: 22px;
+            padding: 14px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+        }
+
+        .info-kicker {
+            color: #9a6a12;
+            font-size: 10px;
+            font-weight: 950;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            margin-top: 7px;
+            color: #111827;
+            font-size: 14px;
+            line-height: 1.45;
+            font-weight: 850;
+            word-break: break-word;
+        }
+
+        .social-row {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .social-link {
+            min-width: 42px;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #064236, #0d5a46);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 950;
+            box-shadow: 0 10px 22px rgba(6, 66, 54, .18);
+        }
+
+        .menu-note {
+            margin-top: 14px;
+            border-radius: 20px;
+            padding: 14px;
+            color: #fff;
+            background: linear-gradient(135deg, #05392f, #064236 60%, #0b5b47);
+            box-shadow: 0 14px 30px rgba(6, 44, 35, .22);
+        }
+
+        .menu-note strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 950;
+        }
+
+        .menu-note span {
+            display: block;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, .82);
+            font-size: 12px;
+            line-height: 1.45;
+            font-weight: 750;
+        }
+
         @media (max-width: 370px) {
             .name {
                 font-size: 26px;
@@ -937,18 +1055,16 @@
     <div class="app">
         <section class="hero">
             <div class="top">
-                <button class="round" type="button">☰</button>
-                <button class="lang" type="button">🌐 AZ⌄</button>
+                <button class="round" type="button" onclick="openMenuOverlay()">☰</button>
+                <button class="lang" type="button">AZ&nbsp;&nbsp;EN&nbsp;&nbsp;RU</button>
             </div>
 
             <div class="brand">
+                @if($restaurant->logo)
                 <div class="logo">
-                    @if($restaurant->logo)
                     <img src="{{ asset('storage/' . $restaurant->logo) }}" alt="{{ $restaurant->name }}">
-                    @else
-                    DQ
-                    @endif
                 </div>
+                @endif
 
                 <div class="name">{{ $restaurant->name }}</div>
                 <div class="type">Restoran</div>
@@ -974,7 +1090,7 @@
 
                     <div class="open">
                         <span class="dot"></span>
-                        <span>Açıq çek</span>
+                        <span>Aktiv hesab</span>
                         <span class="badge">{{ $openOrders->count() }}</span>
                     </div>
 
@@ -1011,7 +1127,7 @@
                 <div class="bill-label">Ümumi məbləğ</div>
                 <div class="bill-total">{{ number_format((float) $currentBillTotal, 2) }} ₼</div>
 
-                <button class="check" type="button">Çeki göstər ›</button>
+                <button class="check" type="button">Hesabı görüntülə →</button>
             </div>
     </div>
     </section>
@@ -1057,7 +1173,7 @@
 
     <div id="products" class="products-head">
         <h2 class="title">Məhsullar</h2>
-        <button class="sort" type="button">Populyar⌄</button>
+        <button class="sort" type="button">Populyar</button>
     </div>
 
     <div class="grid">
@@ -1134,6 +1250,68 @@
         <div><span>♡</span>Seçilənlər</div>
         <div><span>ⓘ</span>Haqqımızda</div>
     </nav>
+
+
+    <div id="menuOverlay" class="overlay">
+        <div class="menu-sheet">
+            <div class="menu-sheet-head">
+                <div class="menu-sheet-title">
+                    <h2>{{ $restaurant->name }}</h2>
+                    <p>{{ $table ? ($table->name ?: $table->code) . ' üçün QR menyu' : 'Ümumi QR menyu' }}</p>
+                </div>
+
+                <button class="round" type="button" onclick="closeMenuOverlay()">✕</button>
+            </div>
+
+            <div class="menu-note">
+                <strong>Restoran məlumatları</strong>
+                <span>Əlaqə, ünvan və sosial şəbəkə məlumatları bu bölmədə göstərilir.</span>
+            </div>
+
+            <div class="info-list">
+                <div class="info-card">
+                    <div class="info-kicker">Əlaqə</div>
+                    <div class="info-value">
+                        {{ data_get($restaurant, 'phone') ?: data_get($restaurant, 'contact_phone') ?: data_get($restaurant, 'mobile') ?: 'Əlaqə nömrəsi əlavə edilməyib' }}
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-kicker">Yerləşdiyi yer</div>
+                    <div class="info-value">
+                        {{ data_get($restaurant, 'address') ?: data_get($restaurant, 'location') ?: 'Ünvan əlavə edilməyib' }}
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-kicker">Sosial şəbəkələr</div>
+                    <div class="info-value">Bizi izləyin və yeniliklərdən xəbərdar olun.</div>
+
+                    <div class="social-row">
+                        @if(data_get($restaurant, 'instagram'))
+                        <a class="social-link" href="{{ data_get($restaurant, 'instagram') }}" target="_blank" rel="noopener">Instagram</a>
+                        @endif
+
+                        @if(data_get($restaurant, 'facebook'))
+                        <a class="social-link" href="{{ data_get($restaurant, 'facebook') }}" target="_blank" rel="noopener">Facebook</a>
+                        @endif
+
+                        @if(data_get($restaurant, 'tiktok'))
+                        <a class="social-link" href="{{ data_get($restaurant, 'tiktok') }}" target="_blank" rel="noopener">TikTok</a>
+                        @endif
+
+                        @if(data_get($restaurant, 'website'))
+                        <a class="social-link" href="{{ data_get($restaurant, 'website') }}" target="_blank" rel="noopener">Web</a>
+                        @endif
+
+                        @if(! data_get($restaurant, 'instagram') && ! data_get($restaurant, 'facebook') && ! data_get($restaurant, 'tiktok') && ! data_get($restaurant, 'website'))
+                        <span class="social-link">Tezliklə</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="productDetailOverlay" class="overlay">
         <div class="detail">
@@ -1307,6 +1485,17 @@
                 closeProductDetail();
             }
         });
+
+
+        function openMenuOverlay() {
+            document.getElementById('menuOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuOverlay() {
+            document.getElementById('menuOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
         updateCart();
     </script>
