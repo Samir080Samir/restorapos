@@ -340,6 +340,12 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
             Route::post('/store', [ProductController::class, 'store'])
                 ->name('store');
+
+            Route::get('/{product}/edit', [ProductController::class, 'edit'])
+                ->name('edit');
+
+            Route::put('/{product}', [ProductController::class, 'update'])
+                ->name('update');
         });
 
     /*
@@ -586,6 +592,8 @@ Route::prefix('branch')->name('branch.')->group(function () {
 | Public QR Menu
 |--------------------------------------------------------------------------
 */
+Route::get('/menu/{restaurantSlug}', [QrMenuController::class, 'showRestaurant'])
+    ->name('public.qr-menu.restaurant');
 
 Route::get('/menu/{restaurantSlug}/table/{tableCode}', [QrMenuController::class, 'show'])
     ->name('public.qr-menu.show');

@@ -171,7 +171,7 @@
 
                         <td class="px-4 py-3">
                             <div class="flex justify-end gap-2">
-                                <a href="#"
+                                <a href="{{ route('owner.menu.products.edit', $product) }}"
                                     class="h-9 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-black flex items-center">
                                     Düzəliş
                                 </a>
