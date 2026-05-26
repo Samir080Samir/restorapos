@@ -527,10 +527,109 @@
                 left: 20px;
             }
         }
+
+
+        /* ================= QR WAITER CALL ALERT - LOGIN SCREEN ================= */
+
+        .login-waiter-alert-wrap {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            z-index: 99999;
+            width: min(390px, calc(100vw - 32px));
+            display: grid;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .login-waiter-alert {
+            border-radius: 20px;
+            padding: 15px;
+            background:
+                radial-gradient(circle at top right, rgba(72, 187, 120, .28), transparent 34%),
+                linear-gradient(135deg, #063b31, #083326 60%, #0b4d3d);
+            color: #fff;
+            box-shadow: 0 22px 55px rgba(6, 44, 35, .28);
+            border: 1px solid rgba(255, 255, 255, .12);
+            display: none;
+            grid-template-columns: 46px 1fr;
+            gap: 12px;
+            align-items: center;
+            pointer-events: auto;
+            animation: waiterLoginIn .22s ease forwards;
+        }
+
+        .login-waiter-alert.show {
+            display: grid;
+        }
+
+        .login-waiter-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 17px;
+            background: rgba(255, 255, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10);
+        }
+
+        .login-waiter-title {
+            font-size: 14px;
+            font-weight: 900;
+            line-height: 1.15;
+        }
+
+        .login-waiter-meta {
+            margin-top: 5px;
+            color: rgba(255, 255, 255, .82);
+            font-size: 12px;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+
+        .login-waiter-count {
+            color: #f1c86a;
+            font-weight: 900;
+        }
+
+        @keyframes waiterLoginIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media(max-width: 900px) {
+            .login-waiter-alert-wrap {
+                top: auto;
+                right: 16px;
+                left: 16px;
+                bottom: 16px;
+                width: auto;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <div id="loginWaiterAlertWrap" class="login-waiter-alert-wrap">
+        <div id="loginWaiterAlert" class="login-waiter-alert" aria-live="polite">
+            <div class="login-waiter-icon">🛎</div>
+            <div>
+                <div id="loginWaiterTitle" class="login-waiter-title">Ofisiant çağırışı var</div>
+                <div id="loginWaiterMeta" class="login-waiter-meta">Yeni çağırış gözləyir.</div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="login-wrapper">
 
@@ -966,6 +1065,194 @@
             element.className = 'status-message ' + type;
             element.innerHTML = message || '';
         }
+
+
+        /* ================= QR WAITER CALL ALERT - LOGIN SCREEN ================= */
+        (function() {
+            const alertBox = document.getElementById('loginWaiterAlert');
+            const alertTitle = document.getElementById('loginWaiterTitle');
+            const alertMeta = document.getElementById('loginWaiterMeta');
+
+            let knownWaiterCallIds = new Set();
+            let firstWaiterLoad = true;
+            let loginWaiterLastReminderAt = 0;
+            let loginWaiterLastActiveSignature = '';
+            let loginWaiterReminderCount = 0;
+
+            function escapeWaiterText(value) {
+                return String(value ?? '')
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#039;');
+            }
+
+            function playLoginWaiterSignal() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+
+                    const ctx = new AudioCtx();
+                    const now = ctx.currentTime;
+
+                    const compressor = ctx.createDynamicsCompressor();
+                    compressor.threshold.setValueAtTime(-28, now);
+                    compressor.knee.setValueAtTime(24, now);
+                    compressor.ratio.setValueAtTime(5, now);
+                    compressor.attack.setValueAtTime(0.012, now);
+                    compressor.release.setValueAtTime(0.38, now);
+                    compressor.connect(ctx.destination);
+
+                    const master = ctx.createGain();
+                    master.gain.setValueAtTime(0.0001, now);
+                    master.gain.exponentialRampToValueAtTime(1.18, now + 0.09);
+                    master.gain.setValueAtTime(1.18, now + 2.15);
+                    master.gain.exponentialRampToValueAtTime(0.0001, now + 2.85);
+                    master.connect(compressor);
+
+                    const delay = ctx.createDelay(0.45);
+                    delay.delayTime.setValueAtTime(0.18, now);
+
+                    const feedback = ctx.createGain();
+                    feedback.gain.setValueAtTime(0.18, now);
+
+                    delay.connect(feedback);
+                    feedback.connect(delay);
+                    delay.connect(master);
+
+                    function bell(start, duration, freq, type, volume) {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startAt = now + start;
+                        const endAt = startAt + duration;
+
+                        osc.type = type || 'sine';
+                        osc.frequency.setValueAtTime(freq, startAt);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 1.015, endAt);
+
+                        gain.gain.setValueAtTime(0.0001, startAt);
+                        gain.gain.exponentialRampToValueAtTime(volume, startAt + 0.055);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, endAt);
+
+                        osc.connect(gain);
+                        gain.connect(master);
+                        gain.connect(delay);
+
+                        osc.start(startAt);
+                        osc.stop(endAt + 0.05);
+                    }
+
+                    // Premium hotel / reception notification tone
+                    bell(0.00, 1.05, 523.25, 'sine', 0.55); // C5
+                    bell(0.08, 1.22, 659.25, 'triangle', 0.35); // E5
+                    bell(0.18, 1.34, 783.99, 'sine', 0.27); // G5
+
+                    bell(1.10, 1.12, 587.33, 'sine', 0.55); // D5
+                    bell(1.20, 1.35, 739.99, 'triangle', 0.34); // F#5
+                    bell(1.34, 1.42, 880.00, 'sine', 0.26); // A5
+                } catch (error) {
+                    // Səs dəstəklənməsə panelin işləməsinə mane olmur.
+                }
+            }
+
+            function playLoginWaiterReminderSeries() {
+                playLoginWaiterSignal();
+            }
+
+            function renderLoginWaiterAlert(calls) {
+                calls = Array.isArray(calls) ? calls : [];
+
+                if (!alertBox || !alertTitle || !alertMeta) return;
+
+                if (!calls.length) {
+                    alertBox.classList.remove('show');
+                    return;
+                }
+
+                const latest = calls[0] || {};
+                const tableName = escapeWaiterText(latest.table_name || ('Masa #' + latest.table_id));
+                const time = escapeWaiterText(latest.time || '');
+
+                alertTitle.innerHTML = `🛎 ${tableName} ofisiant çağırır`;
+                alertMeta.innerHTML = `<span class="login-waiter-count">${calls.length}</span> aktiv çağırış var${time ? ' · Saat: ' + time : ''}`;
+                alertBox.classList.add('show');
+            }
+
+            async function loadLoginWaiterCalls() {
+                try {
+                    const waiterCallsUrl = new URL("{{ url('/staff/waiter-calls') }}", window.location.origin);
+                    const savedTerminalCode = localStorage.getItem('novapos_terminal_code') || savedTerminalForView || '';
+
+                    if (savedTerminalCode) {
+                        waiterCallsUrl.searchParams.set('terminal_code', savedTerminalCode);
+                    }
+
+                    const response = await fetch(waiterCallsUrl.toString(), {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) return;
+
+                    const data = await response.json();
+
+                    if (!data.success) return;
+
+                    const calls = Array.isArray(data.calls) ? data.calls : [];
+                    const nowMs = Date.now();
+                    const activeSignature = calls.map(function(call) {
+                        return String(call.id);
+                    }).join('|');
+
+                    if (!calls.length) {
+                        loginWaiterLastReminderAt = 0;
+                        loginWaiterLastActiveSignature = '';
+                        loginWaiterReminderCount = 0;
+                    } else if (activeSignature !== loginWaiterLastActiveSignature) {
+                        loginWaiterLastActiveSignature = activeSignature;
+                        loginWaiterLastReminderAt = nowMs;
+                        loginWaiterReminderCount = 0;
+                    }
+
+                    const currentIds = new Set(calls.map(function(call) {
+                        return String(call.id);
+                    }));
+
+                    const hasNewCall = calls.some(function(call) {
+                        return !knownWaiterCallIds.has(String(call.id));
+                    });
+
+                    renderLoginWaiterAlert(calls);
+
+                    if (!firstWaiterLoad && hasNewCall && calls.length > 0) {
+                        playLoginWaiterSignal();
+                        loginWaiterLastReminderAt = nowMs;
+                    }
+
+                    if (firstWaiterLoad && calls.length > 0) {
+                        playLoginWaiterSignal();
+                        loginWaiterLastReminderAt = nowMs;
+                    }
+
+                    if (!firstWaiterLoad && calls.length > 0 && loginWaiterLastReminderAt > 0 && loginWaiterReminderCount < 3 && (nowMs - loginWaiterLastReminderAt) >= 60000) {
+                        playLoginWaiterReminderSeries();
+                        loginWaiterReminderCount++;
+                        loginWaiterLastReminderAt = nowMs;
+                    }
+
+                    knownWaiterCallIds = currentIds;
+                    firstWaiterLoad = false;
+                } catch (error) {
+                    // Login ekranında səssiz qalırıq ki giriş prosesini pozmasın.
+                }
+            }
+
+            loadLoginWaiterCalls();
+            setInterval(loadLoginWaiterCalls, 3000);
+        })();
     </script>
 
 </body>

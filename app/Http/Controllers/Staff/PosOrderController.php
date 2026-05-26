@@ -61,7 +61,7 @@ class PosOrderController extends Controller
             'order_id' => $currentOrder?->id,
             'table_status' => $table->status ?: 'empty',
             'payment_locked' => ($table->status === 'waiting_payment'),
-            'staff_name' => optional($currentOrder?->staff)->name ?: 'Əməkdaş',
+            'staff_name' => $this->displayStaffName($currentOrder),
             'opened_at' => optional($currentOrder?->opened_at)->toIso8601String(),
             'opened_at_ms' => $currentOrder?->opened_at ? $currentOrder->opened_at->getTimestampMs() : null,
             'checks' => $orders->map(function ($order, $index) {
@@ -71,7 +71,7 @@ class PosOrderController extends Controller
                     'order_number' => $order->order_number,
                     'total_amount' => (float) $order->total_amount,
                     'items_count' => $order->items->count(),
-                    'staff_name' => optional($order->staff)->name ?: 'Əməkdaş',
+                    'staff_name' => $this->displayStaffName($order),
                     'opened_at' => optional($order->opened_at)->toIso8601String(),
                     'opened_at_ms' => $order->opened_at ? $order->opened_at->getTimestampMs() : null,
                 ];
@@ -744,7 +744,10 @@ class PosOrderController extends Controller
         }
 
         if ($staffRole !== 'cashier') {
-            $ordersQuery->where('staff_id', $staffId);
+            $ordersQuery->where(function ($query) use ($staffId) {
+                $query->where('staff_id', $staffId)
+                    ->orWhereNull('staff_id');
+            });
         }
 
         $orders = $ordersQuery
@@ -778,7 +781,7 @@ class PosOrderController extends Controller
                     'table_id' => $order->table_id,
                     'table_name' => optional($order->table)->name ?: 'Masa',
                     'area_name' => optional(optional($order->table)->diningArea)->name ?: '',
-                    'staff_name' => optional($order->staff)->name ?: 'Əməkdaş',
+                    'staff_name' => $this->displayStaffName($order),
                     'items_count' => (int) ($order->items_count ?? 0),
                     'total_amount' => (float) $order->total_amount,
                     'opened_at' => optional($order->opened_at)->format('H:i'),
@@ -790,6 +793,34 @@ class PosOrderController extends Controller
                 ];
             })->values(),
         ]);
+    }
+
+    private function displayStaffName(?PosOrder $order, ?string $fallback = null): string
+    {
+        if (! $order) {
+            return $fallback ?: session('staff_user_name') ?: 'Əməkdaş';
+        }
+
+        if ($order->relationLoaded('staff') && $order->staff) {
+            return $order->staff->name;
+        }
+
+        if (! $order->relationLoaded('staff')) {
+            $order->loadMissing('staff');
+
+            if ($order->staff) {
+                return $order->staff->name;
+            }
+        }
+
+        $orderNumber = (string) ($order->order_number ?? '');
+        $note = (string) ($order->note ?? '');
+
+        if (str_starts_with($orderNumber, 'QR-') || str_contains($note, 'QR Menu')) {
+            return 'QR Müştəri';
+        }
+
+        return $fallback ?: session('staff_user_name') ?: 'Əməkdaş';
     }
 
     private function resolveOrderForSave(Request $request, RestaurantTable $table, ?int $staffId, ?string $staffRole = null): ?PosOrder

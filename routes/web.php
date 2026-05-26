@@ -60,24 +60,43 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffLoginController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [StaffLoginController::class, 'logout'])->name('logout');
     Route::post('/terminal/reset', [StaffLoginController::class, 'resetTerminal'])->name('terminal.reset');
+
+    Route::get('/waiter-calls', [StaffLoginController::class, 'waiterCalls'])
+        ->name('waiter-calls.index');
+
+    Route::post('/waiter-calls/{call}/acknowledge', [StaffLoginController::class, 'acknowledgeWaiterCall'])
+        ->name('waiter-calls.acknowledge');
+
+    Route::post('/waiter-calls/{call}/resolve', [StaffLoginController::class, 'resolveWaiterCall'])
+        ->name('waiter-calls.resolve');
+
     Route::post('/orders', [PosOrderController::class, 'store'])
         ->name('orders.store');
+
     Route::get('/orders/open-checks', [PosOrderController::class, 'openChecks'])
         ->name('orders.open-checks');
+
     Route::get('/orders/table/{table}', [PosOrderController::class, 'active'])
         ->name('orders.active');
+
     Route::post('/orders/new-check', [PosOrderController::class, 'newCheck'])
         ->name('orders.new-check');
+
     Route::post('/orders/move-table', [PosOrderController::class, 'moveTable'])
         ->name('orders.move-table');
+
     Route::post('/orders/merge-tables', [PosOrderController::class, 'mergeTables'])
         ->name('orders.merge-tables');
+
     Route::post('/orders/merge-checks', [PosOrderController::class, 'mergeChecks'])
         ->name('orders.merge-checks');
+
     Route::post('/orders/print-bill', [PosOrderController::class, 'printBill'])
         ->name('orders.print-bill');
+
     Route::post('/orders/unlock-bill', [PosOrderController::class, 'unlockBill'])
         ->name('orders.unlock-bill');
+
     Route::post('/orders/complete-payment', [PosOrderController::class, 'completePayment'])
         ->name('orders.complete-payment');
 
@@ -98,6 +117,7 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
     Route::post('/reservations/{id}/cancel', [TableReservationController::class, 'cancel'])
         ->name('reservations.cancel');
+
     Route::post('/reservations/{id}/complete', [TableReservationController::class, 'complete'])
         ->name('reservations.complete');
 });
@@ -283,10 +303,10 @@ Route::prefix('owner')->name('owner.')->group(function () {
     })->name('dashboard');
 
     /*
-|--------------------------------------------------------------------------
-| Owner QR Menu Management
-|--------------------------------------------------------------------------
-*/
+    |--------------------------------------------------------------------------
+    | Owner QR Menu Management
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/qr-menu', [QrMenuManagementController::class, 'index'])
         ->name('qr-menu.index');
@@ -457,10 +477,11 @@ Route::prefix('owner')->name('owner.')->group(function () {
     Route::put('/staff/users/{user}', [OwnerStaffController::class, 'update'])->name('staff.users.update');
 
     /*
-|--------------------------------------------------------------------------
-| Owner Tables
-|--------------------------------------------------------------------------
-*/
+    |--------------------------------------------------------------------------
+    | Owner Tables
+    |--------------------------------------------------------------------------
+    */
+
     Route::get('/tables', [TableManagementController::class, 'tablesIndex'])
         ->name('tables.index');
 
@@ -505,7 +526,6 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
     Route::post('/reservations/{id}/complete', [\App\Http\Controllers\Owner\TableReservationController::class, 'complete'])
         ->name('reservations.complete');
-
 
     /*
     |--------------------------------------------------------------------------
@@ -618,17 +638,12 @@ Route::prefix('branch')->name('branch.')->group(function () {
 | Public QR Menu
 |--------------------------------------------------------------------------
 */
+
 Route::get('/menu/{restaurantSlug}', [QrMenuController::class, 'showRestaurant'])
     ->name('public.qr-menu.restaurant');
 
 Route::get('/menu/{restaurantSlug}/table/{tableCode}', [QrMenuController::class, 'show'])
     ->name('public.qr-menu.show');
-
-Route::get('/qr-live', [QrLiveMonitorController::class, 'index'])
-    ->name('qr-live.index');
-
-Route::get('/qr-live/data', [QrLiveMonitorController::class, 'data'])
-    ->name('qr-live.data');
 
 Route::post(
     '/menu/{restaurantSlug}/table/{tableCode}/send-order',
@@ -639,6 +654,17 @@ Route::post(
     '/menu/{restaurantSlug}/table/{tableCode}/request-bill',
     [QrMenuController::class, 'requestBill']
 )->name('public.qr-menu.request-bill');
+
+Route::post(
+    '/menu/{restaurantSlug}/table/{tableCode}/call-waiter',
+    [QrMenuController::class, 'callWaiter']
+)->name('public.qr-menu.call-waiter');
+
+Route::get('/qr-live', [QrLiveMonitorController::class, 'index'])
+    ->name('qr-live.index');
+
+Route::get('/qr-live/data', [QrLiveMonitorController::class, 'data'])
+    ->name('qr-live.data');
 
 /*
 |--------------------------------------------------------------------------

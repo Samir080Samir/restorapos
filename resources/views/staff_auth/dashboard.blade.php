@@ -2386,6 +2386,150 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ================= QR WAITER CALLS ================= */
+
+        .waiter-call-btn {
+            position: relative;
+        }
+
+        .waiter-call-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 18px rgba(239, 68, 68, .28);
+        }
+
+        .waiter-call-badge.show {
+            display: flex;
+        }
+
+        .waiter-calls-panel {
+            position: fixed;
+            top: 72px;
+            right: 14px;
+            width: min(420px, calc(100vw - 28px));
+            max-height: calc(100vh - 92px);
+            z-index: 8200;
+            background: #ffffff;
+            border: 1px solid #e5ebf5;
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
+            padding: 14px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .waiter-calls-panel.show {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .waiter-calls-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .waiter-calls-title {
+            color: #071143;
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .waiter-calls-subtitle {
+            margin-top: 6px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .waiter-calls-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            color: #071143;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .waiter-calls-list {
+            margin-top: 12px;
+            overflow-y: auto;
+            display: grid;
+            gap: 9px;
+            padding-right: 4px;
+        }
+
+        .waiter-call-row {
+            border: 1px solid rgba(32, 201, 133, .26);
+            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(32, 201, 133, .10), #fff);
+            padding: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+        }
+
+        .waiter-call-row strong {
+            display: block;
+            color: #071143;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .waiter-call-row span {
+            display: block;
+            margin-top: 4px;
+            color: #64748b;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        .waiter-call-ack {
+            height: 36px;
+            padding: 0 12px;
+            border-radius: 11px;
+            border: none;
+            background: linear-gradient(90deg, #17b978, #21c985);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .waiter-calls-empty {
+            padding: 24px 12px;
+            text-align: center;
+            border: 1px dashed #dbe3ef;
+            border-radius: 14px;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 800;
+            background: #fbfdff;
+        }
     </style>
 </head>
 
@@ -2426,6 +2570,22 @@
             <div class="checks-empty">Açıq çek yoxdur</div>
         </div>
     </section>
+
+    <section id="waiterCallsPanel" class="waiter-calls-panel" aria-hidden="true">
+        <div class="waiter-calls-head">
+            <div>
+                <div class="waiter-calls-title">Ofisiant çağırışları</div>
+                <div id="waiterCallsSubtitle" class="waiter-calls-subtitle">Aktiv çağırış yoxdur</div>
+            </div>
+
+            <button type="button" id="closeWaiterCallsPanelBtn" class="waiter-calls-close">×</button>
+        </div>
+
+        <div id="waiterCallsList" class="waiter-calls-list">
+            <div class="waiter-calls-empty">Aktiv çağırış yoxdur</div>
+        </div>
+    </section>
+
 
     @php
     $restaurantName = session('staff_restaurant_name') ?: 'Restoran';
@@ -2506,11 +2666,12 @@
             <div class="nav-spacer"></div>
 
             <div class="nav-status">
-                <a href="#" class="nav-status-item">
+                <a href="#" id="waiterCallsBtn" class="nav-status-item waiter-call-btn" title="Ofisiant çağırışları">
                     <svg fill="none" stroke="currentColor" stroke-width="2.1" viewBox="0 0 24 24">
                         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
                         <path d="M13.7 21a2 2 0 0 1-3.4 0" />
                     </svg>
+                    <span id="waiterCallBadge" class="waiter-call-badge">0</span>
                 </a>
 
                 <div class="nav-status-item">
@@ -2547,11 +2708,21 @@
         ];
 
         foreach ($allTables as $countTable) {
+        $hasOpenOrders = method_exists($countTable, 'openOrders')
+        ? $countTable->openOrders()->exists()
+        : false;
+
         $state = method_exists($countTable, 'reservationState')
         ? $countTable->reservationState()
         : ($countTable->status ?? 'empty');
 
-        if ($state === 'empty') {
+        if ($hasOpenOrders) {
+        if (($countTable->status ?? '') === 'waiting_payment') {
+        $tableStatusCounts['waiting']++;
+        } else {
+        $tableStatusCounts['busy']++;
+        }
+        } elseif ($state === 'empty') {
         $tableStatusCounts['empty']++;
         } elseif ($state === 'busy') {
         $tableStatusCounts['busy']++;
@@ -2647,8 +2818,12 @@
                             @forelse($area->tables as $table)
 
                             @php
-                            $openOrder = $table->openOrder()->with('staff')->first();
+                            $openOrder = $table->openOrders()->with('staff')->latest('opened_at')->first();
                             $openOrdersCount = $table->openOrders()->count();
+                            $isQrOrder = $openOrder && (\Illuminate\Support\Str::startsWith((string) $openOrder->order_number, 'QR-') || str_contains((string) $openOrder->note, 'QR Menu'));
+                            $activeStaffName = $openOrder
+                            ? ($openOrder->staff?->name ?: ($isQrOrder ? 'QR Müştəri' : 'Əməkdaş'))
+                            : '';
                             $tableState = $table->reservationState();
                             $tableStateLabel = $table->reservationStateLabel();
                             $visibleReservation = method_exists($table, 'visibleReservation')
@@ -2672,7 +2847,7 @@
                                 data-state="{{ $tableState }}"
                                 data-state-label="{{ $tableStateLabel }}"
                                 data-area="{{ $area->name }}"
-                                data-staff="{{ $openOrder?->staff?->name ?? '' }}"
+                                data-staff="{{ $activeStaffName }}"
                                 data-opened-at="{{ optional($openOrder?->opened_at)->toIso8601String() }}"
                                 data-opened-at-ms="{{ $openOrder?->opened_at ? $openOrder->opened_at->getTimestampMs() : '' }}"
                                 data-check-count="{{ $openOrdersCount }}"
@@ -2711,7 +2886,7 @@
                                     {{ $table->seats }} nəfər
                                     @else
                                     <span class="staff-table-waiter">
-                                        {{ $openOrder?->staff?->name ?? 'Əməkdaş' }}
+                                        {{ $activeStaffName ?: 'Əməkdaş' }}
                                     </span>
 
                                     <span class="staff-table-time"
@@ -5864,6 +6039,299 @@
                 }
             }
         });
+
+
+        /* ================= QR WAITER CALLS LIVE JS - FIXED ================= */
+        (function() {
+            const waiterCallsBtn = document.getElementById('waiterCallsBtn');
+            const waiterCallsPanel = document.getElementById('waiterCallsPanel');
+            const closeWaiterCallsPanelBtn = document.getElementById('closeWaiterCallsPanelBtn');
+            const waiterCallsList = document.getElementById('waiterCallsList');
+            const waiterCallsSubtitle = document.getElementById('waiterCallsSubtitle');
+            const waiterCallBadge = document.getElementById('waiterCallBadge');
+
+            let knownWaiterCallIds = new Set();
+            let firstWaiterLoad = true;
+            let waiterLastReminderAt = 0;
+            let waiterLastActiveSignature = '';
+            let waiterReminderCount = 0;
+
+            function waiterEscape(value) {
+                return String(value ?? '')
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#039;');
+            }
+
+            function openWaiterCallsPanel() {
+                if (!waiterCallsPanel) return;
+                waiterCallsPanel.classList.add('show');
+                waiterCallsPanel.setAttribute('aria-hidden', 'false');
+            }
+
+            function closeWaiterCallsPanel() {
+                if (!waiterCallsPanel) return;
+                waiterCallsPanel.classList.remove('show');
+                waiterCallsPanel.setAttribute('aria-hidden', 'true');
+            }
+
+            function playWaiterBeep() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+
+                    const ctx = new AudioCtx();
+                    const now = ctx.currentTime;
+
+                    const compressor = ctx.createDynamicsCompressor();
+                    compressor.threshold.setValueAtTime(-28, now);
+                    compressor.knee.setValueAtTime(24, now);
+                    compressor.ratio.setValueAtTime(5, now);
+                    compressor.attack.setValueAtTime(0.012, now);
+                    compressor.release.setValueAtTime(0.38, now);
+                    compressor.connect(ctx.destination);
+
+                    const master = ctx.createGain();
+                    master.gain.setValueAtTime(0.0001, now);
+                    master.gain.exponentialRampToValueAtTime(1.18, now + 0.09);
+                    master.gain.setValueAtTime(1.18, now + 2.15);
+                    master.gain.exponentialRampToValueAtTime(0.0001, now + 2.85);
+                    master.connect(compressor);
+
+                    const delay = ctx.createDelay(0.45);
+                    delay.delayTime.setValueAtTime(0.18, now);
+
+                    const feedback = ctx.createGain();
+                    feedback.gain.setValueAtTime(0.18, now);
+
+                    delay.connect(feedback);
+                    feedback.connect(delay);
+                    delay.connect(master);
+
+                    function bell(start, duration, freq, type, volume) {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startAt = now + start;
+                        const endAt = startAt + duration;
+
+                        osc.type = type || 'sine';
+                        osc.frequency.setValueAtTime(freq, startAt);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 1.015, endAt);
+
+                        gain.gain.setValueAtTime(0.0001, startAt);
+                        gain.gain.exponentialRampToValueAtTime(volume, startAt + 0.055);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, endAt);
+
+                        osc.connect(gain);
+                        gain.connect(master);
+                        gain.connect(delay);
+
+                        osc.start(startAt);
+                        osc.stop(endAt + 0.05);
+                    }
+
+                    // Premium hotel / reception notification tone
+                    bell(0.00, 1.05, 523.25, 'sine', 0.55); // C5
+                    bell(0.08, 1.22, 659.25, 'triangle', 0.35); // E5
+                    bell(0.18, 1.34, 783.99, 'sine', 0.27); // G5
+
+                    bell(1.10, 1.12, 587.33, 'sine', 0.55); // D5
+                    bell(1.20, 1.35, 739.99, 'triangle', 0.34); // F#5
+                    bell(1.34, 1.42, 880.00, 'sine', 0.26); // A5
+                } catch (error) {
+                    // Səs dəstəklənməsə panelin işləməsinə mane olmur.
+                }
+            }
+
+            function playWaiterReminderSeries() {
+                playWaiterBeep();
+            }
+
+            function renderWaiterCalls(calls) {
+                calls = Array.isArray(calls) ? calls : [];
+
+                if (waiterCallBadge) {
+                    waiterCallBadge.textContent = calls.length;
+                    waiterCallBadge.classList.toggle('show', calls.length > 0);
+                }
+
+                if (waiterCallsSubtitle) {
+                    waiterCallsSubtitle.textContent = calls.length > 0 ?
+                        calls.length + ' aktiv çağırış var' :
+                        'Aktiv çağırış yoxdur';
+                }
+
+                if (!waiterCallsList) return;
+
+                if (!calls.length) {
+                    waiterCallsList.innerHTML = '<div class="waiter-calls-empty">Aktiv çağırış yoxdur</div>';
+                    return;
+                }
+
+                waiterCallsList.innerHTML = calls.map(function(call) {
+                    const tableName = waiterEscape(call.table_name || ('Masa #' + call.table_id));
+                    const tableCode = waiterEscape(call.table_code || '');
+                    const time = waiterEscape(call.time || '');
+
+                    return `
+                        <div class="waiter-call-row" data-waiter-call-id="${call.id}">
+                            <div>
+                                <strong>🛎 ${tableName}</strong>
+                                <span>${tableCode ? 'Kod: ' + tableCode + ' · ' : ''}${time ? 'Saat: ' + time : 'Yeni çağırış'}</span>
+                            </div>
+
+                            <button type="button" class="waiter-call-ack" data-waiter-call-resolve="${call.id}">
+                                Qəbul et
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            async function loadWaiterCalls() {
+                try {
+                    const response = await fetch("{{ url('/staff/waiter-calls') }}", {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.success) {
+                        return;
+                    }
+
+                    const calls = Array.isArray(data.calls) ? data.calls : [];
+                    const nowMs = Date.now();
+                    const activeSignature = calls.map(function(call) {
+                        return String(call.id);
+                    }).join('|');
+
+                    if (!calls.length) {
+                        waiterLastReminderAt = 0;
+                        waiterLastActiveSignature = '';
+                        waiterReminderCount = 0;
+                    } else if (activeSignature !== waiterLastActiveSignature) {
+                        waiterLastActiveSignature = activeSignature;
+                        waiterLastReminderAt = nowMs;
+                        waiterReminderCount = 0;
+                    }
+
+                    const currentIds = new Set(calls.map(function(call) {
+                        return String(call.id);
+                    }));
+
+                    const hasNewCall = calls.some(function(call) {
+                        return !knownWaiterCallIds.has(String(call.id));
+                    });
+
+                    renderWaiterCalls(calls);
+
+                    if (!firstWaiterLoad && hasNewCall && calls.length > 0) {
+                        openWaiterCallsPanel();
+                        playWaiterBeep();
+                        waiterLastReminderAt = nowMs;
+
+                        if (typeof showPosToast === 'function') {
+                            showPosToast('Yeni ofisiant çağırışı var.', 'warning');
+                        }
+                    }
+
+                    if (firstWaiterLoad && calls.length > 0) {
+                        openWaiterCallsPanel();
+                        playWaiterBeep();
+                        waiterLastReminderAt = nowMs;
+                    }
+
+                    if (!firstWaiterLoad && calls.length > 0 && waiterLastReminderAt > 0 && waiterReminderCount < 3 && (nowMs - waiterLastReminderAt) >= 60000) {
+                        openWaiterCallsPanel();
+                        playWaiterReminderSeries();
+                        waiterReminderCount++;
+                        waiterLastReminderAt = nowMs;
+
+                        if (typeof showPosToast === 'function') {
+                            showPosToast('Ofisiant çağırışı hələ qəbul edilməyib.', 'warning');
+                        }
+                    }
+
+                    knownWaiterCallIds = currentIds;
+                    firstWaiterLoad = false;
+                } catch (error) {
+                    console.error('Waiter calls load error:', error);
+                }
+            }
+
+            async function resolveWaiterCall(callId) {
+                try {
+                    const currentRow = document.querySelector('[data-waiter-call-id="' + callId + '"]');
+                    if (currentRow) {
+                        currentRow.remove();
+                    }
+                    const response = await fetch("{{ url('/staff/waiter-calls') }}/" + callId + "/resolve", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({})
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.success) {
+                        if (typeof showPosToast === 'function') {
+                            showPosToast(data.message || 'Çağırış bağlanmadı.', 'error');
+                        } else {
+                            alert(data.message || 'Çağırış bağlanmadı.');
+                        }
+                        return;
+                    }
+
+                    if (typeof showPosToast === 'function') {
+                        showPosToast(data.message || 'Çağırış qəbul edildi.', 'success');
+                    }
+
+                    await loadWaiterCalls();
+                    closeWaiterCallsPanel();
+                } catch (error) {
+                    console.error('Waiter call resolve error:', error);
+                    if (typeof showPosToast === 'function') {
+                        showPosToast('Çağırışı bağlamaq mümkün olmadı.', 'error');
+                    } else {
+                        alert('Çağırışı bağlamaq mümkün olmadı.');
+                    }
+                }
+            }
+
+            if (waiterCallsBtn) {
+                waiterCallsBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openWaiterCallsPanel();
+                    loadWaiterCalls();
+                });
+            }
+
+            if (closeWaiterCallsPanelBtn) {
+                closeWaiterCallsPanelBtn.addEventListener('click', closeWaiterCallsPanel);
+            }
+
+            document.addEventListener('click', function(event) {
+                const resolveButton = event.target.closest('[data-waiter-call-resolve]');
+
+                if (!resolveButton) return;
+
+                event.preventDefault();
+                resolveWaiterCall(resolveButton.dataset.waiterCallResolve);
+            });
+
+            loadWaiterCalls();
+            setInterval(loadWaiterCalls, 3000);
+        })();
     </script>
 
 </body>

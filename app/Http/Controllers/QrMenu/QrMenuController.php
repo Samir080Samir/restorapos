@@ -63,6 +63,7 @@ class QrMenuController extends Controller
         $table = null;
         $openOrders = collect();
         $currentBillTotal = 0;
+        $popularProductIds = $this->popularProductIds($restaurant);
 
         return view('public.qr-menu.show', compact(
             'restaurant',
@@ -70,7 +71,8 @@ class QrMenuController extends Controller
             'categories',
             'uncategorizedProducts',
             'openOrders',
-            'currentBillTotal'
+            'currentBillTotal',
+            'popularProductIds'
         ));
     }
 
@@ -157,13 +159,16 @@ class QrMenuController extends Controller
             });
         }
 
+        $popularProductIds = $this->popularProductIds($restaurant);
+
         return view('public.qr-menu.show', compact(
             'restaurant',
             'table',
             'categories',
             'uncategorizedProducts',
             'openOrders',
-            'currentBillTotal'
+            'currentBillTotal',
+            'popularProductIds'
         ));
     }
 
@@ -201,20 +206,31 @@ class QrMenuController extends Controller
                     throw new \RuntimeException('Bu masa üçün hesab istənilib. Əlavə sifariş üçün ofisianta müraciət edin.');
                 }
 
-                $order = PosOrder::create([
-                    'restaurant_id' => $restaurant->id,
-                    'branch_id' => $table->branch_id,
-                    'table_id' => $table->id,
-                    'staff_id' => null,
-                    'order_number' => $this->makeQrOrderNumber(),
-                    'status' => 'open',
-                    'opened_at' => now(),
-                    'subtotal' => 0,
-                    'discount_amount' => 0,
-                    'tax_amount' => 0,
-                    'total_amount' => 0,
-                    'note' => 'QR Menu sifarişi',
-                ]);
+                $order = PosOrder::query()
+                    ->where('restaurant_id', $restaurant->id)
+                    ->where('table_id', $table->id)
+                    ->where('status', 'open')
+                    ->where('order_number', 'like', 'QR-%')
+                    ->lockForUpdate()
+                    ->latest('opened_at')
+                    ->first();
+
+                if (! $order) {
+                    $order = PosOrder::create([
+                        'restaurant_id' => $restaurant->id,
+                        'branch_id' => $table->branch_id,
+                        'table_id' => $table->id,
+                        'staff_id' => null,
+                        'order_number' => $this->makeQrOrderNumber(),
+                        'status' => 'open',
+                        'opened_at' => now(),
+                        'subtotal' => 0,
+                        'discount_amount' => 0,
+                        'tax_amount' => 0,
+                        'total_amount' => 0,
+                        'note' => 'QR Menu sifarişi',
+                    ]);
+                }
 
                 $subtotal = 0;
 
@@ -257,10 +273,10 @@ class QrMenuController extends Controller
                 }
 
                 $order->update([
-                    'subtotal' => round($subtotal, 2),
-                    'discount_amount' => 0,
-                    'tax_amount' => 0,
-                    'total_amount' => round($subtotal, 2),
+                    'subtotal' => round(((float) $order->subtotal) + $subtotal, 2),
+                    'discount_amount' => (float) $order->discount_amount,
+                    'tax_amount' => (float) $order->tax_amount,
+                    'total_amount' => round(((float) $order->total_amount) + $subtotal, 2),
                 ]);
 
                 $table->update(['status' => 'busy']);
@@ -330,6 +346,58 @@ class QrMenuController extends Controller
                 'message' => $e->getMessage(),
             ], 422);
         }
+    }
+
+
+    public function callWaiter(Request $request, string $restaurantSlug, string $tableCode)
+    {
+        $restaurant = Restaurant::where('slug', $restaurantSlug)->firstOrFail();
+
+        if (! $restaurant->hasActiveLicense()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'QR Menu hazırda aktiv deyil.',
+            ], 403);
+        }
+
+        $table = RestaurantTable::where('restaurant_id', $restaurant->id)
+            ->where('code', $tableCode)
+            ->firstOrFail();
+
+        try {
+            DB::table('qr_waiter_calls')->insert([
+                'restaurant_id' => $restaurant->id,
+                'table_id' => $table->id,
+                'status' => 'pending',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ofisiant çağırıldı.',
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ofisiant çağırışı göndərilə bilmədi.',
+            ], 422);
+        }
+    }
+
+    private function popularProductIds(Restaurant $restaurant)
+    {
+        return PosOrderItem::query()
+            ->select('product_id')
+            ->whereNotNull('product_id')
+            ->whereHas('order', function ($query) use ($restaurant) {
+                $query->where('restaurant_id', $restaurant->id)
+                    ->where('opened_at', '>=', now()->subDays(7))
+                    ->where('status', '!=', 'cancelled');
+            })
+            ->groupBy('product_id')
+            ->havingRaw('SUM(qty) >= 15')
+            ->pluck('product_id');
     }
 
     private function trackQrView(Request $request, Restaurant $restaurant, ?RestaurantTable $table, string $type): void
