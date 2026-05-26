@@ -42,8 +42,45 @@ use App\Http\Controllers\Owner\QrMenuManagementController;
 use App\Models\Restaurant;
 use App\Models\User;
 
-Route::get('/', function () {
-    return redirect()->route('owner.login');
+/*
+|--------------------------------------------------------------------------
+| MAIN DOMAIN LANDING
+|--------------------------------------------------------------------------
+| novapos.az -> simple coming soon landing page.
+| Existing /admin, /staff, /menu and debug routes below are NOT removed.
+*/
+
+Route::domain('novapos.az')->group(function () {
+    Route::get('/', function () {
+        return view('landing');
+    })->name('landing');
+});
+
+/*
+|--------------------------------------------------------------------------
+| WWW DOMAIN LANDING
+|--------------------------------------------------------------------------
+| www.novapos.az -> same landing page.
+*/
+
+Route::domain('www.novapos.az')->group(function () {
+    Route::get('/', function () {
+        return view('landing');
+    })->name('landing.www');
+});
+
+/*
+|--------------------------------------------------------------------------
+| CLIENT SUBDOMAIN HOME
+|--------------------------------------------------------------------------
+| client.novapos.az -> owner login.
+| This only adds subdomain behavior and does not delete old /owner routes.
+*/
+
+Route::domain('client.novapos.az')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('owner.login');
+    })->name('client.home');
 });
 
 /*
