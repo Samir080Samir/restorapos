@@ -36,6 +36,8 @@ use App\Http\Controllers\Staff\PosOrderController;
 use App\Http\Controllers\Staff\CustomerController as StaffCustomerController;
 
 use App\Http\Controllers\QrMenu\QrMenuController;
+use App\Http\Controllers\Owner\QrLiveMonitorController;
+use App\Http\Controllers\Owner\QrMenuManagementController;
 
 use App\Models\Restaurant;
 use App\Models\User;
@@ -279,6 +281,30 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
         return view('owner.dashboard');
     })->name('dashboard');
+
+    /*
+|--------------------------------------------------------------------------
+| Owner QR Menu Management
+|--------------------------------------------------------------------------
+*/
+
+    Route::get('/qr-menu', [QrMenuManagementController::class, 'index'])
+        ->name('qr-menu.index');
+
+    Route::get('/qr-menu/settings', [QrMenuManagementController::class, 'settings'])
+        ->name('qr-menu.settings');
+
+    Route::put('/qr-menu/settings', [QrMenuManagementController::class, 'update'])
+        ->name('qr-menu.settings.update');
+
+    Route::patch('/qr-menu/tables/{table}/regenerate-code', [QrMenuManagementController::class, 'regenerateTableCode'])
+        ->name('qr-menu.regenerate-table-code');
+
+    Route::get('/qr-live', [QrLiveMonitorController::class, 'index'])
+        ->name('qr-live.index');
+
+    Route::get('/qr-live/data', [QrLiveMonitorController::class, 'data'])
+        ->name('qr-live.data');
 
     /*
     |--------------------------------------------------------------------------
@@ -598,6 +624,21 @@ Route::get('/menu/{restaurantSlug}', [QrMenuController::class, 'showRestaurant']
 Route::get('/menu/{restaurantSlug}/table/{tableCode}', [QrMenuController::class, 'show'])
     ->name('public.qr-menu.show');
 
+Route::get('/qr-live', [QrLiveMonitorController::class, 'index'])
+    ->name('qr-live.index');
+
+Route::get('/qr-live/data', [QrLiveMonitorController::class, 'data'])
+    ->name('qr-live.data');
+
+Route::post(
+    '/menu/{restaurantSlug}/table/{tableCode}/send-order',
+    [QrMenuController::class, 'sendOrder']
+)->name('public.qr-menu.send-order');
+
+Route::post(
+    '/menu/{restaurantSlug}/table/{tableCode}/request-bill',
+    [QrMenuController::class, 'requestBill']
+)->name('public.qr-menu.request-bill');
 
 /*
 |--------------------------------------------------------------------------

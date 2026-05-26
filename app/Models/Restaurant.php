@@ -25,10 +25,28 @@ class Restaurant extends Model
         'logo',
         'status',
         'subscription_ends_at',
+
+        /*
+        |--------------------------------------------------------------------------
+        | QR Menu Settings
+        |--------------------------------------------------------------------------
+        */
+        'qr_is_active',
+        'qr_background_image',
+        'qr_welcome_text',
+        'qr_about_title',
+        'qr_about_description',
+        'qr_contact_phone',
+        'qr_address',
+        'qr_instagram',
+        'qr_tiktok',
+        'qr_facebook',
+        'qr_website',
     ];
 
     protected $casts = [
         'subscription_ends_at' => 'datetime',
+        'qr_is_active' => 'boolean',
     ];
 
     protected $hidden = [

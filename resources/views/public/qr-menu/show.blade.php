@@ -7,6 +7,8 @@
     <title>{{ $restaurant->name }} | QR Menu</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -21,7 +23,7 @@
             min-height: 100vh;
             background: #edf2f3;
             color: #111827;
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         button {
@@ -88,16 +90,63 @@
             backdrop-filter: blur(14px);
         }
 
+        .lang-wrap {
+            position: relative;
+        }
+
         .lang {
             height: 38px;
+            min-width: 60px;
             padding: 0 12px;
             border-radius: 15px;
             background: rgba(0, 30, 24, .78);
             color: #fff;
             font-size: 12px;
-            font-weight: 950;
+            font-weight: 900;
             border: 1px solid rgba(255, 255, 255, .18);
             backdrop-filter: blur(14px);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .lang-list {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            width: 112px;
+            padding: 7px;
+            border-radius: 17px;
+            background: rgba(0, 30, 24, .94);
+            border: 1px solid rgba(255, 255, 255, .16);
+            backdrop-filter: blur(16px);
+            display: none;
+            z-index: 20;
+            box-shadow: 0 18px 38px rgba(2, 6, 23, .24);
+        }
+
+        .lang-list.active {
+            display: grid;
+            gap: 5px;
+        }
+
+        .lang-option {
+            width: 100%;
+            height: 34px;
+            border-radius: 12px;
+            background: transparent;
+            color: rgba(255, 255, 255, .86);
+            font-size: 12px;
+            font-weight: 850;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .lang-option.active,
+        .lang-option:hover {
+            background: rgba(255, 255, 255, .12);
+            color: #f1c86a;
         }
 
         .brand {
@@ -127,7 +176,7 @@
         }
 
         .name {
-            font-family: Georgia, "Times New Roman", serif;
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
             font-size: 27px;
             line-height: 1.04;
             font-weight: 900;
@@ -607,6 +656,74 @@
             margin-bottom: 2px;
         }
 
+
+        .nav-svg {
+            width: 22px;
+            height: 22px;
+            margin: 0 auto 3px;
+            display: grid !important;
+            place-items: center;
+            font-size: 0 !important;
+        }
+
+        .nav-svg svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        .nav-svg.favorite-active svg path {
+            fill: #ef4444;
+            stroke: #ef4444;
+        }
+
+        .cart-list {
+            margin-top: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .cart-item {
+            min-height: 58px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, .06);
+            padding: 11px 12px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, .05);
+        }
+
+        .cart-item strong {
+            display: block;
+            color: #111827;
+            font-size: 13px;
+            font-weight: 950;
+        }
+
+        .cart-item span {
+            display: block;
+            margin-top: 3px;
+            color: #667085;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .cart-total-row {
+            margin-top: 14px;
+            border-radius: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #05392f, #064236);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-weight: 950;
+        }
+
         .overlay {
             position: fixed;
             inset: 0;
@@ -1005,6 +1122,239 @@
             font-weight: 750;
         }
 
+
+        .bill-sheet {
+            width: 100%;
+            max-width: 430px;
+            max-height: 86vh;
+            margin-top: auto;
+            background: #fffaf2;
+            overflow-y: auto;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 16px 14px 96px;
+            animation: billUp .22s ease-out;
+            box-shadow: 0 -18px 45px rgba(2, 6, 23, .22);
+        }
+
+        @keyframes billUp {
+            from {
+                transform: translateY(32px);
+                opacity: .75;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .bill-sheet-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(15, 23, 42, .08);
+        }
+
+        .bill-sheet-head h2 {
+            color: #0f172a;
+            font-size: 21px;
+            font-weight: 900;
+            letter-spacing: -.4px;
+        }
+
+        .bill-sheet-head p {
+            margin-top: 4px;
+            color: #667085;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .bill-items {
+            margin-top: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .bill-item {
+            min-height: 58px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, .06);
+            padding: 11px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+        }
+
+        .bill-item-name {
+            color: #111827;
+            font-size: 13px;
+            font-weight: 900;
+            line-height: 1.25;
+        }
+
+        .bill-item-meta {
+            margin-top: 4px;
+            color: #667085;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .bill-item-price {
+            color: #0b5b47;
+            font-size: 13px;
+            font-weight: 950;
+            white-space: nowrap;
+        }
+
+        .bill-final {
+            position: sticky;
+            bottom: -80px;
+            margin-top: 14px;
+            border-radius: 22px;
+            padding: 14px;
+            color: #fff;
+            background: linear-gradient(135deg, #05392f, #064236 60%, #0b5b47);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 14px 30px rgba(6, 44, 35, .20);
+        }
+
+        .bill-final span {
+            display: block;
+            color: rgba(255, 255, 255, .78);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .bill-final strong {
+            display: block;
+            margin-top: 3px;
+            color: #f1c86a;
+            font-size: 24px;
+            font-weight: 950;
+        }
+
+
+        .fav.active,
+        .detail-fav.active {
+            background: rgba(255, 255, 255, .92);
+            color: #ef4444;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, .20);
+        }
+
+        .other-list,
+        .favorite-list {
+            margin-top: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .other-category-btn,
+        .favorite-item {
+            width: 100%;
+            min-height: 58px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, .06);
+            color: #111827;
+            padding: 10px 12px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: center;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+        }
+
+        .other-category-icon,
+        .favorite-thumb {
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            background: #ecfdf5;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            font-size: 19px;
+        }
+
+        .favorite-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .other-category-title,
+        .favorite-name {
+            font-size: 13px;
+            font-weight: 950;
+            color: #111827;
+        }
+
+        .other-category-sub,
+        .favorite-price {
+            margin-top: 3px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #667085;
+        }
+
+        .empty-soft {
+            margin-top: 16px;
+            border-radius: 20px;
+            padding: 20px 14px;
+            background: #fff;
+            color: #667085;
+            font-size: 13px;
+            font-weight: 850;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+        }
+
+        .request-success {
+            margin-top: 16px;
+            border-radius: 22px;
+            padding: 18px 14px;
+            background: linear-gradient(135deg, #05392f, #064236 60%, #0b5b47);
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 14px 30px rgba(6, 44, 35, .22);
+        }
+
+        .request-success .big {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 10px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, .12);
+            display: grid;
+            place-items: center;
+            font-size: 25px;
+        }
+
+        .request-success strong {
+            display: block;
+            font-size: 17px;
+            font-weight: 950;
+        }
+
+        .request-success span {
+            display: block;
+            margin-top: 6px;
+            color: rgba(255, 255, 255, .80);
+            font-size: 12px;
+            line-height: 1.45;
+            font-weight: 750;
+        }
+
         @media (max-width: 370px) {
             .name {
                 font-size: 26px;
@@ -1050,13 +1400,50 @@
     foreach ($uncategorizedProducts as $product) {
     $allProducts->push($product);
     }
+
+    $qrHeroImage = data_get($restaurant, 'qr_background_image')
+    ? asset('storage/' . data_get($restaurant, 'qr_background_image'))
+    : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80';
+
+    $qrWelcomeText = data_get($restaurant, 'qr_welcome_text')
+    ?: ($table ? 'Xoş gəldiniz! Nəfis təamlarımızdan dadın.' : 'Menyumuza baxın və seçimlərinizi rahat edin.');
+
+    $qrAboutTitle = data_get($restaurant, 'qr_about_title') ?: 'Restoran məlumatları';
+
+    $qrAboutDescription = data_get($restaurant, 'qr_about_description')
+    ?: 'Əlaqə, ünvan və sosial şəbəkə məlumatları bu bölmədə göstərilir.';
+
+    $qrContactPhone = data_get($restaurant, 'qr_contact_phone')
+    ?: data_get($restaurant, 'phone')
+    ?: data_get($restaurant, 'contact_phone')
+    ?: data_get($restaurant, 'mobile');
+
+    $qrAddress = data_get($restaurant, 'qr_address')
+    ?: data_get($restaurant, 'address')
+    ?: data_get($restaurant, 'location');
+
+    $qrInstagram = data_get($restaurant, 'qr_instagram') ?: data_get($restaurant, 'instagram');
+    $qrFacebook = data_get($restaurant, 'qr_facebook') ?: data_get($restaurant, 'facebook');
+    $qrTiktok = data_get($restaurant, 'qr_tiktok') ?: data_get($restaurant, 'tiktok');
+    $qrWebsite = data_get($restaurant, 'qr_website') ?: data_get($restaurant, 'website');
     @endphp
 
     <div class="app">
-        <section class="hero">
+        <section class="hero"
+            style="background:
+                linear-gradient(180deg, rgba(0, 0, 0, .18), rgba(0, 0, 0, .78)),
+                url('{{ $qrHeroImage }}') center/cover;">
             <div class="top">
                 <button class="round" type="button" onclick="openMenuOverlay()">☰</button>
-                <button class="lang" type="button">AZ&nbsp;&nbsp;EN&nbsp;&nbsp;RU</button>
+                <div class="lang-wrap">
+                    <button class="lang" type="button" onclick="toggleLanguageList(event)">AZ ▾</button>
+
+                    <div id="languageList" class="lang-list">
+                        <button class="lang-option active" type="button">AZ</button>
+                        <button class="lang-option" type="button">EN</button>
+                        <button class="lang-option" type="button">RU</button>
+                    </div>
+                </div>
             </div>
 
             <div class="brand">
@@ -1074,7 +1461,7 @@
                 </div>
 
                 <div class="welcome">
-                    {{ $table ? 'Xoş gəldiniz! Nəfis təamlarımızdan dadın.' : 'Menyumuza baxın və seçimlərinizi rahat edin.' }}
+                    {{ $qrWelcomeText }}
                 </div>
             </div>
         </section>
@@ -1127,7 +1514,7 @@
                 <div class="bill-label">Ümumi məbləğ</div>
                 <div class="bill-total">{{ number_format((float) $currentBillTotal, 2) }} ₼</div>
 
-                <button class="check" type="button">Hesabı görüntülə →</button>
+                <button class="check" type="button" onclick="openBillOverlay()">Hesabı görüntülə →</button>
             </div>
     </div>
     </section>
@@ -1138,7 +1525,7 @@
             <span>Ofisiant çağır</span>
         </button>
 
-        <button class="action" type="button">
+        <button class="action" type="button" onclick="requestBill()">
             <span style="font-size: 22px;">🧾</span>
             <span>Hesab istə</span>
         </button>
@@ -1147,27 +1534,27 @@
 
     <div class="head">
         <h2 class="title">Kateqoriyalar</h2>
-        <a class="all" href="#products">Hamısına bax ›</a>
+        <button class="all" type="button" onclick="filterProducts('all'); document.getElementById('products').scrollIntoView({behavior: 'smooth'});">Hamısına bax ›</button>
     </div>
 
-    <div class="cats">
-        <a href="#products" class="cat active">
+    <div class="cats" id="categoryTabs">
+        <button type="button" class="cat active" data-category="all" onclick="filterProducts('all', this)">
             <span>▦</span>
             <small>Hamısı</small>
-        </a>
+        </button>
 
         @foreach($categories as $category)
-        <a href="#category-{{ $category->id }}" class="cat">
+        <button type="button" class="cat" data-category="{{ $category->id }}" onclick="filterProducts('{{ $category->id }}', this)">
             <span>{{ $category->icon ?: '🍽' }}</span>
             <small>{{ $category->name }}</small>
-        </a>
+        </button>
         @endforeach
 
         @if($uncategorizedProducts->count())
-        <a href="#category-other" class="cat">
-            <span>⋯</span>
-            <small>Digər</small>
-        </a>
+        <button type="button" class="cat" data-category="other" onclick="filterProducts('other', this)">
+            <span>🍽</span>
+            <small>Kateqoriyasız</small>
+        </button>
         @endif
     </div>
 
@@ -1185,6 +1572,7 @@
         @endphp
 
         <article class="card"
+            data-category="{{ optional($product->menuCategory)->id ?: (data_get($product, 'menu_category_id') ?: (data_get($product, 'category_id') ?: 'other')) }}"
             onclick="openProductDetail({
                         id: {{ $product->id }},
                         name: @js($product->name),
@@ -1207,7 +1595,17 @@
                 <div class="tag" style="background:#f59e0b;">Yeni</div>
                 @endif
 
-                <div class="fav">♡</div>
+                <button type="button"
+                    class="fav"
+                    data-product-id="{{ $product->id }}"
+                    onclick="toggleFavorite(event, this, {
+                        id: {{ $product->id }},
+                        name: @js($product->name),
+                        description: @js($desc),
+                        price: {{ (float) $product->sale_price }},
+                        image: @js($imageUrl),
+                        category: @js($categoryName)
+                    })">♡</button>
             </div>
 
             <div class="info">
@@ -1217,7 +1615,7 @@
 
                 <button type="button"
                     class="add"
-                    onclick="event.stopPropagation(); addToCart(@js($product->name), {{ (float) $product->sale_price }})">
+                    onclick="event.stopPropagation(); addToCart(@js($product->name), {{ (float) $product->sale_price }}, 1, {{ $product->id }})">
                     + Əlavə et
                 </button>
             </div>
@@ -1239,16 +1637,27 @@
             <div id="cartTotal" class="ctotal">0.00 ₼</div>
         </div>
 
-        <button type="button" class="send">
+        <button type="button" class="send" onclick="openCartOverlay()">
             {{ $table ? 'Sifarişi göndər ›' : 'Səbətə bax ›' }}
         </button>
     </div>
 
     <nav class="nav">
-        <div class="active"><span>⌂</span>Menyu</div>
-        <div><span>🛒</span>Səbət</div>
-        <div><span>♡</span>Seçilənlər</div>
-        <div><span>ⓘ</span>Haqqımızda</div>
+        <div class="active" onclick="goHomeMenu()"><span class="nav-svg"><svg viewBox="0 0 24 24" fill="none">
+                    <path d="M4 11.4 12 5l8 6.4V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-8.6Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" />
+                </svg></span>Menyu</div>
+        <div onclick="openCartOverlay()"><span class="nav-svg"><svg viewBox="0 0 24 24" fill="none">
+                    <path d="M6.4 8h13l-1.2 7.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.7 5.8H3.8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9 21h.01M17 21h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg></span>Səbət</div>
+        <div onclick="openFavoritesOverlay()"><span id="favoriteNavIcon" class="nav-svg"><svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 20s-7.4-4.5-9.1-9.1C1.7 7.5 3.7 4.7 6.8 4.7c1.8 0 3.2.9 4.1 2.2.9-1.3 2.3-2.2 4.1-2.2 3.1 0 5.1 2.8 3.9 6.2C19.4 15.5 12 20 12 20Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" />
+                </svg></span>Seçilənlər</div>
+        <div onclick="openMenuOverlay()"><span class="nav-svg"><svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="1.9" />
+                    <path d="M12 10.8V16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" />
+                    <path d="M12 7.7h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg></span>Haqqımızda</div>
     </nav>
 
 
@@ -1264,22 +1673,22 @@
             </div>
 
             <div class="menu-note">
-                <strong>Restoran məlumatları</strong>
-                <span>Əlaqə, ünvan və sosial şəbəkə məlumatları bu bölmədə göstərilir.</span>
+                <strong>{{ $qrAboutTitle }}</strong>
+                <span>{{ $qrAboutDescription }}</span>
             </div>
 
             <div class="info-list">
                 <div class="info-card">
                     <div class="info-kicker">Əlaqə</div>
                     <div class="info-value">
-                        {{ data_get($restaurant, 'phone') ?: data_get($restaurant, 'contact_phone') ?: data_get($restaurant, 'mobile') ?: 'Əlaqə nömrəsi əlavə edilməyib' }}
+                        {{ $qrContactPhone ?: 'Əlaqə nömrəsi əlavə edilməyib' }}
                     </div>
                 </div>
 
                 <div class="info-card">
                     <div class="info-kicker">Yerləşdiyi yer</div>
                     <div class="info-value">
-                        {{ data_get($restaurant, 'address') ?: data_get($restaurant, 'location') ?: 'Ünvan əlavə edilməyib' }}
+                        {{ $qrAddress ?: 'Ünvan əlavə edilməyib' }}
                     </div>
                 </div>
 
@@ -1288,27 +1697,152 @@
                     <div class="info-value">Bizi izləyin və yeniliklərdən xəbərdar olun.</div>
 
                     <div class="social-row">
-                        @if(data_get($restaurant, 'instagram'))
-                        <a class="social-link" href="{{ data_get($restaurant, 'instagram') }}" target="_blank" rel="noopener">Instagram</a>
+                        @if($qrInstagram)
+                        <a class="social-link" href="{{ $qrInstagram }}" target="_blank" rel="noopener">Instagram</a>
                         @endif
 
-                        @if(data_get($restaurant, 'facebook'))
-                        <a class="social-link" href="{{ data_get($restaurant, 'facebook') }}" target="_blank" rel="noopener">Facebook</a>
+                        @if($qrFacebook)
+                        <a class="social-link" href="{{ $qrFacebook }}" target="_blank" rel="noopener">Facebook</a>
                         @endif
 
-                        @if(data_get($restaurant, 'tiktok'))
-                        <a class="social-link" href="{{ data_get($restaurant, 'tiktok') }}" target="_blank" rel="noopener">TikTok</a>
+                        @if($qrTiktok)
+                        <a class="social-link" href="{{ $qrTiktok }}" target="_blank" rel="noopener">TikTok</a>
                         @endif
 
-                        @if(data_get($restaurant, 'website'))
-                        <a class="social-link" href="{{ data_get($restaurant, 'website') }}" target="_blank" rel="noopener">Web</a>
+                        @if($qrWebsite)
+                        <a class="social-link" href="{{ $qrWebsite }}" target="_blank" rel="noopener">Web</a>
                         @endif
 
-                        @if(! data_get($restaurant, 'instagram') && ! data_get($restaurant, 'facebook') && ! data_get($restaurant, 'tiktok') && ! data_get($restaurant, 'website'))
+                        @if(! $qrInstagram && ! $qrFacebook && ! $qrTiktok && ! $qrWebsite)
                         <span class="social-link">Tezliklə</span>
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="billOverlay" class="overlay">
+        <div class="bill-sheet">
+            <div class="bill-sheet-head">
+                <div>
+                    <h2>Cari hesab</h2>
+                    <p>{{ $table ? ($table->name ?: $table->code) . ' üzrə açıq sifarişlər' : 'Açıq hesab məlumatı' }}</p>
+                </div>
+
+                <button class="round" type="button" onclick="closeBillOverlay()">✕</button>
+            </div>
+
+            <div class="bill-items">
+                @php $billHasItems = false; @endphp
+
+                @foreach($openOrders as $order)
+                @foreach($order->items as $item)
+                @php $billHasItems = true; @endphp
+                <div class="bill-item">
+                    <div>
+                        <div class="bill-item-name">{{ $item->product_name }}</div>
+                        <div class="bill-item-meta">
+                            {{ number_format((float) $item->qty, 0) }} ədəd
+                            @if(data_get($order, 'order_number'))
+                            • Sifariş #{{ data_get($order, 'order_number') }}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="bill-item-price">{{ number_format((float) $item->total_price, 2) }} ₼</div>
+                </div>
+                @endforeach
+                @endforeach
+
+                @if(! $billHasItems)
+                <div class="empty">Hazırda bu masa üzrə açıq sifariş yoxdur.</div>
+                @endif
+            </div>
+
+            <div class="bill-final">
+                <div>
+                    <span>Ümumi məbləğ</span>
+                    <strong>{{ number_format((float) $currentBillTotal, 2) }} ₼</strong>
+                </div>
+
+                <button class="send" type="button" onclick="closeBillOverlay()">Bağla</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="favoritesOverlay" class="overlay">
+        <div class="bill-sheet">
+            <div class="bill-sheet-head">
+                <div>
+                    <h2>Seçilənlər</h2>
+                    <p>Bəyəndiyiniz məhsullar bu bölmədə görünəcək.</p>
+                </div>
+
+                <button class="round" type="button" onclick="closeFavoritesOverlay()">✕</button>
+            </div>
+
+            <div id="favoriteList" class="favorite-list"></div>
+        </div>
+    </div>
+
+    <div id="requestBillOverlay" class="overlay">
+        <div class="bill-sheet">
+            <div class="bill-sheet-head">
+                <div>
+                    <h2>Hesab istəyi</h2>
+                    <p>{{ $table ? ($table->name ?: $table->code) . ' üçün' : 'QR menyu üzrə' }}</p>
+                </div>
+
+                <button class="round" type="button" onclick="closeRequestBillOverlay()">✕</button>
+            </div>
+
+            <div class="request-success">
+                <div class="big">✓</div>
+                <strong>Hesab istəyi aktivləşdirildi</strong>
+                <span>Ofisiant hesab istəyinizi görəcək. İstəsəniz, cari hesab detalları ilə məbləği də görüntüləyə bilərsiniz.</span>
+            </div>
+
+            <div class="bill-final">
+                <div>
+                    <span>Ümumi məbləğ</span>
+                    <strong>{{ number_format((float) $currentBillTotal, 2) }} ₼</strong>
+                </div>
+
+                <button class="send" type="button" onclick="closeRequestBillOverlay(); openBillOverlay();">Hesaba bax</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartOverlay" class="overlay">
+        <div class="bill-sheet">
+            <div class="bill-sheet-head">
+                <div>
+                    <h2>Səbət</h2>
+                    <p>Seçilən məhsullar</p>
+                </div>
+
+                <button class="round" type="button" onclick="closeCartOverlay()">✕</button>
+            </div>
+
+            <div id="cartList" class="cart-list"></div>
+
+            <div class="cart-total-row">
+                <div>
+                    <span style="display:block;font-size:11px;color:rgba(255,255,255,.7);font-weight:800;">
+                        Ümumi məbləğ
+                    </span>
+
+                    <strong id="cartOverlayTotal" style="display:block;margin-top:4px;font-size:22px;font-weight:950;color:#f1c86a;">
+                        0.00 ₼
+                    </strong>
+                </div>
+
+                <button type="button" class="send" onclick="sendQrOrder()">
+                    Sifarişi göndər
+                </button>
             </div>
         </div>
     </div>
@@ -1322,7 +1856,7 @@
                     <button class="round" type="button" onclick="closeProductDetail()">‹</button>
 
                     <div class="dacts">
-                        <button class="round" type="button">♡</button>
+                        <button id="detailFavBtn" class="round detail-fav" type="button" onclick="toggleDetailFavorite(event)">♡</button>
                         <button class="round" type="button">↗</button>
                     </div>
                 </div>
@@ -1409,6 +1943,7 @@
     <script>
         let cartCount = 0;
         let cartTotal = 0;
+        let cartItems = [];
         let currentProduct = null;
         let currentQty = 1;
 
@@ -1425,10 +1960,26 @@
                 'Səbət boşdur';
         }
 
-        function addToCart(name, price, qty = 1) {
+        function addToCart(name, price, qty = 1, id = null) {
+            const existing = cartItems.find(function(item) {
+                return item.name === name && Number(item.price) === Number(price);
+            });
+
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cartItems.push({
+                    id: id,
+                    name: name,
+                    price: Number(price),
+                    qty: qty
+                });
+            }
+
             cartCount += qty;
             cartTotal += Number(price) * qty;
             updateCart();
+            renderCartOverlay();
         }
 
         function openProductDetail(product) {
@@ -1452,6 +2003,7 @@
             document.getElementById('detailAddBtn').textContent =
                 'Səbətə əlavə et • ' + money(product.price);
 
+            refreshFavoriteButtons();
             document.getElementById('productDetailOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1476,7 +2028,7 @@
         document.getElementById('detailAddBtn').addEventListener('click', function() {
             if (!currentProduct) return;
 
-            addToCart(currentProduct.name, currentProduct.price, currentQty);
+            addToCart(currentProduct.name, currentProduct.price, currentQty, currentProduct.id);
             closeProductDetail();
         });
 
@@ -1496,6 +2048,332 @@
             document.getElementById('menuOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
+
+
+        function toggleLanguageList(event) {
+            event.stopPropagation();
+            document.getElementById('languageList').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const languageList = document.getElementById('languageList');
+
+            if (languageList && !event.target.closest('.lang-wrap')) {
+                languageList.classList.remove('active');
+            }
+        });
+
+        function filterProducts(categoryId, clickedElement = null) {
+            const cards = document.querySelectorAll('.card[data-category]');
+            const tabs = document.querySelectorAll('#categoryTabs .cat');
+
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+
+                if (String(tab.dataset.category) === String(categoryId)) {
+                    tab.classList.add('active');
+                }
+            });
+
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
+
+            cards.forEach(function(card) {
+                const show = String(categoryId) === 'all' || String(card.dataset.category) === String(categoryId);
+                card.style.display = show ? '' : 'none';
+            });
+
+            const productsTitle = document.querySelector('#products .title');
+
+            if (productsTitle) {
+                productsTitle.textContent = String(categoryId) === 'all' ? 'Məhsullar' : (String(categoryId) === 'other' ? 'Digər məhsullar' : 'Seçilmiş kateqoriya');
+            }
+        }
+
+        function openBillOverlay() {
+            const billOverlay = document.getElementById('billOverlay');
+
+            if (!billOverlay) return;
+
+            billOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBillOverlay() {
+            const billOverlay = document.getElementById('billOverlay');
+
+            if (!billOverlay) return;
+
+            billOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        const billOverlay = document.getElementById('billOverlay');
+
+        if (billOverlay) {
+            billOverlay.addEventListener('click', function(event) {
+                if (event.target.id === 'billOverlay') {
+                    closeBillOverlay();
+                }
+            });
+        }
+
+
+        let favorites = [];
+
+        function goHomeMenu() {
+            filterProducts('all');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        function renderCartOverlay() {
+            const cartList = document.getElementById('cartList');
+            const cartOverlayTotal = document.getElementById('cartOverlayTotal');
+
+            if (cartOverlayTotal) {
+                cartOverlayTotal.textContent = money(cartTotal);
+            }
+
+            if (!cartList) return;
+
+            if (!cartItems.length) {
+                cartList.innerHTML = '<div class="empty-soft">Səbət boşdur. Məhsullardan seçim edin.</div>';
+                return;
+            }
+
+            cartList.innerHTML = cartItems.map(function(item) {
+                return '<div class="cart-item">' +
+                    '<div><strong>' + item.name + '</strong><span>' + item.qty + ' × ' + money(item.price) + '</span></div>' +
+                    '<strong>' + money(item.price * item.qty) + '</strong>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function openCartOverlay() {
+            renderCartOverlay();
+            setOverlay('cartOverlay', true);
+        }
+
+        function closeCartOverlay() {
+            setOverlay('cartOverlay', false);
+        }
+
+        function setOverlay(id, active) {
+            const overlay = document.getElementById(id);
+            if (!overlay) return;
+
+            overlay.classList.toggle('active', active);
+            document.body.style.overflow = active ? 'hidden' : '';
+        }
+
+        function productIndex(productId) {
+            return favorites.findIndex(function(item) {
+                return String(item.id) === String(productId);
+            });
+        }
+
+        function refreshFavoriteButtons() {
+            document.querySelectorAll('.fav[data-product-id]').forEach(function(button) {
+                const isFavorite = productIndex(button.dataset.productId) !== -1;
+                button.classList.toggle('active', isFavorite);
+                button.textContent = isFavorite ? '♥' : '♡';
+            });
+            const navIcon = document.getElementById('favoriteNavIcon');
+            if (navIcon) {
+                navIcon.classList.toggle('favorite-active', favorites.length > 0);
+            }
+
+            const detailFavBtn = document.getElementById('detailFavBtn');
+            if (detailFavBtn && currentProduct) {
+                const isFavorite = productIndex(currentProduct.id) !== -1;
+                detailFavBtn.classList.toggle('active', isFavorite);
+                detailFavBtn.textContent = isFavorite ? '♥' : '♡';
+            }
+        }
+
+        function toggleFavorite(event, button, product) {
+            event.stopPropagation();
+
+            const index = productIndex(product.id);
+
+            if (index === -1) {
+                favorites.push(product);
+            } else {
+                favorites.splice(index, 1);
+            }
+
+            refreshFavoriteButtons();
+            renderFavorites();
+        }
+
+        function toggleDetailFavorite(event) {
+            event.stopPropagation();
+            if (!currentProduct) return;
+
+            const index = productIndex(currentProduct.id);
+
+            if (index === -1) {
+                favorites.push(currentProduct);
+            } else {
+                favorites.splice(index, 1);
+            }
+
+            refreshFavoriteButtons();
+            renderFavorites();
+        }
+
+        function renderFavorites() {
+            const favoriteList = document.getElementById('favoriteList');
+            if (!favoriteList) return;
+
+            if (!favorites.length) {
+                favoriteList.innerHTML = '<div class="empty-soft">Hələ seçilən məhsul yoxdur. Məhsul üzərindəki ürək ikonuna toxunun.</div>';
+                return;
+            }
+
+            favoriteList.innerHTML = favorites.map(function(product) {
+                const image = product.image ?
+                    '<img src="' + product.image + '" alt="' + product.name + '">' :
+                    '🍽';
+
+                return '<button type="button" class="favorite-item" onclick="openFavoriteProduct(' + product.id + ')">' +
+                    '<span class="favorite-thumb">' + image + '</span>' +
+                    '<span><span class="favorite-name">' + product.name + '</span>' +
+                    '<span class="favorite-price">' + money(product.price) + '</span></span>' +
+                    '<span>›</span>' +
+                    '</button>';
+            }).join('');
+        }
+
+        function openFavoriteProduct(productId) {
+            const product = favorites.find(function(item) {
+                return String(item.id) === String(productId);
+            });
+
+            if (!product) return;
+
+            closeFavoritesOverlay();
+            openProductDetail(product);
+        }
+
+        function openFavoritesOverlay() {
+            renderFavorites();
+            setOverlay('favoritesOverlay', true);
+        }
+
+        function closeFavoritesOverlay() {
+            setOverlay('favoritesOverlay', false);
+        }
+
+        async function requestBill() {
+            @if($table)
+            try {
+                const response = await fetch(
+                    "{{ route('public.qr-menu.request-bill', [$restaurant->slug, $table->code]) }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+                    setOverlay('requestBillOverlay', true);
+                } else {
+                    alert(data.message || 'Hesab istəyi göndərilə bilmədi');
+                }
+            } catch (e) {
+                alert('Server xətası');
+            }
+            @else
+            alert('Hesab istəmək üçün masa QR kodundan daxil olun.');
+            @endif
+        }
+
+        function closeRequestBillOverlay() {
+            setOverlay('requestBillOverlay', false);
+        }
+
+        ['cartOverlay', 'favoritesOverlay', 'requestBillOverlay'].forEach(function(id) {
+            const overlay = document.getElementById(id);
+
+            if (overlay) {
+                overlay.addEventListener('click', function(event) {
+                    if (event.target.id === id) {
+                        setOverlay(id, false);
+                    }
+                });
+            }
+        });
+
+        async function sendQrOrder() {
+            if (!cartItems.length) {
+                alert('Səbət boşdur');
+                return;
+            }
+
+            @if($table)
+            try {
+                const response = await fetch(
+                    "{{ route('public.qr-menu.send-order', [$restaurant->slug, $table->code]) }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            items: cartItems.map(function(item) {
+                                return {
+                                    id: item.id || null,
+                                    name: item.name,
+                                    qty: item.qty,
+                                    price: item.price
+                                };
+                            })
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message || 'Sifariş göndərildi');
+
+                    cartItems = [];
+                    cartCount = 0;
+                    cartTotal = 0;
+
+                    updateCart();
+                    renderCartOverlay();
+                    closeCartOverlay();
+
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Xəta baş verdi');
+                }
+            } catch (e) {
+                alert('Server xətası');
+            }
+            @else
+            alert('Sifariş göndərmək üçün masa QR kodundan daxil olun.');
+            @endif
+        }
+
+        renderFavorites();
+        refreshFavoriteButtons();
 
         updateCart();
     </script>

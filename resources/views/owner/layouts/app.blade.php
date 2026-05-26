@@ -122,7 +122,20 @@
     'label' => 'QR Menu',
     'route' => null,
     'icon' => 'qr',
-    'children' => [],
+    'children' => [
+    ['label' => 'İdarəçilik', 'route' => 'owner.qr-menu.index'],
+    ['label' => 'Canlı izləmə', 'route' => 'owner.qr-live.index'],
+    ['label' => 'Məlumat dəyişikliyi', 'route' => 'owner.qr-menu.settings'],
+    ],
+    ],
+    [
+    'label' => 'Marketinq',
+    'route' => null,
+    'icon' => 'marketing',
+    'children' => [
+    ['label' => 'Müştərilər', 'route' => 'owner.customers.index'],
+    ['label' => 'Müştəri Borcları', 'route' => 'owner.customer-debts.index'],
+    ],
     ],
     [
     'label' => 'Kampaniyalar',
@@ -168,6 +181,88 @@
     ],
     ],
     ];
+
+    function owner_sidebar_icon_svg($icon) {
+    $icons = [
+    'dashboard' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M4 4h7v7H4V4Z" />
+        <path d="M13 4h7v7h-7V4Z" />
+        <path d="M4 13h7v7H4v-7Z" />
+        <path d="M13 13h7v7h-7v-7Z" />
+    </svg>',
+    'sales' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M6.5 8h13l-1.2 7.2a2 2 0 0 1-2 1.7H9.1a2 2 0 0 1-2-1.6L5.7 5.8H3.8" />
+        <path d="M9 21h.01M17 21h.01" stroke-width="3" stroke-linecap="round" />
+    </svg>',
+    'finance' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M4 19V5" />
+        <path d="M4 19h16" />
+        <path d="M8 16v-5" />
+        <path d="M12 16V8" />
+        <path d="M16 16v-8" />
+    </svg>',
+    'tables' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M5 7h14" />
+        <path d="M8 7v12" />
+        <path d="M16 7v12" />
+        <path d="M7 19h10" />
+        <path d="M9 4h6" />
+    </svg>',
+    'menu' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M7 4h10v16H7V4Z" />
+        <path d="M10 8h4" />
+        <path d="M10 12h4" />
+        <path d="M10 16h3" />
+    </svg>',
+    'inventory' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+        <path d="m4.5 8 7.5 4 7.5-4" />
+        <path d="M12 12v9" />
+    </svg>',
+    'qr' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M4 4h6v6H4V4Z" />
+        <path d="M14 4h6v6h-6V4Z" />
+        <path d="M4 14h6v6H4v-6Z" />
+        <path d="M14 14h2" />
+        <path d="M18 14h2" />
+        <path d="M14 18h6" />
+        <path d="M18 16v4" />
+    </svg>',
+    'marketing' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <circle cx="12" cy="7" r="3.2" />
+        <circle cx="6" cy="10" r="2.6" />
+        <circle cx="18" cy="10" r="2.6" />
+        <path d="M7.5 20a4.8 4.8 0 0 1 9 0" />
+        <path d="M2.8 20a4.4 4.4 0 0 1 6.1-3.9" />
+        <path d="M15.1 16.1A4.4 4.4 0 0 1 21.2 20" />
+    </svg>',
+    'campaign' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M4 13v-2l13-5v12L4 13Z" />
+        <path d="M7 13l2 6" />
+        <path d="M18 9h3" />
+        <path d="M18 15h3" />
+    </svg>',
+    'branches' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" />
+        <path d="M9 8h1M14 8h1M9 12h1M14 12h1M9 16h1M14 16h1" />
+    </svg>',
+    'staff' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M20 21a8 8 0 0 0-16 0" />
+        <circle cx="12" cy="7" r="4" />
+    </svg>',
+    'devices' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M4 5h16v11H4V5Z" />
+        <path d="M8 21h8" />
+        <path d="M12 16v5" />
+    </svg>',
+    'settings' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+        <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+        <path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.06.06a2.1 2.1 0 0 1-2.97 2.97l-.06-.06a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.1 1.66V21a2.1 2.1 0 0 1-4.2 0v-.09a1.8 1.8 0 0 0-1.1-1.66 1.8 1.8 0 0 0-1.98.36l-.06.06a2.1 2.1 0 0 1-2.97-2.97l.06-.06A1.8 1.8 0 0 0 4.6 15a1.8 1.8 0 0 0-1.66-1.1H3a2.1 2.1 0 0 1 0-4.2h.09A1.8 1.8 0 0 0 4.75 8.6a1.8 1.8 0 0 0-.36-1.98l-.06-.06a2.1 2.1 0 0 1 2.97-2.97l.06.06A1.8 1.8 0 0 0 9.35 4a1.8 1.8 0 0 0 1.1-1.66V2a2.1 2.1 0 0 1 4.2 0v.09A1.8 1.8 0 0 0 15.75 4a1.8 1.8 0 0 0 1.98-.36l.06-.06a2.1 2.1 0 0 1 2.97 2.97l-.06.06A1.8 1.8 0 0 0 19.4 8.6a1.8 1.8 0 0 0 1.66 1.1H21a2.1 2.1 0 0 1 0 4.2h-.09A1.8 1.8 0 0 0 19.4 15Z" />
+    </svg>',
+    ];
+
+    return $icons[$icon] ?? $icons['dashboard'];
+    }
     @endphp
 
     <div class="h-screen flex overflow-hidden">
@@ -178,18 +273,19 @@
         </div>
 
         <aside id="ownerSidebar"
-            class="fixed lg:relative inset-y-0 left-0 z-50 w-64 h-screen bg-[#2f3f7a] text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shrink-0">
+            style="background: radial-gradient(circle at top right, rgba(72, 187, 120, .28), transparent 34%), linear-gradient(135deg, #063b31, #083326 60%, #0b4d3d);"
+            class="fixed lg:relative inset-y-0 left-0 z-50 w-64 h-screen text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col shrink-0 shadow-2xl shadow-emerald-950/30">
 
             <div class="h-16 flex items-center justify-between px-5 border-b border-white/10 shrink-0">
 
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-white flex items-center justify-center shadow-sm">
-                        <span class="text-[#2f3f7a] font-black text-lg">N</span>
+                    <div class="w-10 h-10 rounded-2xl bg-white/95 flex items-center justify-center shadow-sm">
+                        <span class="text-[#063b31] font-black text-lg">N</span>
                     </div>
 
                     <div>
-                        <h1 class="font-bold text-lg leading-none">NovaPOS</h1>
-                        <p class="text-xs text-white/60 mt-1">Owner Panel</p>
+                        <h1 class="font-black text-lg leading-none tracking-tight">NovaPOS</h1>
+                        <p class="text-xs text-white/55 mt-1 font-semibold">Owner Panel</p>
                     </div>
                 </div>
 
@@ -220,11 +316,7 @@
                 }
 
                 foreach ($menu['children'] as $childCheck) {
-                if (
-                ! empty($childCheck['route']) &&
-                Route::has($childCheck['route']) &&
-                request()->routeIs($childCheck['route'])
-                ) {
+                if (! empty($childCheck['route']) && Route::has($childCheck['route']) && request()->routeIs($childCheck['route'])) {
                 $isChildActiveGroup = true;
                 }
                 }
@@ -238,10 +330,11 @@
 
                     <button type="button"
                         onclick="toggleSidebarMenu(this)"
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition text-white/80 hover:bg-white/10 hover:text-white">
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition
+                            {{ $isChildActiveGroup ? 'bg-white/12 text-white shadow-sm ring-1 ring-white/10' : 'text-white/82 hover:bg-white/10 hover:text-white' }}">
 
-                        <span class="w-5 h-5 flex items-center justify-center shrink-0">
-                            @include('owner.partials.sidebar-icon', ['icon' => $menu['icon']])
+                        <span class="w-5 h-5 flex items-center justify-center shrink-0 text-emerald-100/90">
+                            {!! owner_sidebar_icon_svg($menu['icon']) !!}
                         </span>
 
                         <span class="truncate flex-1 text-left">
@@ -262,11 +355,11 @@
 
                         <a href="{{ $childHref }}"
                             class="flex items-center gap-2 px-3 py-2 rounded-xl text-xs transition
-                                        {{ $isChildActive
-                                            ? 'bg-white/15 text-white font-bold shadow-sm'
-                                            : 'text-white/60 hover:bg-white/10 hover:text-white' }}">
+                                {{ $isChildActive
+                                    ? 'bg-white/15 text-white font-black shadow-sm'
+                                    : 'text-white/58 hover:bg-white/10 hover:text-white font-semibold' }}">
 
-                            <span class="w-1.5 h-1.5 rounded-full bg-current opacity-60 shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full {{ $isChildActive ? 'bg-emerald-300' : 'bg-white/35' }} shrink-0"></span>
 
                             <span class="truncate">
                                 {{ __($child['label']) }}
@@ -283,13 +376,13 @@
                 @else
 
                 <a href="{{ $menuHref }}"
-                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition
-                            {{ $isSingleActive
-                                ? 'bg-white/15 text-white shadow-sm'
-                                : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                    class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition
+                        {{ $isSingleActive
+                            ? 'bg-white/12 text-white shadow-sm ring-1 ring-white/10'
+                            : 'text-white/82 hover:bg-white/10 hover:text-white' }}">
 
-                    <span class="w-5 h-5 flex items-center justify-center shrink-0">
-                        @include('owner.partials.sidebar-icon', ['icon' => $menu['icon']])
+                    <span class="w-5 h-5 flex items-center justify-center shrink-0 text-emerald-100/90">
+                        {!! owner_sidebar_icon_svg($menu['icon']) !!}
                     </span>
 
                     <span class="truncate">
@@ -306,9 +399,9 @@
 
             <div class="px-3 pb-5 pt-2 shrink-0">
 
-                <div class="flex items-center gap-3 bg-white/10 rounded-2xl px-3 py-3">
+                <div class="flex items-center gap-3 bg-white/10 rounded-2xl px-3 py-3 ring-1 ring-white/10">
 
-                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
                         <svg class="w-5 h-5 text-white/85" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path d="M20 21a8 8 0 0 0-16 0" />
                             <circle cx="12" cy="7" r="4" />
@@ -316,11 +409,11 @@
                     </div>
 
                     <div class="min-w-0 flex-1">
-                        <p class="text-sm font-semibold truncate">
+                        <p class="text-sm font-bold truncate">
                             {{ $displayUserName }}
                         </p>
 
-                        <p class="text-xs text-white/60 truncate">
+                        <p class="text-xs text-white/55 truncate font-semibold">
                             {{ $displayUserRole }}
                         </p>
                     </div>
